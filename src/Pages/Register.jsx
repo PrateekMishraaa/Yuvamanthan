@@ -28,7 +28,7 @@ const Register = () => {
             Swal.fire('All fields are required')
         }
         try{
-            const response = await axios.post('http://localhost:5000/api/register',formData,{
+            const response = await axios.post('https://yuvamanthanbackend.onrender.com/api/register',formData,{
                 "headers":{
                     "Content-type":"application/json"
                 }
