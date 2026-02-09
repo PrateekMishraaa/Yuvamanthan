@@ -1,68 +1,98 @@
 import React, { useState } from "react";
 import Navbar from "../Components/Navbar";
 import Footer from "../Components/Footer";
-import { FaEyeSlash,FaEye  } from "react-icons/fa";
+import { FaEyeSlash, FaEye } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import Swal from "sweetalert2"
-const Login = () => {
-    const navigate = useNavigate()
-    const [viewPassword,setViewPassword] = useState(true)
-    const [formData,setFormData] = useState({
-        email:"",
-        password:""
-    });
-    const [error,setError] = useState(false)
-    const [loading,setLoading] = useState(false)
-    console.log("this is formdata",formData)
+import Swal from "sweetalert2";
+import { jwtDecode } from "jwt-decode";
 
-    const handleViewPassword=()=>{
-        setViewPassword(!viewPassword)
+const Login = () => {
+  const navigate = useNavigate();
+
+  const [viewPassword, setViewPassword] = useState(true);
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+  const [loading, setLoading] = useState(false);
+
+  const handleViewPassword = () => {
+    setViewPassword(!viewPassword);
+  };
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!formData.email || !formData.password) {
+      Swal.fire("All fields are required");
+      return;
     }
-    const handleChange=(e)=>{
-        setFormData({...formData,[e.target.name]:e.target.value})
-    }
-    const handleSubmit=async(e)=>{
-        e.preventDefault()
-        if(!formData.email || !formData.password){
-            Swal.fire('All fields are required')
+
+    try {
+      setLoading(true);
+
+      const response = await axios.post(
+        "http://localhost:5000/api/login",
+        formData,
+        {
+          headers: {
+            "Content-type": "application/json",
+          },
         }
-        try{
-            const response = await axios.post('http://localhost:5000/api/login',formData,{
-                "headers":{
-                    "Content-type":"application/json"
-                }
-            })
-            console.log("response",response)
-            Swal.fire("User Registration has been completed")
-            navigate('/login')
-        }catch(error){
-            console.log('error',error)
-            Swal.fire('Something went wrong')
-        }
+      );
+
+      // ✅ token from backend
+      const token = response.data.token;
+
+      if (!token) {
+        Swal.fire("Token not received");
+        return;
+      }
+
+      // ✅ Save token
+      localStorage.setItem("token", token);
+
+      // ✅ Decode token
+      const decoded = jwtDecode(token);
+      console.log("decoded user => ", decoded);
+
+      Swal.fire("Login Successful");
+
+      // ✅ Redirect based on role
+      if (decoded.role === "admin") {
+        navigate("/admin/dashboard");
+      } else {
+        navigate("/");
+      }
+    } catch (error) {
+      console.log("Login error", error);
+      Swal.fire("Invalid email or password");
+    } finally {
+      setLoading(false);
     }
+  };
+
   return (
     <>
       <Navbar />
 
-      {/* REGISTER SECTION */}
       <section className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-indigo-900 via-purple-800 to-orange-600 px-6">
-        
         <div className="w-full max-w-md bg-white rounded-3xl shadow-2xl p-10">
-          
           {/* HEADER */}
           <div className="text-center mb-8">
             <h1 className="text-3xl font-extrabold text-blue-900 mb-2">
               Login
             </h1>
-            <p className="text-gray-500">
-              Join the Yuvamanthan movement
-            </p>
+            <p className="text-gray-500">Join the Yuvamanthan movement</p>
           </div>
 
-          {/* FORM (UI ONLY) */}
+          {/* FORM */}
           <form className="flex flex-col gap-6" onSubmit={handleSubmit}>
-
             {/* EMAIL */}
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">
@@ -79,37 +109,46 @@ const Login = () => {
             </div>
 
             {/* PASSWORD */}
-            <div className="flex justify-between">
+            <div className="relative">
               <label className="block text-sm font-semibold text-gray-700 mb-2">
                 Password
               </label>
+
               <input
-                type={viewPassword?"password":"text"}
+                type={viewPassword ? "password" : "text"}
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
                 placeholder="Enter your password"
                 className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500"
               />
-              <span onClick={handleViewPassword}>
-                {
-                    viewPassword?<FaEyeSlash/>:<FaEye/>
-                }
+
+              {/* Eye Icon */}
+              <span
+                onClick={handleViewPassword}
+                className="absolute right-4 top-[42px] cursor-pointer text-gray-600"
+              >
+                {viewPassword ? <FaEyeSlash /> : <FaEye />}
               </span>
             </div>
 
             {/* BUTTON */}
             <button
               type="submit"
+              disabled={loading}
               className="w-full py-3 mt-4 bg-gradient-to-r from-[#8B4513] to-[#E07B00] text-white font-bold rounded-full uppercase hover:scale-105 transition"
             >
-              Login
+              {loading ? "Logging in..." : "Login"}
             </button>
           </form>
+
           {/* FOOTER TEXT */}
           <p className="text-center text-sm text-gray-500 mt-6">
             Don't have an account?{" "}
-            <span className="text-[#78434e] font-semibold cursor-pointer hover:underline">
+            <span
+              onClick={() => navigate("/register")}
+              className="text-[#78434e] font-semibold cursor-pointer hover:underline"
+            >
               Register
             </span>
           </p>

@@ -4,7 +4,9 @@ import HomePage from './Pages/HomePage'
 import Register from './Pages/Register'
 import Login from './Pages/Login'
 import Programs from './Pages/Programs'
+import ProtectedRoutes from './Components/ProtectedRoutes'
 import About from './Pages/About'
+import Admin from './Pages/Admin'
 const App = () => {
   return (
   <>
@@ -13,8 +15,15 @@ const App = () => {
         <Route path='/' element={<HomePage/>}/>
         <Route path='/register' element={<Register/>}/>
         <Route path='/login' element={<Login/>}/>
-        <Route path='/programs' element={<Programs/>}/>
-        <Route path='/about' element={<About/>}/>
+        <Route path='/programs' element={<ProtectedRoutes>
+          <Programs/>
+        </ProtectedRoutes>}/>
+        <Route path='/about' element={<ProtectedRoutes>
+          <About/>
+        </ProtectedRoutes>}/>
+         <Route path='/admin/dashboard' element={<ProtectedRoutes>
+          <Admin/>
+        </ProtectedRoutes>}/>
       </Routes>
     </Router>
   </>
