@@ -6,7 +6,7 @@ const ProtectedRoutes = ({ children }) => {
   console.log('user token:', userToken)
 
   if (!userToken) {
-    return <Navigate to="/login" replace />
+    return <Navigate to="/register" replace />
   }
 
   return children
