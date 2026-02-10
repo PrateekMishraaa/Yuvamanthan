@@ -41,18 +41,16 @@ const Navbar = () => {
       label: "Programs",
       icon: <FaBookOpen className="md:hidden" />,
       dropdown: [
-        { 
-          // path: "/programs/yuvamanthan",
-           label: "Yuva manthan" },
+       
         { 
           path: "/programs/nipam", 
-          label: "NIPAM Programme" },
+          label: " YUVAMANTHAN NIPAM Programme" },
         {
-          //  path: "/programs/g20", 
-          label: "Yuva manthan G20" },
+           path: "/program/modelg20", 
+          label: "YUVAMANTHAN  Model G20" },
         { 
-          // path: "/programs/air-quality",
-           label: "Air Quality Champions" },
+          path: "/program/cleanAir",
+           label: "YUVAMANTHAN Air Quality Awareness" },
         { 
           // path: "/programs/un",
            label: "Yuva manthan UN" },

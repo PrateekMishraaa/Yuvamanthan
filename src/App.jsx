@@ -8,6 +8,8 @@ import ProtectedRoutes from './Components/ProtectedRoutes'
 import About from './Pages/About'
 import Admin from './Pages/Admin'
 import Nipam from './Pages/Programs/Nipam'
+import AirQualityAwareness from './Pages/Programs/AirQualityAwareness'
+import ModelG20 from './Pages/Programs/ModelG20'
 const App = () => {
   return (
   <>
@@ -22,6 +24,8 @@ const App = () => {
         <Route path='/register' element={<Register/>}/>
         <Route path='/login' element={<Login/>}/>
         <Route path='/programs/nipam' element={<Nipam/>}/>
+        <Route path='/program/cleanAir' element={<AirQualityAwareness/>}/>
+        <Route path='/program/modelg20' element={<ModelG20/>}/>
         <Route path='/programs' element={
           // <ProtectedRoutes>
           <Programs/>

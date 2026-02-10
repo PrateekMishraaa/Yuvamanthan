@@ -81,7 +81,7 @@ const Login = () => {
     <>
       <Navbar />
 
-      <section className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-indigo-900 via-purple-800 to-orange-600 px-6">
+      <section className="min-h-screen w-full flex items-center justify-center  px-6">
         <div className="w-full max-w-md bg-white rounded-3xl shadow-2xl p-10">
           {/* HEADER */}
           <div className="text-center mb-8">
