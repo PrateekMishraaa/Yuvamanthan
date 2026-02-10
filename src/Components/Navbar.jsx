@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { FaBars, FaTimes, FaChevronDown, FaUserPlus, FaHome, FaBookOpen, FaPalette, FaHandsHelping, FaInfoCircle } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
+import Logo from "../assets/logo.png";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -44,7 +45,7 @@ const Navbar = () => {
           // path: "/programs/yuvamanthan",
            label: "Yuva manthan" },
         { 
-          // path: "/programs/nipam", 
+          path: "/programs/nipam", 
           label: "NIPAM Programme" },
         {
           //  path: "/programs/g20", 
@@ -126,8 +127,12 @@ const Navbar = () => {
               >
                 <div className="relative">
                   <div className="absolute -inset-1 bg-gradient-to-r from-[#8B4513] to-[#E07B00] rounded-full blur opacity-30 group-hover:opacity-50 transition duration-300"></div>
-                  <div className="relative w-12 h-12 bg-gradient-to-br from-[#6A3E2E] via-[#8B4513] to-[#E07B00] rounded-full flex items-center justify-center">
-                    <span className="text-white font-bold text-xl">Y</span>
+                  <div className="relative w-12 h-12 rounded-full flex items-center justify-center overflow-hidden bg-white">
+                    <img 
+                      src={Logo} 
+                      alt="Yuvamanthan Logo" 
+                      className="w-full h-full object-contain p-1"
+                    />
                   </div>
                 </div>
                 <div>

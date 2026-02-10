@@ -7,6 +7,7 @@ import Programs from './Pages/Programs'
 import ProtectedRoutes from './Components/ProtectedRoutes'
 import About from './Pages/About'
 import Admin from './Pages/Admin'
+import Nipam from './Pages/Programs/Nipam'
 const App = () => {
   return (
   <>
@@ -20,6 +21,7 @@ const App = () => {
         />
         <Route path='/register' element={<Register/>}/>
         <Route path='/login' element={<Login/>}/>
+        <Route path='/programs/nipam' element={<Nipam/>}/>
         <Route path='/programs' element={
           // <ProtectedRoutes>
           <Programs/>
