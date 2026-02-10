@@ -11,6 +11,7 @@ import Nipam from './Pages/Programs/Nipam'
 import AirQualityAwareness from './Pages/Programs/AirQualityAwareness'
 import ModelG20 from './Pages/Programs/ModelG20'
 import YuvamanthanUnitedNations from './Pages/Programs/YuvamanthanUnitedNations'
+import YouthCommunity from './Pages/Engage/YouthCommunity'
 const App = () => {
   return (
   <>
@@ -28,6 +29,7 @@ const App = () => {
         <Route path='/program/cleanAir' element={<AirQualityAwareness/>}/>
         <Route path='/program/modelg20' element={<ModelG20/>}/>
         <Route path='/program/ymun' element={<YuvamanthanUnitedNations/>}/>
+        <Route path="/engage/youth-community" element={<YouthCommunity/>}/>
         <Route path='/programs' element={
           // <ProtectedRoutes>
           <Programs/>

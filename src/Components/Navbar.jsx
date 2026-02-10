@@ -19,17 +19,17 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
+  const [mobileDropdown, setMobileDropdown] = useState(null);
   const [user, setUser] = useState(null);
 
   const location = useLocation();
 
-  // Decode JWT on load
+  // Decode JWT
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
       try {
-        const decoded = jwtDecode(token);
-        setUser(decoded);
+        setUser(jwtDecode(token));
       } catch {
         localStorage.removeItem("token");
         setUser(null);
@@ -44,10 +44,11 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close mobile menu on route change
+  // Close menus on route change
   useEffect(() => {
     setIsOpen(false);
     setActiveDropdown(null);
+    setMobileDropdown(null);
   }, [location]);
 
   const navItems = [
@@ -57,15 +58,13 @@ const Navbar = () => {
       icon: <FaHome className="md:hidden" />
     },
     {
-      path: "/programs",
       label: "Programs",
       icon: <FaBookOpen className="md:hidden" />,
       dropdown: [
         { path: "/programs/nipam", label: "YUVAMANTHAN NIPAM Programme" },
         { path: "/program/modelg20", label: "YUVAMANTHAN Model G20" },
-        { path: "/program/cleanAir", label: "YUVAMANTHAN Air Quality Awareness" },
-        { path: "/program/ymun", label: "Yuvamanthan Model United Nations" },
-        // { path: "/programs/hackathon", label: "Innovation Hackathon" }
+        { path: "/program/cleanAir", label: "Air Quality Awareness" },
+        { path: "/program/ymun", label: "Yuvamanthan Model United Nations" }
       ]
     },
     {
@@ -74,7 +73,25 @@ const Navbar = () => {
     },
     {
       label: "Engage",
-      icon: <FaHandsHelping className="md:hidden" />
+      icon: <FaHandsHelping className="md:hidden" />,
+      dropdown: [
+        { path: "/engage/youth-community", label: "Youth Connect" },
+        { 
+          // path: "/engage/ymg20", 
+          label: "YMG20" },
+        { 
+          // path: "/media",
+           label: "Media" },
+        { 
+          // path: "/blogs",
+           label: "Blogs" },
+        {
+          //  path: "/news",
+            label: "News" },
+        {
+          //  path: "/contact", 
+           label: "Contact Us" }
+      ]
     },
     {
       path: "/about",
@@ -82,16 +99,6 @@ const Navbar = () => {
       icon: <FaInfoCircle className="md:hidden" />
     }
   ];
-
-  const menuVariants = {
-    closed: { opacity: 0, height: 0 },
-    open: { opacity: 1, height: "auto" }
-  };
-
-  const itemVariants = {
-    closed: { opacity: 0, x: -20 },
-    open: { opacity: 1, x: 0 }
-  };
 
   return (
     <>
@@ -102,13 +109,15 @@ const Navbar = () => {
             : "bg-white py-4"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4">
           <div className="flex items-center justify-between">
 
             {/* LOGO */}
             <Link to="/" className="flex items-center space-x-3">
-              <img src={Logo} alt="Yuvamanthan Logo" className="w-12 h-12" />
-              <span className="text-2xl font-bold text-[#8B4513]">Yuvamanthan</span>
+              <img src={Logo} alt="Logo" className="w-12 h-12" />
+              <span className="text-2xl font-bold text-[#8B4513]">
+                Yuvamanthan
+              </span>
             </Link>
 
             {/* DESKTOP NAV */}
@@ -117,17 +126,22 @@ const Navbar = () => {
                 <div
                   key={item.label}
                   className="relative"
-                  onMouseEnter={() => item.dropdown && setActiveDropdown(item.label)}
-                  onMouseLeave={() => item.dropdown && setActiveDropdown(null)}
+                  onMouseEnter={() =>
+                    item.dropdown && setActiveDropdown(item.label)
+                  }
+                  onMouseLeave={() => setActiveDropdown(null)}
                 >
                   <Link
                     to={item.path || "#"}
                     className="px-4 py-3 font-semibold text-gray-700 hover:text-[#8B4513]"
                   >
                     {item.label}
-                    {item.dropdown && <FaChevronDown className="inline ml-1 text-xs" />}
+                    {item.dropdown && (
+                      <FaChevronDown className="inline ml-1 text-xs" />
+                    )}
                   </Link>
 
+                  {/* DESKTOP DROPDOWN */}
                   {item.dropdown && activeDropdown === item.label && (
                     <div className="absolute bg-white shadow-xl rounded-xl mt-2 w-64 py-3">
                       {item.dropdown.map((sub) => (
@@ -160,8 +174,11 @@ const Navbar = () => {
               </Link>
             )}
 
-            {/* MOBILE MENU BUTTON */}
-            <button onClick={() => setIsOpen(!isOpen)} className="lg:hidden">
+            {/* MOBILE TOGGLE */}
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="lg:hidden text-xl"
+            >
               {isOpen ? <FaTimes /> : <FaBars />}
             </button>
           </div>
@@ -171,21 +188,45 @@ const Navbar = () => {
         <AnimatePresence>
           {isOpen && (
             <motion.div
-              initial="closed"
-              animate="open"
-              exit="closed"
-              variants={menuVariants}
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
               className="lg:hidden bg-white shadow-lg"
             >
               <div className="p-4 space-y-3">
                 {navItems.map((item) => (
-                  <Link
-                    key={item.label}
-                    to={item.path || "#"}
-                    className="block font-semibold"
-                  >
-                    {item.label}
-                  </Link>
+                  <div key={item.label}>
+                    <button
+                      className="w-full flex justify-between items-center font-semibold"
+                      onClick={() =>
+                        item.dropdown
+                          ? setMobileDropdown(
+                              mobileDropdown === item.label
+                                ? null
+                                : item.label
+                            )
+                          : setIsOpen(false)
+                      }
+                    >
+                      <span>{item.label}</span>
+                      {item.dropdown && <FaChevronDown />}
+                    </button>
+
+                    {/* MOBILE DROPDOWN */}
+                    {item.dropdown && mobileDropdown === item.label && (
+                      <div className="ml-4 mt-2 space-y-2">
+                        {item.dropdown.map((sub) => (
+                          <Link
+                            key={sub.path}
+                            to={sub.path}
+                            className="block text-sm text-gray-700"
+                          >
+                            {sub.label}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 ))}
               </div>
             </motion.div>
@@ -193,6 +234,7 @@ const Navbar = () => {
         </AnimatePresence>
       </header>
 
+      {/* SPACER */}
       <div className="h-20" />
     </>
   );
