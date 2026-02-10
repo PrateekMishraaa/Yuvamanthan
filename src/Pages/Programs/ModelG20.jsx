@@ -14,15 +14,147 @@ import G20One from "../../assets/g20one.webp";
 import G20Two from "../../assets/g20two.webp";
 import G20Three from "../../assets/g20three.webp";
 import { useNavigate } from "react-router-dom";
+import Modi from "../../assets/modi3.png"
 import Footer from "../../Components/Footer";
 
 const ModelG20 = () => {
   const navigate = useNavigate();
 
-  // ... (keep all your existing arrays: benefits, programStructure, targetParticipants, upcomingEvents, globalIssues)
+  // Existing arrays from your code
+  const benefits = [
+    {
+      icon: <Lightbulb className="w-6 h-6" />,
+      title: "Critical Thinking",
+      description: "Develop analytical and problem-solving skills",
+      color: "from-[#6A3E2E] to-[#8B4513]"
+    },
+    {
+      icon: <Users className="w-6 h-6" />,
+      title: "Leadership",
+      description: "Enhance leadership and team management abilities",
+      color: "from-[#8B4513] to-[#C46200]"
+    },
+    {
+      icon: <HeartHandshake className="w-6 h-6" />,
+      title: "Diplomacy",
+      description: "Master the art of negotiation and consensus building",
+      color: "from-[#C46200] to-[#E07B00]"
+    },
+    {
+      icon: <BookOpen className="w-6 h-6" />,
+      title: "Global Awareness",
+      description: "Gain insights into international relations",
+      color: "from-[#E07B00] to-[#FFA500]"
+    },
+    {
+      icon: <TrendingUp className="w-6 h-6" />,
+      title: "Career Growth",
+      description: "Boost your profile for future opportunities",
+      color: "from-[#FFA500] to-[#FF8C00]"
+    },
+    {
+      icon: <Award className="w-6 h-6" />,
+      title: "Recognition",
+      description: "Earn certificates and awards",
+      color: "from-[#FF8C00] to-[#FF7F00]"
+    },
+  ];
 
-  // Add these new arrays based on the file content
+  const programStructure = [
+    {
+      phase: "Phase 1",
+      title: "Registration & Orientation",
+      description: "Participant registration and program overview",
+      icon: <Users className="w-8 h-8" />,
+      gradient: "from-[#6A3E2E] to-[#8B4513]",
+      bg: "bg-gradient-to-br from-orange-50 to-amber-50",
+      border: "border-orange-200",
+      textColor: "text-[#8B4513]"
+    },
+    {
+      phase: "Phase 2",
+      title: "Training & Workshops",
+      description: "Diplomacy, public speaking, and research skills",
+      icon: <BookOpen className="w-8 h-8" />,
+      gradient: "from-[#8B4513] to-[#C46200]",
+      bg: "bg-gradient-to-br from-amber-50 to-orange-50",
+      border: "border-amber-200",
+      textColor: "text-[#C46200]"
+    },
+    {
+      phase: "Phase 3",
+      title: "Committee Assignments",
+      description: "Country and committee allocations",
+      icon: <Globe className="w-8 h-8" />,
+      gradient: "from-[#C46200] to-[#E07B00]",
+      bg: "bg-gradient-to-br from-orange-50 to-amber-50",
+      border: "border-orange-200",
+      textColor: "text-[#E07B00]"
+    },
+    {
+      phase: "Phase 4",
+      title: "Summit Simulation",
+      description: "Actual G20 summit proceedings simulation",
+      icon: <MessageSquare className="w-8 h-8" />,
+      gradient: "from-[#E07B00] to-[#FFA500]",
+      bg: "bg-gradient-to-br from-amber-50 to-orange-50",
+      border: "border-amber-200",
+      textColor: "text-[#FFA500]"
+    },
+    {
+      phase: "Phase 5",
+      title: "Resolution & Awards",
+      description: "Consensus building and recognition ceremony",
+      icon: <Award className="w-8 h-8" />,
+      gradient: "from-[#FFA500] to-[#FF8C00]",
+      bg: "bg-gradient-to-br from-orange-50 to-amber-50",
+      border: "border-orange-200",
+      textColor: "text-[#FF8C00]"
+    },
+  ];
 
+
+
+  const upcomingEvents = [
+    {
+      date: "15-18 March 2024",
+      title: "YMG20 Winter Summit",
+      location: "New Delhi, India",
+      status: "Upcoming",
+      gradient: "from-[#6A3E2E] to-[#8B4513]",
+      bg: "bg-gradient-to-br from-orange-50 to-amber-50",
+      textColor: "text-[#8B4513]"
+    },
+    {
+      date: "10-13 July 2024",
+      title: "YMG20 Summer Summit",
+      location: "Virtual Conference",
+      status: "Registration Open",
+      gradient: "from-[#8B4513] to-[#C46200]",
+      bg: "bg-gradient-to-br from-amber-50 to-orange-50",
+      textColor: "text-[#C46200]"
+    },
+    {
+      date: "5-8 Nov 2024",
+      title: "YMG20 Annual Summit",
+      location: "Mumbai, India",
+      status: "Coming Soon",
+      gradient: "from-[#C46200] to-[#E07B00]",
+      bg: "bg-gradient-to-br from-orange-50 to-amber-50",
+      textColor: "text-[#E07B00]"
+    },
+  ];
+
+  const globalIssues = [
+    "Climate Action & Sustainability",
+    "Digital Economy & Innovation",
+    "Sustainable Development Goals",
+    "Global Health Security",
+    "Trade & Economic Cooperation",
+    "Education & Skill Development"
+  ];
+
+  // New arrays from the files
   const learningSkills = [
     {
       icon: <Users className="w-6 h-6" />,
@@ -176,10 +308,193 @@ const ModelG20 = () => {
     <>
       <Navbar />
       
-      {/* Hero Section (keep your existing hero section) */}
+      {/* Hero Section */}
       <section className="min-h-screen w-full bg-gradient-to-br from-white via-orange-50 to-amber-50">
-        {/* ... Your existing hero section code ... */}
+        <div className="container mx-auto px-4 md:px-8 lg:px-16 py-8 md:py-12 lg:py-20">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-16">
+            {/* Left Content */}
+            <div className="w-full lg:w-1/2 space-y-8">
+              <div className="space-y-6">
+                <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-amber-100 to-orange-100 rounded-full">
+                  <Building className="w-5 h-5 text-[#8B4513] mr-2" />
+                  <span className="text-sm font-semibold text-[#8B4513]">
+                    YuvaManthan Initiative
+                  </span>
+                </div>
+
+                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight">
+                  <span className="bg-gradient-to-r from-[#6A3E2E] via-[#8B4513] to-[#E07B00] bg-clip-text text-transparent">
+                    Model G20
+                  </span>
+                  <br />
+                  <span className="text-gray-900 text-3xl sm:text-4xl md:text-3xl">
+                   What is Model G20?
+                  </span>
+                </h1>
+
+                <div className="space-y-4">
+                  <p className="text-lg md:text-xl text-gray-700 leading-relaxed">
+                    <span className="font-semibold text-[#8B4513]">YuvaManthan Model G20 (YMG20)</span> is a youth engagement mock simulator created to mirror the actual G20 or Group of Twenty summit of leaders.
+                  </p>
+                  <p className="text-lg md:text-xl text-gray-700 leading-relaxed">
+                    It is conceived and designed for young learners and professionals who wish to ace the art of public speaking, strategy and diplomacy. It aims to unlock the true potential of Indian youth as it convenes young leaders, thinkers and innovators on a platform that promotes consensus building, negotiation, and shared ideas.
+                  </p>
+                     <p className="text-lg md:text-xl text-gray-700 leading-relaxed">
+                   It offers youth a chance to participate in an all-encompassing discussion on trade, economics and socio-political affairs as well as cultural programmes centred around real global issues and craft critical actions while at it.
+                  </p>
+                </div>
+              </div>
+
+             
+
+              <div className="flex flex-col sm:flex-row gap-4 pt-4">
+                <button onClick={()=>navigate('/register')} className="group relative h-14 w-full sm:w-48 px-8 overflow-hidden rounded-xl bg-gradient-to-r from-[#6A3E2E] via-[#8B4513] to-[#E07B00] text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02]">
+                  <div className="absolute inset-0 w-0 bg-white/20 group-hover:w-full transition-all duration-500"></div>
+                  <div className="relative flex items-center justify-center space-x-3">
+                    <span className="text-lg font-semibold">Register Now</span>
+                    <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform duration-300" />
+                  </div>
+                </button>
+                
+             
+              </div>
+            </div>
+
+            {/* Right Content */}
+            <div className="w-full lg:w-1/2">
+  <div className="relative space-y-6">
+    {/* YMG20 Summit Card with Image */}
+    <div className="relative group">
+      <div className="absolute -inset-4 bg-gradient-to-r from-[#6A3E2E] via-[#8B4513] to-[#E07B00] rounded-3xl blur-xl opacity-20 group-hover:opacity-30 transition-opacity duration-300"></div>
+      <div className="relative bg-white rounded-2xl p-8 shadow-2xl transform group-hover:-translate-y-2 transition-transform duration-300 overflow-hidden">
+        
+        {/* Background Image with Overlay */}
+        <div className="absolute inset-0 z-0">
+          <div className="absolute inset-0 bg-gradient-to-br from-white/90 via-white/95 to-white"></div>
+          <div 
+            className="absolute inset-0 opacity-10 bg-cover bg-center"
+            style={{
+              backgroundImage: 'url("https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80")',
+              backgroundBlendMode: 'overlay'
+            }}
+          ></div>
+        </div>
+        
+        <div className="relative z-10 text-center space-y-6">
+          {/* Logo with Image Background */}
+          <div className="relative w-24 h-24 mx-auto">
+            <div className="absolute inset-0 bg-gradient-to-br from-amber-100 to-orange-100 rounded-full"></div>
+            <div className="absolute inset-4 overflow-hidden rounded-full border-4 border-white shadow-lg">
+              <img 
+                src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+                alt="Global Summit"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div className="relative w-full h-full flex items-center justify-center">
+              <div className="absolute inset-0 bg-gradient-to-br from-[#6A3E2E]/20 to-[#E07B00]/20 rounded-full"></div>
+              <Globe className="w-12 h-12 text-white drop-shadow-lg" />
+            </div>
+          </div>
+          
+          <div>
+            <h3 className="text-2xl font-bold text-gray-900">YMG20 Summit</h3>
+            <p className="text-gray-600 mt-2">Youth Diplomatic Conference</p>
+          </div>
+          
+          
+          
+          {/* Mini Image Gallery */}
+          <div className="pt-4">
+            <div className="flex -space-x-3">
+              <div className="w-12 h-12 rounded-full border-2 border-white overflow-hidden shadow-lg">
+                <img 
+                  src="https://images.unsplash.com/photo-1515187029135-18ee286d815b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+                  alt="Delegate 1"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="w-12 h-12 rounded-full border-2 border-white overflow-hidden shadow-lg">
+                <img 
+                  src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+                  alt="Delegate 2"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="w-12 h-12 rounded-full border-2 border-white overflow-hidden shadow-lg">
+                <img 
+                  src="https://images.unsplash.com/photo-1511578314322-379afb476865?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+                  alt="Delegate 3"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="w-12 h-12 rounded-full border-2 border-white overflow-hidden shadow-lg flex items-center justify-center bg-gradient-to-br from-[#8B4513] to-[#E07B00]">
+                <span className="text-white text-sm font-bold">50+</span>
+              </div>
+            </div>
+            <p className="text-gray-500 text-sm mt-2">Join 500+ delegates from 30+ countries</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {/* Global Issues Card with Images */}
+    <div className="relative group">
+      <div className="absolute -inset-4 bg-gradient-to-r from-[#8B4513] via-[#C46200] to-[#E07B00] rounded-3xl blur-xl opacity-20 group-hover:opacity-30 transition-opacity duration-300"></div>
+      <div className="relative bg-white rounded-2xl p-6 shadow-2xl transform group-hover:-translate-y-2 transition-transform duration-300 overflow-hidden">
+        
+        {/* Background Pattern */}
+        <div className="absolute inset-0 z-0">
+          <div className="absolute inset-0 bg-gradient-to-br from-orange-50/30 to-amber-50/30"></div>
+          <div 
+            className="absolute inset-0 opacity-5 bg-cover bg-center"
+            style={{
+              backgroundImage: 'url("https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80")'
+            }}
+          ></div>
+        </div>
+        
+        <div className="relative z-10 text-center space-y-6">
+          <h4 className="text-xl font-bold text-gray-900">Global Issues Discussed</h4>
+          
+          <div className="grid grid-cols-2 gap-4">
+            {globalIssues.slice(0, 4).map((issue, index) => (
+              <div 
+                key={index}
+                className="group/item relative overflow-hidden rounded-xl border border-orange-200 bg-gradient-to-br from-white to-orange-50 shadow-sm hover:shadow-md transition-all duration-300"
+              >
+                {/* Issue Content */}
+                <div className="h-24 overflow-hidden flex items-center justify-center bg-gradient-to-br from-amber-100 to-orange-100">
+                  <div className="text-center p-4">
+                    <span className="text-sm font-medium text-[#8B4513] line-clamp-2">
+                      {issue}
+                    </span>
+                  </div>
+                </div>
+                
+                {/* Gradient Bottom Border */}
+                <div className={`h-1 ${index % 2 === 0 ? 'bg-gradient-to-r from-[#6A3E2E] to-[#8B4513]' : 'bg-gradient-to-r from-[#C46200] to-[#E07B00]'}`}></div>
+              </div>
+            ))}
+          </div>
+          
+          {/* View More Link */}
+          <div className="pt-4">
+            <button className="inline-flex items-center text-sm font-semibold text-[#8B4513] hover:text-[#6A3E2E] group">
+              <span>View All 20+ Global Issues</span>
+              <ArrowRightCircle className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform duration-300" />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+          </div>
+        </div>
       </section>
+
+   
 
       {/* What You Will Learn Section */}
       <section className="py-20 bg-gradient-to-b from-orange-50 to-white">
@@ -214,8 +529,10 @@ const ModelG20 = () => {
         </div>
       </section>
 
+
+
       {/* Who Can Participate Section */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-gradient-to-b from-orange-50 to-white">
         <div className="container mx-auto px-4 md:px-8 lg:px-16">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
@@ -291,46 +608,135 @@ const ModelG20 = () => {
                   </button>
                 </div>
               </div>
+
+              
             </div>
           </div>
         </div>
       </section>
 
       {/* Model G20 India Theme Section */}
-      <section className="py-20 bg-gradient-to-b from-amber-50 to-orange-50">
-        <div className="container mx-auto px-4 md:px-8 lg:px-16">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-4xl md:text-5xl font-bold mb-8">
-              <span className="bg-gradient-to-r from-[#6A3E2E] via-[#8B4513] to-[#E07B00] bg-clip-text text-transparent">
-                MODEL G20 INDIA THEME
-              </span>
-            </h2>
+   <section className="py-20 bg-gradient-to-b from-amber-50 to-orange-50">
+  <div className="container mx-auto px-4 md:px-8 lg:px-16">
+    <div className="max-w-6xl mx-auto">
+      <div className="text-center mb-16">
+        <h2 className="text-4xl md:text-5xl font-bold mb-8">
+          <span className="bg-gradient-to-r from-[#6A3E2E] via-[#8B4513] to-[#E07B00] bg-clip-text text-transparent">
+            MODEL G20 INDIA THEME
+          </span>
+        </h2>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        {/* Image Column */}
+        <div className="relative group">
+          <div className="absolute -inset-4 bg-gradient-to-r from-[#6A3E2E] via-[#8B4513] to-[#E07B00] rounded-3xl blur-xl opacity-20 group-hover:opacity-30 transition-opacity duration-300"></div>
+          <div className="relative overflow-hidden rounded-2xl shadow-2xl transform group-hover:-translate-y-2 transition-transform duration-300">
+            {/* Main Image */}
+            <div className="aspect-square overflow-hidden">
+              <img 
+                src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                alt="G20 Summit Theme - Vasudhaiva Kutumbakam"
+                className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
+              />
+              {/* Overlay Gradient */}
+              <div className="absolute inset-0 bg-gradient-to-t from-[#6A3E2E]/40 via-transparent to-transparent"></div>
+            </div>
             
-            <div className="bg-white rounded-3xl p-8 md:p-12 shadow-2xl mb-8">
-              <div className="text-3xl md:text-4xl font-bold text-[#8B4513] mb-6">
-                'Vasudhaiva Kutumbakam'
+            {/* Theme Badge Overlay */}
+            <div className="absolute top-6 right-6">
+              <div className="bg-gradient-to-r from-[#8B4513] to-[#E07B00] text-white px-4 py-2 rounded-full font-bold shadow-lg">
+                G20 2023
               </div>
-              <div className="text-2xl font-semibold text-gray-800 mb-8">
-                One Earth. One Family. One Future
-              </div>
-              <p className="text-lg text-gray-700 mb-6">
-                The theme vividly discusses the poignant value of all life forms on earth and their exponential interconnectivity with the future and universe.
+            </div>
+            
+            {/* Image Caption */}
+            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6">
+              <p className="text-white text-lg font-semibold">
+                One Earth • One Family • One Future
               </p>
-              <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-6 border border-green-200">
-                <p className="text-lg font-semibold text-green-800">
-                  The summit theme also highlights the significance of LiFE (Lifestyle for Environment). 
-                  The key indication to environmental sustainability on individual and national levels.
-                </p>
+            </div>
+          </div>
+          
+          {/* Decorative Elements */}
+          <div className="absolute -bottom-4 -left-4 w-20 h-20 bg-gradient-to-r from-amber-400 to-orange-500 rounded-full blur-xl opacity-30"></div>
+          <div className="absolute -top-4 -right-4 w-16 h-16 bg-gradient-to-r from-[#6A3E2E] to-[#8B4513] rounded-full blur-xl opacity-20"></div>
+        </div>
+
+        {/* Content Column */}
+        <div className="space-y-8">
+          <div className="bg-white rounded-3xl p-8 md:p-10 shadow-2xl">
+            <div className="text-3xl md:text-4xl font-bold text-[#8B4513] mb-6">
+              'Vasudhaiva Kutumbakam'
+            </div>
+            <div className="text-2xl font-semibold text-gray-800 mb-8">
+              One Earth. One Family. One Future
+            </div>
+            <p className="text-lg text-gray-700 mb-6 leading-relaxed">
+              The theme vividly discusses the poignant value of all life forms on earth and their exponential interconnectivity with the future and universe.
+            </p>
+            
+            <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-6 border border-green-200 mb-6">
+              <div className="flex items-start">
+                <div className="bg-green-100 p-3 rounded-lg mr-4">
+                 <img src={Modi} alt="" />
+                </div>
+                <div>
+                  <p className="text-lg font-semibold text-green-800 mb-2">
+                    LiFE Initiative
+                  </p>
+                  <p className="text-green-700">
+                    Lifestyle for Environment - Promoting sustainable living at individual and national levels
+                  </p>
+                </div>
               </div>
             </div>
 
-            <p className="text-gray-600 text-lg">
-              Model G20 India will reproduce the same theme among the youth through its 2023 event. 
-              The themes will change over the years to foster new thoughts and visions.
-            </p>
+            {/* Key Features */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8">
+              <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-xl p-4 text-center">
+                <div className="w-12 h-12 mx-auto bg-gradient-to-r from-[#6A3E2E] to-[#8B4513] rounded-full flex items-center justify-center mb-3">
+                  <Globe className="w-6 h-6 text-white" />
+                </div>
+                <p className="font-semibold text-[#8B4513]">Global Unity</p>
+              </div>
+              <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-xl p-4 text-center">
+                <div className="w-12 h-12 mx-auto bg-gradient-to-r from-[#8B4513] to-[#C46200] rounded-full flex items-center justify-center mb-3">
+                  <HeartHandshake className="w-6 h-6 text-white" />
+                </div>
+                <p className="font-semibold text-[#C46200]">Shared Future</p>
+              </div>
+              <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-xl p-4 text-center">
+                <div className="w-12 h-12 mx-auto bg-gradient-to-r from-[#C46200] to-[#E07B00] rounded-full flex items-center justify-center mb-3">
+                  <Shield className="w-6 h-6 text-white" />
+                </div>
+                <p className="font-semibold text-[#E07B00]">Sustainability</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Additional Info */}
+          <div className="bg-gradient-to-r from-[#8B4513] to-[#E07B00] rounded-2xl p-6 text-white">
+            <div className="flex items-start">
+              <div className="bg-white/20 p-3 rounded-lg mr-4">
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <div>
+                <p className="text-lg font-semibold mb-2">Theme Evolution</p>
+                <p className="opacity-90">
+                  Model G20 India will reproduce the same theme among the youth through its 2023 event. 
+                  The themes will change over the years to foster new thoughts and visions.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
-      </section>
+      </div>
+    </div>
+  </div>
+</section>
 
       {/* Themes and Topics Section */}
       <section className="py-20 bg-white">
@@ -493,8 +899,8 @@ const ModelG20 = () => {
         </div>
       </section>
 
-    
-      <Footer/>
+
+      <Footer />
     </>
   );
 };
