@@ -11,7 +11,10 @@ const Register = () => {
   const [viewPassword, setViewPassword] = useState(true);
 
   const [formData, setFormData] = useState({
+    firstname:"",
+    lastname:"",
     email: "",
+    mobile:"",
     password: "",
   });
 
@@ -25,14 +28,14 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.email || !formData.password) {
+    if (!formData.firstname || !formData.lastname || !formData.mobile || !formData.email || !formData.password) {
       Swal.fire("All fields are required");
       return;
     }
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/register",
+        "https://yuvamanthanbackend.onrender.com/api/register",
         formData,
         {
           headers: {
@@ -70,6 +73,35 @@ const Register = () => {
           <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
             
             {/* EMAIL */}
+
+ <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                First Name
+              </label>
+              <input
+                type="text"
+                name="firstname"
+                value={formData.firstname}
+                onChange={handleChange}
+                placeholder="john doe"
+                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500"
+              />
+            </div>
+
+             <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Last Name
+              </label>
+              <input
+                type="text"
+                name="lastname"
+                value={formData.lastname}
+                onChange={handleChange}
+                placeholder="doe"
+                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500"
+              />
+            </div>
+
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">
                 Email Address
@@ -84,6 +116,19 @@ const Register = () => {
               />
             </div>
 
+ <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              Mobile
+              </label>
+              <input
+                type="text"
+                name="mobile"
+                value={formData.mobile}
+                onChange={handleChange}
+                placeholder="9540802061"
+                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500"
+              />
+            </div>
             {/* PASSWORD */}
             <div className="relative">
               <label className="block text-sm font-semibold text-gray-700 mb-2">
