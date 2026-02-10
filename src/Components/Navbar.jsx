@@ -65,7 +65,7 @@ const Navbar = () => {
         { path: "/program/modelg20", label: "YUVAMANTHAN Model G20" },
         { path: "/program/cleanAir", label: "YUVAMANTHAN Air Quality Awareness" },
         { path: "/program/ymun", label: "Yuvamanthan Model United Nations" },
-        { path: "/programs/hackathon", label: "Innovation Hackathon" }
+        // { path: "/programs/hackathon", label: "Innovation Hackathon" }
       ]
     },
     {
