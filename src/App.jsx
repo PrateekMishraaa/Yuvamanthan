@@ -12,6 +12,9 @@ import AirQualityAwareness from './Pages/Programs/AirQualityAwareness'
 import ModelG20 from './Pages/Programs/ModelG20'
 import YuvamanthanUnitedNations from './Pages/Programs/YuvamanthanUnitedNations'
 import YouthCommunity from './Pages/Engage/YouthCommunity'
+import YuvamanthanMedia from './Pages/Engage/YuvamanthanMedia'
+import YuvamanthanBlog from './Pages/Engage/YuvamanthanBlog'
+import YuvamanthanNews from './Pages/Engage/YuvamanthanNews'
 const App = () => {
   return (
   <>
@@ -30,6 +33,9 @@ const App = () => {
         <Route path='/program/modelg20' element={<ModelG20/>}/>
         <Route path='/program/ymun' element={<YuvamanthanUnitedNations/>}/>
         <Route path="/engage/youth-community" element={<YouthCommunity/>}/>
+        <Route path='/engage/yuvamanthanG20-media'element={<YuvamanthanMedia/>}/>
+        <Route path='/engage/blog' element={<YuvamanthanBlog/>}/>
+        <Route path='/engage/news' element={<YuvamanthanNews/>}/>
         <Route path='/programs' element={
           // <ProtectedRoutes>
           <Programs/>

@@ -77,16 +77,16 @@ const Navbar = () => {
       dropdown: [
         { path: "/engage/youth-community", label: "Youth Connect" },
         { 
-          // path: "/engage/ymg20", 
-          label: "YMG20" },
+          path: "/engage/yuvamanthanG20-media", 
+          label: "YMG20 Media" },
         { 
-          // path: "/media",
+          path: "/engage/yuvamanthanG20-media",
            label: "Media" },
         { 
-          // path: "/blogs",
+          path: "/engage/blog",
            label: "Blogs" },
         {
-          //  path: "/news",
+           path: "/engage/news",
             label: "News" },
         {
           //  path: "/contact", 
