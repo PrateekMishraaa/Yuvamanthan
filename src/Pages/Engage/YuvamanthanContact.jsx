@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import Navbar from '../../Components/Navbar'
+import axios from "axios"
+import Swal from "sweetalert2"
 import Footer from '../../Components/Footer'
 import { 
   MapPin,
@@ -21,27 +23,50 @@ import {
   User,
   MessageCircle
 } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
 
 const YuvamanthanContact = () => {
+  const navigate = useNavigate()
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    phone: '',
-    message: ''
+    Fullname: '',
+    Email: '',
+    Subject: '',
+    PhoneNumber: '',
+    Message: ''
   })
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    console.log('Form submitted:', formData)
-    // Handle form submission here
+
+  const handleChange=(e)=>{
+    console.log("this is E value",e)
+    setFormData({...formData,[e.target.name]:e.target.value})
   }
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    })
+  const handleSubmit=async(e)=>{
+    e.preventDefault()
+    if(!formData.Fullname || !formData.Email || !formData.Subject || !formData.PhoneNumber || !formData.Message){
+      Swal.fire('All Fields are required')
+    }
+    try{
+      const response = await axios.post('https://yuvamanthanbackend.onrender.com/api/contact',formData,{
+        headers:{
+          "Content-Type":"application/json"
+        }
+      })
+      console.log("response from form",response)
+      Swal.fire("Your Query has been successfully submitted | !Thankyou")
+
+      setFormData({
+        Fullname:"",
+        Email:"",
+        Message:"",
+        Subject:"",
+        PhoneNumber:""
+      })
+      navigate('/')
+    }catch(error){
+      console.log('error',error)
+      Swal.fire('Something went wrong')
+    }
   }
 
   // Contact points
@@ -207,8 +232,8 @@ const YuvamanthanContact = () => {
                           <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-[#8B4513]/60" />
                           <input
                             type="text"
-                            name="name"
-                            value={formData.name}
+                            name="Fullname"
+                            value={formData.Fullname}
                             onChange={handleChange}
                             required
                             className="w-full pl-10 pr-4 py-3 bg-white border border-[#6A3E2E]/20 rounded-lg focus:outline-none focus:border-[#8B4513] focus:shadow-lg transition-all duration-300"
@@ -225,8 +250,8 @@ const YuvamanthanContact = () => {
                           <MailIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-[#8B4513]/60" />
                           <input
                             type="email"
-                            name="email"
-                            value={formData.email}
+                            name="Email"
+                            value={formData.Email}
                             onChange={handleChange}
                             required
                             className="w-full pl-10 pr-4 py-3 bg-white border border-[#6A3E2E]/20 rounded-lg focus:outline-none focus:border-[#8B4513] focus:shadow-lg transition-all duration-300"
@@ -245,8 +270,8 @@ const YuvamanthanContact = () => {
                           <MessageSquare className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-[#8B4513]/60" />
                           <input
                             type="text"
-                            name="subject"
-                            value={formData.subject}
+                            name="Subject"
+                            value={formData.Subject}
                             onChange={handleChange}
                             required
                             className="w-full pl-10 pr-4 py-3 bg-white border border-[#6A3E2E]/20 rounded-lg focus:outline-none focus:border-[#8B4513] focus:shadow-lg transition-all duration-300"
@@ -262,9 +287,9 @@ const YuvamanthanContact = () => {
                         <div className="relative">
                           <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-[#8B4513]/60" />
                           <input
-                            type="tel"
-                            name="phone"
-                            value={formData.phone}
+                            type="text"
+                            name="PhoneNumber"
+                            value={formData.PhoneNumber}
                             onChange={handleChange}
                             className="w-full pl-10 pr-4 py-3 bg-white border border-[#6A3E2E]/20 rounded-lg focus:outline-none focus:border-[#8B4513] focus:shadow-lg transition-all duration-300"
                             placeholder="+91 00000 00000"
@@ -280,8 +305,8 @@ const YuvamanthanContact = () => {
                       <div className="relative">
                         <MessageCircle className="absolute left-3 top-3 w-5 h-5 text-[#8B4513]/60" />
                         <textarea
-                          name="message"
-                          value={formData.message}
+                          name="Message"
+                          value={formData.Message}
                           onChange={handleChange}
                           required
                           rows="4"
