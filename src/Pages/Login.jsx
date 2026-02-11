@@ -29,7 +29,12 @@ const Login = () => {
     e.preventDefault();
 
     if (!formData.email || !formData.password) {
-      Swal.fire("All fields are required");
+      Swal.fire({
+        icon: "error",
+        title: "Validation Error",
+        text: "All fields are required",
+        confirmButtonColor: "#8B4513"
+      });
       return;
     }
 
@@ -37,7 +42,7 @@ const Login = () => {
       setLoading(true);
 
       const response = await axios.post(
-        "https://yuvamanthanbackend.onrender.com/api/login",
+        "http://localhost:5000/api/login",
         formData,
         {
           headers: {
@@ -46,32 +51,78 @@ const Login = () => {
         }
       );
 
-      // ✅ token from backend
       const token = response.data.token;
+      const userData = response.data.user || response.data.payload;
 
       if (!token) {
-        Swal.fire("Token not received");
+        Swal.fire({
+          icon: "error",
+          title: "Login Failed",
+          text: "Authentication token not received",
+          confirmButtonColor: "#8B4513"
+        });
         return;
       }
 
-      // ✅ Save token
+      // Save token and user data
       localStorage.setItem("token", token);
+      localStorage.setItem("userData", JSON.stringify(userData));
 
-      // ✅ Decode token
+      // Decode token to get role
       const decoded = jwtDecode(token);
-      console.log("decoded user => ", decoded);
+      console.log("Decoded token:", decoded);
 
-      Swal.fire("Login Successful");
+      // Get role from decoded token or response
+      const userRole = decoded.role || userData.role;
 
-      // ✅ Redirect based on role
-      if (decoded.role === "admin") {
-        navigate("/admin/dashboard");
-      } else {
-        navigate("/");
+      Swal.fire({
+        icon: "success",
+        title: "Login Successful!",
+        text: `Welcome back, ${decoded.firstname || "User"}!`,
+        confirmButtonColor: "#8B4513"
+      });
+
+      // Navigate based on role
+      switch(userRole) {
+        case "admin":
+          navigate("/admin/dashboard");
+          break;
+        case "student":
+          navigate("/student/dashboard");
+          break;
+        case "teacher":
+          navigate("/teacher/dashboard");
+          break;
+        case "institution":
+          navigate("/institution/dashboard");
+          break;
+        default:
+          navigate("/");
       }
+
     } catch (error) {
       console.log("Login error", error);
-      Swal.fire("Invalid email or password");
+      
+      let errorMessage = "Invalid email or password";
+      
+      if (error.response?.data?.message) {
+        errorMessage = error.response.data.message;
+      } else if (error.response?.status === 404) {
+        errorMessage = "User not found. Please check your email or register first.";
+      } else if (error.response?.status === 403) {
+        errorMessage = "Incorrect password. Please try again.";
+      } else if (error.response?.status === 400) {
+        errorMessage = "Invalid credentials provided.";
+      } else if (!error.response) {
+        errorMessage = "Network error. Please check your internet connection.";
+      }
+      
+      Swal.fire({
+        icon: "error",
+        title: "Login Failed",
+        text: errorMessage,
+        confirmButtonColor: "#8B4513"
+      });
     } finally {
       setLoading(false);
     }
@@ -81,77 +132,154 @@ const Login = () => {
     <>
       <Navbar />
 
-      <section className="min-h-screen w-full flex items-center justify-center  px-6">
-        <div className="w-full max-w-md bg-white rounded-3xl shadow-2xl p-10">
-          {/* HEADER */}
+      <section className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-[#FFF7ED] via-white to-[#FFEDD5] p-4">
+        <div className="w-full max-w-lg">
+          {/* Header */}
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-extrabold text-blue-900 mb-2">
-              Login
+            <h1 className="text-4xl font-extrabold text-[#6A3E2E] mb-2">
+              Welcome to <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#6A3E2E] via-[#8B4513] to-[#E07B00]">Yuvamanthan</span>
             </h1>
-            <p className="text-gray-500">Join the Yuvamanthan movement</p>
+            <p className="text-[#8B4513]/80">
+              Login to continue your journey in youth empowerment
+            </p>
           </div>
 
-          {/* FORM */}
-          <form className="flex flex-col gap-6" onSubmit={handleSubmit}>
-            {/* EMAIL */}
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
-                Email Address
-              </label>
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                placeholder="you@example.com"
-                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500"
-              />
+          {/* Login Form Card */}
+          <div className="bg-white rounded-3xl shadow-2xl overflow-hidden border border-[#6A3E2E]/10 p-8">
+            <div className="mb-6">
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#6A3E2E]/10 to-[#8B4513]/10 rounded-full mb-4">
+                <span className="text-sm font-semibold text-[#6A3E2E]">
+                  Login to continue
+                </span>
+              </div>
             </div>
 
-            {/* PASSWORD */}
-            <div className="relative">
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
-                Password
-              </label>
+            <form className="flex flex-col gap-6" onSubmit={handleSubmit}>
+              {/* Email */}
+              <div>
+                <label className="block text-sm font-semibold text-[#6A3E2E] mb-2">
+                  Email Address *
+                </label>
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="you@example.com"
+                  className="w-full px-4 py-3 border border-[#6A3E2E]/20 rounded-xl focus:outline-none focus:border-[#8B4513] focus:ring-2 focus:ring-[#8B4513]/20 transition-all"
+                  required
+                />
+              </div>
 
-              <input
-                type={viewPassword ? "password" : "text"}
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                placeholder="Enter your password"
-                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500"
-              />
+              {/* Password */}
+              <div className="relative">
+                <label className="block text-sm font-semibold text-[#6A3E2E] mb-2">
+                  Password *
+                </label>
+                <input
+                  type={viewPassword ? "password" : "text"}
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  placeholder="Enter your password"
+                  className="w-full px-4 py-3 pr-12 border border-[#6A3E2E]/20 rounded-xl focus:outline-none focus:border-[#8B4513] focus:ring-2 focus:ring-[#8B4513]/20 transition-all"
+                  required
+                />
+                <span
+                  onClick={handleViewPassword}
+                  className="absolute right-4 top-[42px] cursor-pointer text-[#8B4513]/60"
+                >
+                  {viewPassword ? <FaEyeSlash /> : <FaEye />}
+                </span>
+              </div>
 
-              {/* Eye Icon */}
-              <span
-                onClick={handleViewPassword}
-                className="absolute right-4 top-[42px] cursor-pointer text-gray-600"
+              {/* Forgot Password */}
+              <div className="text-right">
+                <span
+                  onClick={() => navigate("/forgot-password")}
+                  className="text-sm text-[#8B4513] font-semibold cursor-pointer hover:underline"
+                >
+                  Forgot Password?
+                </span>
+              </div>
+
+              {/* Submit Button */}
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full py-3 bg-gradient-to-r from-[#6A3E2E] via-[#8B4513] to-[#E07B00] text-white font-bold rounded-xl uppercase hover:shadow-lg transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed"
               >
-                {viewPassword ? <FaEyeSlash /> : <FaEye />}
-              </span>
+                {loading ? (
+                  <span className="flex items-center justify-center gap-2">
+                    <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Logging in...
+                  </span>
+                ) : (
+                  "Login to Yuvamanthan"
+                )}
+              </button>
+            </form>
+
+            {/* Register Link */}
+            <div className="mt-8 pt-6 border-t border-[#6A3E2E]/10 text-center">
+              <p className="text-sm text-[#8B4513]/80">
+                Don't have an account?{" "}
+                <span
+                  onClick={() => navigate("/register")}
+                  className="text-[#6A3E2E] font-semibold cursor-pointer hover:underline"
+                >
+                  Register here
+                </span>
+              </p>
             </div>
 
-            {/* BUTTON */}
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full py-3 mt-4 bg-gradient-to-r from-[#8B4513] to-[#E07B00] text-white font-bold rounded-full uppercase hover:scale-105 transition"
-            >
-              {loading ? "Logging in..." : "Login"}
-            </button>
-          </form>
+            {/* Terms and Conditions */}
+            <div className="mt-6 text-center">
+              <p className="text-xs text-[#8B4513]/60">
+                By logging in, you agree to our{" "}
+                <span className="text-[#6A3E2E] font-semibold cursor-pointer hover:underline">
+                  Terms of Service
+                </span>{" "}
+                and{" "}
+                <span className="text-[#6A3E2E] font-semibold cursor-pointer hover:underline">
+                  Privacy Policy
+                </span>
+              </p>
+            </div>
+          </div>
 
-          {/* FOOTER TEXT */}
-          <p className="text-center text-sm text-gray-500 mt-6">
-            Don't have an account?{" "}
-            <span
-              onClick={() => navigate("/register")}
-              className="text-[#78434e] font-semibold cursor-pointer hover:underline"
-            >
-              Register
-            </span>
-          </p>
+          {/* Platform Stats */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
+            <div className="bg-white rounded-xl p-4 border border-[#6A3E2E]/10 text-center hover:shadow-md transition-shadow">
+              <div className="text-2xl font-bold text-[#6A3E2E]">2.4M+</div>
+              <div className="text-sm text-[#8B4513]/80">Active Users</div>
+            </div>
+            <div className="bg-white rounded-xl p-4 border border-[#6A3E2E]/10 text-center hover:shadow-md transition-shadow">
+              <div className="text-2xl font-bold text-[#6A3E2E]">10K+</div>
+              <div className="text-sm text-[#8B4513]/80">Events Conducted</div>
+            </div>
+            <div className="bg-white rounded-xl p-4 border border-[#6A3E2E]/10 text-center hover:shadow-md transition-shadow">
+              <div className="text-2xl font-bold text-[#6A3E2E]">450+</div>
+              <div className="text-sm text-[#8B4513]/80">Expert Mentors</div>
+            </div>
+          </div>
+
+          {/* Demo Credentials Info */}
+          <div className="mt-6 bg-gradient-to-r from-[#FFF7ED] to-[#FFEDD5] rounded-xl p-4 border border-[#FFA500]/20">
+            <p className="text-sm text-[#8B4513] font-semibold mb-2">Demo Credentials:</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-[#8B4513]">
+              <div>👨‍🎓 <span className="font-semibold">Student:</span> student@example.com</div>
+              <div>👨‍🏫 <span className="font-semibold">Teacher:</span> teacher@example.com</div>
+              <div>🏛️ <span className="font-semibold">Institution:</span> institution@example.com</div>
+              <div>⚙️ <span className="font-semibold">Admin:</span> admin@example.com</div>
+              <div className="md:col-span-2 mt-2">
+                <span className="font-semibold">Password for all:</span> password123
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
