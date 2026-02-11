@@ -1,9 +1,11 @@
 import React from 'react'
+import Navbar from '../Components/Navbar'
 
 const Institution = () => {
   return (
    <>
-   this is institution
+   <Navbar/>
+   This is for institute
    </>
   )
 }

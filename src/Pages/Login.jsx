@@ -267,19 +267,7 @@ const Login = () => {
             </div>
           </div>
 
-          {/* Demo Credentials Info */}
-          <div className="mt-6 bg-gradient-to-r from-[#FFF7ED] to-[#FFEDD5] rounded-xl p-4 border border-[#FFA500]/20">
-            <p className="text-sm text-[#8B4513] font-semibold mb-2">Demo Credentials:</p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-[#8B4513]">
-              <div>👨‍🎓 <span className="font-semibold">Student:</span> student@example.com</div>
-              <div>👨‍🏫 <span className="font-semibold">Teacher:</span> teacher@example.com</div>
-              <div>🏛️ <span className="font-semibold">Institution:</span> institution@example.com</div>
-              <div>⚙️ <span className="font-semibold">Admin:</span> admin@example.com</div>
-              <div className="md:col-span-2 mt-2">
-                <span className="font-semibold">Password for all:</span> password123
-              </div>
-            </div>
-          </div>
+    
         </div>
       </section>
 

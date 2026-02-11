@@ -19,6 +19,7 @@ import YuvamanthanContact from './Pages/Engage/YuvamanthanContact'
 import Institution from './Dashboard/Institution'
 import Teacher from './Dashboard/Teacher'
 import Student from './Dashboard/Student'
+import ForgotPassword from './Pages/ForgotPassword'
 const App = () => {
   return (
   <>
@@ -47,6 +48,7 @@ const App = () => {
         <Route path='/engage/blog' element={<YuvamanthanBlog/>}/>
         <Route path='/engage/news' element={<YuvamanthanNews/>}/>
         <Route path='/engage/contact-us' element={<YuvamanthanContact/>}/>
+        <Route path='/forgot-password' element={<ForgotPassword/>}/>
         <Route path='/institution/dashboard' element={<ProtectedRoutes>
           <Institution/>
         </ProtectedRoutes>}/>
