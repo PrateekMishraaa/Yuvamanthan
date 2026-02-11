@@ -89,7 +89,7 @@ const Navbar = () => {
            path: "/engage/news",
             label: "News" },
         {
-          //  path: "/contact", 
+           path: "/engage/contact-us", 
            label: "Contact Us" }
       ]
     },

@@ -15,6 +15,7 @@ import YouthCommunity from './Pages/Engage/YouthCommunity'
 import YuvamanthanMedia from './Pages/Engage/YuvamanthanMedia'
 import YuvamanthanBlog from './Pages/Engage/YuvamanthanBlog'
 import YuvamanthanNews from './Pages/Engage/YuvamanthanNews'
+import YuvamanthanContact from './Pages/Engage/YuvamanthanContact'
 const App = () => {
   return (
   <>
@@ -36,6 +37,7 @@ const App = () => {
         <Route path='/engage/yuvamanthanG20-media'element={<YuvamanthanMedia/>}/>
         <Route path='/engage/blog' element={<YuvamanthanBlog/>}/>
         <Route path='/engage/news' element={<YuvamanthanNews/>}/>
+        <Route path='/engage/contact-us' element={<YuvamanthanContact/>}/>
         <Route path='/programs' element={
           // <ProtectedRoutes>
           <Programs/>
