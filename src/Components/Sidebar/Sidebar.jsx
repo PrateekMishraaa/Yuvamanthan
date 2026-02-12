@@ -12,7 +12,11 @@ import {
   FaPalette,
   FaShareAlt,
   FaUserTie,
-  FaFileAlt
+  FaFileAlt,
+  FaEnvelope,
+  FaPhone,
+  FaFax,
+  FaGlobe
 } from 'react-icons/fa'
 
 const Sidebar = ({ currentSection }) => {
@@ -52,7 +56,9 @@ const Sidebar = ({ currentSection }) => {
             'appearance': 'Appearance',
             'social-presence': 'Social Presence',
             'about-you': 'About You',
-            'documents': 'Documents'
+            'documents': 'Documents',
+            'mailing-address': 'Mailing Address',
+          
         }
         const pathSegment = path.split('/').pop()
         return sectionMap[pathSegment] || 'Institution'
@@ -62,13 +68,21 @@ const Sidebar = ({ currentSection }) => {
     useEffect(() => {
         const currentSectionName = currentSection || getSectionFromPath(location.pathname)
         
-        // Always set main menu to 0 (Institute Details) for institution sections
-        setActiveMain(0)
-        
-        // Find and set the active submenu item
-        const submenuIndex = sideItem[0].listing.indexOf(currentSectionName)
-        if (submenuIndex !== -1) {
-            setActiveSub(submenuIndex)
+        // Check if we're in Contact Details section
+        if (location.pathname.includes('/contact-details')) {
+            setActiveMain(1) // Contact Details is at index 1
+            // Find and set active submenu item
+            const submenuIndex = sideItem[1].listing.indexOf(currentSectionName)
+            if (submenuIndex !== -1) {
+                setActiveSub(submenuIndex)
+            }
+        } else if (location.pathname.includes('/institution')) {
+            // Institute Details section
+            setActiveMain(0)
+            const submenuIndex = sideItem[0].listing.indexOf(currentSectionName)
+            if (submenuIndex !== -1) {
+                setActiveSub(submenuIndex)
+            }
         }
     }, [location.pathname, currentSection])
 
@@ -76,6 +90,7 @@ const Sidebar = ({ currentSection }) => {
         localStorage.removeItem('token')
         localStorage.removeItem('userData')
         localStorage.removeItem('instituteFormData')
+        localStorage.removeItem('contactFormData')
         navigate('/login')
     }
 
@@ -87,14 +102,18 @@ const Sidebar = ({ currentSection }) => {
         // Navigate to first submenu item if it has listing
         if (item.listing.length > 0) {
             const firstSubItem = item.listing[0]
-            const path = firstSubItem.toLowerCase().replace(/\s+/g, '-')
-            navigate(`/institution/${path}`)
+            if (mainIndex === 0) {
+                // Institute Details submenu
+                const path = firstSubItem.toLowerCase().replace(/\s+/g, '-')
+                navigate(`/institution/${path}`)
+            } else if (mainIndex === 1) {
+                // Contact Details submenu
+                const path = firstSubItem.toLowerCase().replace(/\s+/g, '-')
+                navigate(`/contact-details/${path}`)
+            }
         } else {
             // Handle other main menu items without submenu
             switch(item.title) {
-                case 'Contact Details':
-                    navigate('/contact-details')
-                    break
                 case 'Account Settings':
                     navigate('/account-settings')
                     break
@@ -111,10 +130,15 @@ const Sidebar = ({ currentSection }) => {
     }
 
     // Handle submenu item click
-    const handleSubItemClick = (subItem, subIndex) => {
+    const handleSubItemClick = (subItem, subIndex, mainIndex) => {
         setActiveSub(subIndex)
-        const path = subItem.toLowerCase().replace(/\s+/g, '-')
-        navigate(`/institution/${path}`)
+        if (mainIndex === 0) {
+            const path = subItem.toLowerCase().replace(/\s+/g, '-')
+            navigate(`/institution/${path}`)
+        } else if (mainIndex === 1) {
+            const path = subItem.toLowerCase().replace(/\s+/g, '-')
+            navigate(`/contact-details/${path}`)
+        }
     }
 
     // Icons for main menu items
@@ -128,13 +152,15 @@ const Sidebar = ({ currentSection }) => {
 
     // Icons for submenu items
     const submenuIcons = {
+        // Institute Details icons
         "Institution": <FaUniversity />,
         "Overview": <FaGraduationCap />,
         "Registered Address": <FaMapMarkerAlt />,
         "Appearance": <FaPalette />,
         "Social Presence": <FaShareAlt />,
         "About You": <FaUserTie />,
-        "Documents": <FaFileAlt />
+        "Documents": <FaFileAlt />,
+       
     }
 
     const sideItem = [
@@ -147,7 +173,7 @@ const Sidebar = ({ currentSection }) => {
         {
             title: "Contact Details",
             icon: menuIcons[1],
-            listing: [],
+            listing: ["Mailing Address"],
             path: "/contact-details"
         },
         {
@@ -177,21 +203,23 @@ const Sidebar = ({ currentSection }) => {
                 <img src={Logo} alt="Logo" className='w-full h-16 p-4 object-contain' />
             </div>
 
-            {/* Progress Indicator */}
-            {/* <div className='px-4 py-3 bg-gradient-to-r from-[#6A3E2E]/5 to-[#8B4513]/10 border-b border-[#8B4513]/20'>
-                <div className='flex items-center justify-between mb-1'>
-                    <span className='text-xs font-medium text-[#6A3E2E]'>Institute Setup</span>
-                    <span className='text-xs font-bold text-[#FF8C00]'>
-                        {activeSub + 1}/{sideItem[0].listing.length}
-                    </span>
+            {/* Progress Indicator - Only show for Institute Details */}
+            {activeMain === 0 && (
+                <div className='px-4 py-3 bg-gradient-to-r from-[#6A3E2E]/5 to-[#8B4513]/10 border-b border-[#8B4513]/20'>
+                    <div className='flex items-center justify-between mb-1'>
+                        <span className='text-xs font-medium text-[#6A3E2E]'>Institute Setup</span>
+                        <span className='text-xs font-bold text-[#FF8C00]'>
+                            {activeSub + 1}/{sideItem[0].listing.length}
+                        </span>
+                    </div>
+                    <div className='w-full bg-[#FFEDD5] rounded-full h-1.5'>
+                        <div 
+                            className='bg-gradient-to-r from-[#8B4513] to-[#FF8C00] h-1.5 rounded-full transition-all duration-500'
+                            style={{ width: `${((activeSub + 1) / sideItem[0].listing.length) * 100}%` }}
+                        ></div>
+                    </div>
                 </div>
-                <div className='w-full bg-[#FFEDD5] rounded-full h-1.5'>
-                    <div 
-                        className='bg-gradient-to-r from-[#8B4513] to-[#FF8C00] h-1.5 rounded-full transition-all duration-500'
-                        style={{ width: `${((activeSub + 1) / sideItem[0].listing.length) * 100}%` }}
-                    ></div>
-                </div>
-            </div> */}
+            )}
 
             {/* Navigation Items */}
             <div className='flex-1 py-6 overflow-y-auto scrollbar-thin scrollbar-thumb-[#8B4513]/30 scrollbar-track-[#FFEDD5]'>
@@ -227,7 +255,7 @@ const Sidebar = ({ currentSection }) => {
                                     {item.listing.map((subItem, subIndex) => (
                                         <li key={subIndex}>
                                             <button
-                                                onClick={() => handleSubItemClick(subItem, subIndex)}
+                                                onClick={() => handleSubItemClick(subItem, subIndex, mainIndex)}
                                                 className={`w-full flex items-center gap-3 px-4 py-2.5 text-sm rounded-lg transition-all duration-200
                                                     ${activeMain === mainIndex && activeSub === subIndex
                                                         ? 'bg-gradient-to-r from-[#FFEDD5] to-[#FFF7ED] text-[#8B4513] font-medium border-l-2 border-[#FF8C00] shadow-sm'
@@ -250,9 +278,6 @@ const Sidebar = ({ currentSection }) => {
                     ))}
                 </ul>
             </div>
-
-          
-          
 
             {/* User Info & Logout */}
             <div className='border-t border-[#8B4513]/20 bg-white'>

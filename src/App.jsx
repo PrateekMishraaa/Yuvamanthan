@@ -36,13 +36,16 @@ const Student = lazy(() => import("./Dashboard/Student"));
 const Admin = lazy(() => import("./Pages/Admin"));
 
 // Institution Parts
-const OverView = lazy(() => import("./Pages/InstitutionParts.jsx/OverView"));
+const OverView = lazy(() => import("./Pages/InstitutionParts/OverView.jsx"));
+const AboutInstitution = lazy(()=>import("./Pages/InstitutionParts/AboutInstitution.jsx"))
+const InstitutionDocuments = lazy(()=>import("./Pages/InstitutionParts/InstitutionDocuments.jsx"))
+const InstitutionMail = lazy(()=>import("./Pages/InstitutionParts/InstitutionMailing.jsx"))
 const RegisteredAddress = lazy(() =>
-  import("./Pages/InstitutionParts.jsx/RegisteredAddress")
+  import("./Pages/InstitutionParts/RegisteredAddress.jsx")
 );
-const Appreance = lazy(() => import("./Pages/InstitutionParts.jsx/Appreance"));
+const Appreance = lazy(() => import("./Pages/InstitutionParts/Appreance.jsx"));
 const SocialPresence = lazy(() =>
-  import("./Pages/InstitutionParts.jsx/SocialPresence.jsx")
+  import("./Pages/InstitutionParts/SocialPresence.jsx")
 );
 
 /* =======================
@@ -97,7 +100,9 @@ const App = () => {
             path="/institution/social-presence"
             element={<ProtectedRoutes><SocialPresence /></ProtectedRoutes>}
           />
-
+        <Route path="/institution/about-you" element={<ProtectedRoutes><AboutInstitution/></ProtectedRoutes>}/>
+        <Route path="/institution/documents" element={<ProtectedRoutes><InstitutionDocuments/></ProtectedRoutes>}/>
+        <Route path="/contact-details/mailing-address" element={<ProtectedRoutes><InstitutionMail/></ProtectedRoutes>}/>
           {/* Teacher */}
           <Route
             path="/teacher/dashboard"
