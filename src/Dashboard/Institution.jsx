@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import Sidebar from '../Components/Sidebar/Sidebar.jsx'
 import { LuNotebookText } from "react-icons/lu";
+import Trouble from '../Components/Trouble/Trouble.jsx';
 
 const Institution = () => {
   const navigate = useNavigate()
@@ -106,15 +107,7 @@ const Institution = () => {
                   Provide information about the nature of your institution and the medium of education.
                 </p>
               </div>
-              <div className='bg-gradient-to-r from-[#FFF7ED] to-[#FFEDD5] p-4 rounded-xl border border-[#8B4513]/20'>
-                <p className='font-semibold text-sm text-[#6A3E2E]'>
-                  Having Trouble? 
-                  <span className='text-[#FF8C00] ml-1 cursor-pointer hover:text-[#FFA500] transition-colors'>
-                    Get Help
-                  </span>
-                </p>
-                <p className='text-[#8B4513]/60 font-lighter text-sm mt-1'>{user?.email}</p>
-              </div>
+              <Trouble/>
             </div>
 
             <div className='w-full px-4'>
