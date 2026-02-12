@@ -21,6 +21,7 @@ import Teacher from './Dashboard/Teacher'
 import Student from './Dashboard/Student'
 import ForgotPassword from './Pages/ForgotPassword'
 import OverView from './Pages/InstitutionParts.jsx/OverView'
+import RegisteredAddress from './Pages/InstitutionParts.jsx/RegisteredAddress'
 const App = () => {
   return (
   <>
@@ -62,6 +63,9 @@ const App = () => {
         </ProtectedRoutes>}/>
         <Route path='/institution/overview' element={<ProtectedRoutes>
           <OverView/>
+        </ProtectedRoutes>}/>
+        <Route path='/institution/registered-address' element={<ProtectedRoutes>
+          <RegisteredAddress/>
         </ProtectedRoutes>}/>
         <Route path='/teacher/dashboard' element={<ProtectedRoutes>
           <Teacher/>
