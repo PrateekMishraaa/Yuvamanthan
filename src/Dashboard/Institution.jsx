@@ -94,7 +94,8 @@ const Institution = () => {
             <Trouble />
           </div>
 
-          <div className='w-full px-4'>
+       <form action="">
+           <div className='w-full px-4'>
 
             {/* Institution Section */}
             {(!section || section === 'institution') ? (
@@ -248,6 +249,7 @@ const Institution = () => {
             </div>
 
           </div>
+       </form>
         </div>
       </section>
     </section>
