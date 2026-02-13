@@ -79,11 +79,17 @@ const App = () => {
           <Route path="/engage/news" element={<YuvamanthanNews />} />
           <Route path="/engage/contact-us" element={<YuvamanthanContact />} />
 
-          {/* Institution */}
+          {/* Institution - Dynamic Route for Multi-step Form */}
           <Route
-            path="/institution/dashboard"
+            path="/institution"
             element={<ProtectedRoutes><Institution /></ProtectedRoutes>}
           />
+          <Route
+            path="/institution/:section"
+            element={<ProtectedRoutes><Institution /></ProtectedRoutes>}
+          />
+
+          {/* Individual Institution Part Routes (Optional - you can keep these for direct access) */}
           <Route
             path="/institution/overview"
             element={<ProtectedRoutes><OverView /></ProtectedRoutes>}
@@ -100,9 +106,19 @@ const App = () => {
             path="/institution/social-presence"
             element={<ProtectedRoutes><SocialPresence /></ProtectedRoutes>}
           />
-        <Route path="/institution/about-you" element={<ProtectedRoutes><AboutInstitution/></ProtectedRoutes>}/>
-        <Route path="/institution/documents" element={<ProtectedRoutes><InstitutionDocuments/></ProtectedRoutes>}/>
-        <Route path="/contact-details/mailing-address" element={<ProtectedRoutes><InstitutionMail/></ProtectedRoutes>}/>
+          <Route 
+            path="/institution/about-you" 
+            element={<ProtectedRoutes><AboutInstitution/></ProtectedRoutes>}
+          />
+          <Route 
+            path="/institution/documents" 
+            element={<ProtectedRoutes><InstitutionDocuments/></ProtectedRoutes>}
+          />
+          <Route 
+            path="/contact-details/mailing-address" 
+            element={<ProtectedRoutes><InstitutionMail/></ProtectedRoutes>}
+          />
+
           {/* Teacher */}
           <Route
             path="/teacher/dashboard"

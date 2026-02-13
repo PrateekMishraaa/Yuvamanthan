@@ -1,12 +1,26 @@
-import React from 'react'
+import React, { useContext, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Sidebar from '../../Components/Sidebar/Sidebar'
 import Trouble from '../../Components/Trouble/Trouble'
+import { UserContext } from "../../Context/InstitutesContext.jsx"
 
 const InstitutionDocuments = () => {
   const navigate = useNavigate()
+  const { 
+    formData,
+    setFormData,
+    institutionDocs, 
+    handleDocumentUpload, 
+    handleDocumentRemove,
+    handleOtherDocumentsUpload,
+    // handleDocumentRemove
+  } = useContext(UserContext)
   
-  // Section order matching sidebar - Now includes Contact Details after Documents
+  // Refs for file inputs
+  const poiInputRef = useRef(null)
+  const poaInputRef = useRef(null)
+
+  // Section order matching sidebar
   const sectionOrder = [
     "Institution",
     "Overview",
@@ -14,8 +28,7 @@ const InstitutionDocuments = () => {
     "Appearance",
     "Social Presence",
     "About You",
-    "Documents",
-    "Contact Details" // Added Contact Details after Documents
+    "Documents"
   ]
 
   // Get current section index
@@ -25,12 +38,7 @@ const InstitutionDocuments = () => {
     const nextIndex = currentSectionIndex + 1
     if (nextIndex < sectionOrder.length) {
       const nextSection = sectionOrder[nextIndex]
-      // Check if next section is under Institute Details or main menu
-      if (nextSection === "Contact Details") {
-        navigate('/contact-details/mailing-address')
-      } else {
-        navigate(`/institution/${nextSection.toLowerCase().replace(/\s+/g, '-')}`)
-      }
+      navigate(`/institution/${nextSection.toLowerCase().replace(/\s+/g, '-')}`)
     }
   }
 
@@ -39,6 +47,119 @@ const InstitutionDocuments = () => {
     if (prevIndex >= 0) {
       navigate(`/institution/${sectionOrder[prevIndex].toLowerCase().replace(/\s+/g, '-')}`)
     }
+  }
+
+  const handleFileUpload = (e, docType) => {
+    const file = e.target.files[0]
+    if (file) {
+      handleDocumentUpload(docType, file)
+      
+      // Also update formData.instituteDocuments array
+      const fieldName = docType === 'proofOfIdentity' ? 'ProofOfIdentity' : 'ProofOfAddress'
+      const previewUrl = file.type.startsWith('image/') ? URL.createObjectURL(file) : null
+      
+      setFormData(prev => ({
+        ...prev,
+        instituteDocuments: [
+          {
+            ...prev.instituteDocuments[0],
+            [fieldName]: {
+              file,
+              preview: previewUrl,
+              name: file.name,
+              type: file.type,
+              size: file.size,
+              uploadedAt: new Date().toISOString()
+            }
+          }
+        ]
+      }))
+    }
+  }
+
+  const triggerFileInput = (inputRef) => {
+    inputRef.current?.click()
+  }
+
+  // Handle document removal with formData sync
+  const handleRemoveDocument = (docType) => {
+    handleDocumentRemove(docType)
+    
+    // Also update formData.instituteDocuments
+    const fieldName = docType === 'proofOfIdentity' ? 'ProofOfIdentity' : 'ProofOfAddress'
+    
+    setFormData(prev => ({
+      ...prev,
+      instituteDocuments: [
+        {
+          ...prev.instituteDocuments[0],
+          [fieldName]: ""
+        }
+      ]
+    }))
+  }
+
+  // Render uploaded file preview
+  const renderUploadedFile = (docType, docData) => {
+    if (!docData) return null
+
+    return (
+      <div className="mt-4 w-full bg-white rounded-lg p-3 border border-[#8B4513]/20">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2 truncate flex-1">
+            {/* File Icon */}
+            <div className="w-8 h-8 bg-[#FFF7ED] rounded-full flex items-center justify-center flex-shrink-0">
+              {docData.type?.startsWith('image/') ? (
+                <svg className="w-4 h-4 text-[#FF8C00]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+              ) : (
+                <svg className="w-4 h-4 text-[#FF8C00]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                </svg>
+              )}
+            </div>
+            
+            {/* File Name */}
+            <div className="truncate flex-1">
+              <p className="text-sm font-medium text-[#6A3E2E] truncate">
+                {docData.name || 'Uploaded file'}
+              </p>
+              <p className="text-xs text-[#8B4513]/50">
+                {docData.size ? (docData.size / 1024 / 1024).toFixed(2) : '0'} MB
+              </p>
+            </div>
+          </div>
+
+          {/* Remove Button */}
+          <button
+            onClick={() => handleRemoveDocument(docType)}
+            className="p-1 hover:bg-red-50 rounded-full transition-colors duration-300 ml-2 flex-shrink-0"
+            title="Remove file"
+          >
+            <svg className="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        {/* Image Preview */}
+        {docData.preview && (
+          <div className="mt-2 pt-2 border-t border-[#8B4513]/10">
+            <img 
+              src={docData.preview} 
+              alt="Preview" 
+              className="max-h-32 rounded-lg object-contain"
+            />
+          </div>
+        )}
+      </div>
+    )
+  }
+
+  // Check if both documents are uploaded
+  const areDocumentsUploaded = () => {
+    return institutionDocs?.proofOfIdentity && institutionDocs?.proofOfAddress
   }
 
   return (
@@ -63,94 +184,209 @@ const InstitutionDocuments = () => {
               <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
                 {/* Proof of Identity (POI) */}
                 <div className='flex flex-col'>
-                  <div className='border-2 border-dashed border-[#8B4513]/30 rounded-xl p-8 bg-[#FFF7ED]/20 hover:border-[#FF8C00] hover:bg-[#FFF7ED]/40 transition-all duration-300 group h-full flex flex-col items-center justify-center min-h-[280px]'>
+                  <div 
+                    className={`border-2 border-dashed rounded-xl p-8 bg-[#FFF7ED]/20 
+                      transition-all duration-300 group h-full flex flex-col items-center justify-center 
+                      min-h-[280px] ${institutionDocs?.proofOfIdentity 
+                        ? 'border-[#4CAF50] bg-green-50' 
+                        : 'border-[#8B4513]/30 hover:border-[#FF8C00] hover:bg-[#FFF7ED]/40'
+                      }`}
+                  >
                     <div className='flex flex-col items-center text-center w-full'>
-                      {/* Upload Icon */}
-                      <div className='w-16 h-16 bg-[#FFF7ED] rounded-full flex items-center justify-center mb-4 group-hover:bg-[#FFEDD5] transition-all duration-300'>
-                        <svg className='w-8 h-8 text-[#8B4513]/60 group-hover:text-[#FF8C00] transition-all duration-300' fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-                        </svg>
-                      </div>
-                      
-                      {/* Upload Text */}
-                      <div className='space-y-2'>
-                        <p className='text-base text-[#6A3E2E] font-medium'>
-                          Drag file here or click to
-                        </p>
-                        <label className='relative cursor-pointer'>
-                          <span className='text-[#FF8C00] font-semibold hover:text-[#6A3E2E] transition-colors duration-300 underline underline-offset-4'>
-                            Select file to upload
-                          </span>
+                      {!institutionDocs?.proofOfIdentity ? (
+                        <>
+                          {/* Upload Icon */}
+                          <div className='w-16 h-16 bg-[#FFF7ED] rounded-full flex items-center justify-center mb-4 group-hover:bg-[#FFEDD5] transition-all duration-300'>
+                            <svg className='w-8 h-8 text-[#8B4513]/60 group-hover:text-[#FF8C00] transition-all duration-300' fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                            </svg>
+                          </div>
+                          
+                          {/* Upload Text */}
+                          <div className='space-y-2'>
+                            <p className='text-base text-[#6A3E2E] font-medium'>
+                              Drag file here or click to
+                            </p>
+                            <button
+                              onClick={() => triggerFileInput(poiInputRef)}
+                              className='relative cursor-pointer'
+                              type="button"
+                            >
+                              <span className='text-[#FF8C00] font-semibold hover:text-[#6A3E2E] transition-colors duration-300 underline underline-offset-4'>
+                                Select file to upload
+                              </span>
+                            </button>
+                            <input
+                              ref={poiInputRef}
+                              type="file"
+                              accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
+                              onChange={(e) => handleFileUpload(e, 'proofOfIdentity')}
+                              className='sr-only'
+                            />
+                          </div>
+                          
+                          {/* Document Label */}
+                          <div className='mt-6 pt-4 border-t border-[#8B4513]/20 w-full'>
+                            <p className='text-sm font-semibold text-[#6A3E2E]'>
+                              Proof of Identity (POI)
+                            </p>
+                            <p className='text-xs text-[#8B4513]/50 mt-1'>
+                              PDF, JPG, PNG, DOC, DOCX (Max 5MB)
+                            </p>
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          {/* Success Icon */}
+                          <div className='w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4'>
+                            <svg className='w-8 h-8 text-green-600' fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                            </svg>
+                          </div>
+                          <p className='text-base text-green-700 font-medium mb-2'>
+                            File uploaded successfully!
+                          </p>
+                          <button
+                            onClick={() => triggerFileInput(poiInputRef)}
+                            className='text-sm text-[#FF8C00] hover:text-[#6A3E2E] transition-colors duration-300 underline underline-offset-4'
+                            type="button"
+                          >
+                            Replace file
+                          </button>
                           <input
+                            ref={poiInputRef}
                             type="file"
+                            accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
+                            onChange={(e) => handleFileUpload(e, 'proofOfIdentity')}
                             className='sr-only'
                           />
-                        </label>
-                      </div>
-                      
-                      {/* Document Label */}
-                      <div className='mt-6 pt-4 border-t border-[#8B4513]/20 w-full'>
-                        <p className='text-sm font-semibold text-[#6A3E2E]'>
-                          Proof of identity (POI)
-                        </p>
-                        <p className='text-xs text-[#8B4513]/50 mt-1'>
-                          PDF, JPG, PNG (Max 10MB)
-                        </p>
-                      </div>
+                        </>
+                      )}
                     </div>
                   </div>
+                  
+                  {/* Uploaded File Preview */}
+                  {institutionDocs?.proofOfIdentity && 
+                    renderUploadedFile('proofOfIdentity', institutionDocs.proofOfIdentity)
+                  }
                 </div>
 
                 {/* Proof of Address (POA) */}
                 <div className='flex flex-col'>
-                  <div className='border-2 border-dashed border-[#8B4513]/30 rounded-xl p-8 bg-[#FFF7ED]/20 hover:border-[#FF8C00] hover:bg-[#FFF7ED]/40 transition-all duration-300 group h-full flex flex-col items-center justify-center min-h-[280px]'>
+                  <div 
+                    className={`border-2 border-dashed rounded-xl p-8 bg-[#FFF7ED]/20 
+                      transition-all duration-300 group h-full flex flex-col items-center justify-center 
+                      min-h-[280px] ${institutionDocs?.proofOfAddress 
+                        ? 'border-[#4CAF50] bg-green-50' 
+                        : 'border-[#8B4513]/30 hover:border-[#FF8C00] hover:bg-[#FFF7ED]/40'
+                      }`}
+                  >
                     <div className='flex flex-col items-center text-center w-full'>
-                      {/* Upload Icon */}
-                      <div className='w-16 h-16 bg-[#FFF7ED] rounded-full flex items-center justify-center mb-4 group-hover:bg-[#FFEDD5] transition-all duration-300'>
-                        <svg className='w-8 h-8 text-[#8B4513]/60 group-hover:text-[#FF8C00] transition-all duration-300' fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-                        </svg>
-                      </div>
-                      
-                      {/* Upload Text */}
-                      <div className='space-y-2'>
-                        <p className='text-base text-[#6A3E2E] font-medium'>
-                          Drag file here or click to
-                        </p>
-                        <label className='relative cursor-pointer'>
-                          <span className='text-[#FF8C00] font-semibold hover:text-[#6A3E2E] transition-colors duration-300 underline underline-offset-4'>
-                            Select file to upload
-                          </span>
+                      {!institutionDocs?.proofOfAddress ? (
+                        <>
+                          {/* Upload Icon */}
+                          <div className='w-16 h-16 bg-[#FFF7ED] rounded-full flex items-center justify-center mb-4 group-hover:bg-[#FFEDD5] transition-all duration-300'>
+                            <svg className='w-8 h-8 text-[#8B4513]/60 group-hover:text-[#FF8C00] transition-all duration-300' fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+                            </svg>
+                          </div>
+                          
+                          {/* Upload Text */}
+                          <div className='space-y-2'>
+                            <p className='text-base text-[#6A3E2E] font-medium'>
+                              Drag file here or click to
+                            </p>
+                            <button
+                              onClick={() => triggerFileInput(poaInputRef)}
+                              className='relative cursor-pointer'
+                              type="button"
+                            >
+                              <span className='text-[#FF8C00] font-semibold hover:text-[#6A3E2E] transition-colors duration-300 underline underline-offset-4'>
+                                Select file to upload
+                              </span>
+                            </button>
+                            <input
+                              ref={poaInputRef}
+                              type="file"
+                              accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
+                              onChange={(e) => handleFileUpload(e, 'proofOfAddress')}
+                              className='sr-only'
+                            />
+                          </div>
+                          
+                          {/* Document Label */}
+                          <div className='mt-6 pt-4 border-t border-[#8B4513]/20 w-full'>
+                            <p className='text-sm font-semibold text-[#6A3E2E]'>
+                              Proof of Address (POA)
+                            </p>
+                            <p className='text-xs text-[#8B4513]/50 mt-1'>
+                              PDF, JPG, PNG, DOC, DOCX (Max 5MB)
+                            </p>
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          {/* Success Icon */}
+                          <div className='w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4'>
+                            <svg className='w-8 h-8 text-green-600' fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                            </svg>
+                          </div>
+                          <p className='text-base text-green-700 font-medium mb-2'>
+                            File uploaded successfully!
+                          </p>
+                          <button
+                            onClick={() => triggerFileInput(poaInputRef)}
+                            className='text-sm text-[#FF8C00] hover:text-[#6A3E2E] transition-colors duration-300 underline underline-offset-4'
+                            type="button"
+                          >
+                            Replace file
+                          </button>
                           <input
+                            ref={poaInputRef}
                             type="file"
+                            accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
+                            onChange={(e) => handleFileUpload(e, 'proofOfAddress')}
                             className='sr-only'
                           />
-                        </label>
-                      </div>
-                      
-                      {/* Document Label */}
-                      <div className='mt-6 pt-4 border-t border-[#8B4513]/20 w-full'>
-                        <p className='text-sm font-semibold text-[#6A3E2E]'>
-                          Proof of address (POA)
-                        </p>
-                        <p className='text-xs text-[#8B4513]/50 mt-1'>
-                          PDF, JPG, PNG (Max 10MB)
-                        </p>
-                      </div>
+                        </>
+                      )}
                     </div>
                   </div>
+                  
+                  {/* Uploaded File Preview */}
+                  {institutionDocs?.proofOfAddress && 
+                    renderUploadedFile('proofOfAddress', institutionDocs.proofOfAddress)
+                  }
                 </div>
               </div>
 
-              {/* Document Guidelines - Simplified */}
+              {/* Document Guidelines */}
               <div className='mt-8 p-4 bg-[#FFF7ED] rounded-lg border border-[#8B4513]/20'>
                 <div className='flex items-start gap-2'>
                   <svg className='w-5 h-5 text-[#FF8C00] flex-shrink-0 mt-0.5' fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  <p className='text-xs text-[#8B4513]/70'>
-                    Documents must be clear, legible, and not older than 6 months. The name should match your institution's registered name.
-                  </p>
+                  <div>
+                    <p className='text-sm text-[#8B4513]/70'>
+                      Documents must be clear, legible, and not older than 6 months. The name should match your institution's registered name.
+                    </p>
+                    <p className='text-xs text-[#8B4513]/50 mt-1'>
+                      Accepted formats: PDF, JPEG, PNG, DOC, DOCX (Max 5MB per file)
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Upload Status Summary */}
+              <div className='mt-6 flex gap-4 justify-end'>
+                <div className='flex items-center gap-2'>
+                  <div className={`w-3 h-3 rounded-full ${institutionDocs?.proofOfIdentity ? 'bg-green-500' : 'bg-[#8B4513]/20'}`}></div>
+                  <span className='text-xs text-[#6A3E2E]'>Proof of Identity {institutionDocs?.proofOfIdentity ? '✓' : 'Pending'}</span>
+                </div>
+                <div className='flex items-center gap-2'>
+                  <div className={`w-3 h-3 rounded-full ${institutionDocs?.proofOfAddress ? 'bg-green-500' : 'bg-[#8B4513]/20'}`}></div>
+                  <span className='text-xs text-[#6A3E2E]'>Proof of Address {institutionDocs?.proofOfAddress ? '✓' : 'Pending'}</span>
                 </div>
               </div>
 
@@ -177,12 +413,15 @@ const InstitutionDocuments = () => {
                 {/* Next Button */}
                 <button 
                   onClick={handleNext}
-                  className='px-8 py-3 bg-gradient-to-r from-[#8B4513] to-[#FF8C00] text-white 
-                           rounded-lg font-semibold hover:shadow-lg 
-                           hover:from-[#6A3E2E] hover:to-[#C46200] transition-all duration-300 
-                           flex items-center gap-2 group cursor-pointer'
+                  disabled={!areDocumentsUploaded()}
+                  className={`px-8 py-3 rounded-lg font-semibold transition-all duration-300 
+                           flex items-center gap-2 group
+                           ${!areDocumentsUploaded()
+                             ? 'bg-gray-400 cursor-not-allowed opacity-50'
+                             : 'bg-gradient-to-r from-[#8B4513] to-[#FF8C00] text-white hover:shadow-lg hover:from-[#6A3E2E] hover:to-[#C46200] cursor-pointer'
+                           }`}
                 >
-                  Next: Contact Details
+                  Next
                   <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                   </svg>

@@ -16,7 +16,38 @@ import {
   FaEnvelope,
   FaPhone,
   FaFax,
-  FaGlobe
+  FaGlobe,
+  FaUser,
+  FaBook,
+  FaCalendarAlt,
+  FaClock,
+  FaChalkboardTeacher,
+  FaUserGraduate,
+  FaClipboardList,
+  FaTasks,
+  FaQuestionCircle,
+  FaCreditCard,
+  FaBell,
+  FaLock,
+  FaLanguage,
+  FaMoon,
+  FaEye,
+  FaDownload,
+  FaTrash,
+  FaAddressBook,
+  FaIdCard,
+  FaCertificate,
+  FaBirthdayCake,
+  FaVenusMars,
+  FaHeart,
+  FaQuoteRight,
+  FaTshirt,
+  FaRuler,
+  FaWeight,
+  FaPlusCircle,
+  FaTrophy,
+  FaExclamationTriangle,
+  FaEdit
 } from 'react-icons/fa'
 
 const Sidebar = ({ currentSection }) => {
@@ -24,6 +55,7 @@ const Sidebar = ({ currentSection }) => {
     const user = userToken ? JSON.parse(userToken) : null
     const navigate = useNavigate()
     const location = useLocation()
+    const userRole = user?.role?.toLowerCase() || 'institution' // Default to institute
     
     // YuuthCommunity color theme
     const COLORS = {
@@ -47,9 +79,172 @@ const Sidebar = ({ currentSection }) => {
     const [activeMain, setActiveMain] = useState(0)
     const [activeSub, setActiveSub] = useState(0)
 
+    // Get menu items based on user role
+    const getSidebarItems = () => {
+        // Institute/Admin menu items
+        if (userRole === 'institution' || userRole === 'admin') {
+            return [
+                {
+                    title: "Institute Details",
+                    icon: <FaUniversity className="text-lg" />,
+                    listing: ["Institution", "Overview", "Registered Address", "Appearance", "Social Presence", "About You", "Documents"],
+                    path: "/institution"
+                },
+                {
+                    title: "Contact Details",
+                    icon: <FaPhoneAlt className="text-lg" />,
+                    listing: ["Mailing Address"],
+                    path: "/contact-details"
+                },
+                {
+                    title: "Account Settings",
+                    icon: <FaCog className="text-lg" />,
+                    listing: [],
+                    path: "/account-settings"
+                },
+                {
+                    title: "Account Managers",
+                    icon: <FaUsers className="text-lg" />,
+                    listing: [],
+                    path: "/account-managers"
+                },
+                {
+                    title: "Complete",
+                    icon: <FaCheckCircle className="text-lg" />,
+                    listing: [],
+                    path: "/complete"
+                },
+            ]
+        }
+        
+        // Teacher menu items (from screenshots)
+        else if (userRole === 'teacher' || userRole === 'faculty') {
+            return [
+                {
+                    title: "Personal Details",
+                    icon: <FaUser className="text-lg" />,
+                    listing: ["About You", "Appearance", "Social Presence"],
+                    path: "/teacher/personal-details"
+                },
+                {
+                    title: "Academics Details",
+                    icon: <FaBook className="text-lg" />,
+                    listing: [
+                        "Teaching Subjects",
+                        "Class Teacher",
+                        "Experience",
+                        "Qualification",
+                        "Certifications",
+                        "Achievements"
+                    ],
+                    path: "/teacher/academics"
+                },
+                {
+                    title: "Additional Details",
+                    icon: <FaPlusCircle className="text-lg" />,
+                    listing: [
+                        "Contact Details",
+                        "Address Details",
+                        "Bank Details",
+                        "Emergency Contact",
+                        "Documents",
+                        "Medical Information"
+                    ],
+                    path: "/teacher/additional"
+                },
+                {
+                    title: "Time Table",
+                    icon: <FaCalendarAlt className="text-lg" />,
+                    listing: ["Class Schedule", "Exam Duty", "Meeting Schedule"],
+                    path: "/teacher/timetable"
+                },
+                {
+                    title: "Assignments",
+                    icon: <FaTasks className="text-lg" />,
+                    listing: ["Create Assignment", "Pending Review", "Completed", "Drafts"],
+                    path: "/teacher/assignments"
+                },
+                {
+                    title: "Attendance",
+                    icon: <FaClipboardList className="text-lg" />,
+                    listing: ["Mark Attendance", "Attendance Report", "Defaulter List"],
+                    path: "/teacher/attendance"
+                },
+                {
+                    title: "Students",
+                    icon: <FaUserGraduate className="text-lg" />,
+                    listing: ["My Class Students", "All Students", "Student Reports"],
+                    path: "/teacher/students"
+                },
+                {
+                    title: "Leave Management",
+                    icon: <FaClock className="text-lg" />,
+                    listing: ["Apply Leave", "Leave History", "Leave Balance"],
+                    path: "/teacher/leave"
+                },
+                {
+                    title: "Exam & Results",
+                    icon: <FaChalkboardTeacher className="text-lg" />,
+                    listing: ["Create Exam", "Enter Marks", "Results", "Report Cards"],
+                    path: "/teacher/exams"
+                },
+                {
+                    title: "Settings",
+                    icon: <FaCog className="text-lg" />,
+                    listing: [
+                        "Profile Settings",
+                        "Privacy",
+                        "Notifications",
+                        "Language",
+                        "Theme",
+                        "Security"
+                    ],
+                    path: "/teacher/settings"
+                }
+            ]
+        }
+        
+        // Default to institute menu
+        return [
+            {
+                title: "Institute Details",
+                icon: <FaUniversity className="text-lg" />,
+                listing: ["Institution", "Overview", "Registered Address", "Appearance", "Social Presence", "About You", "Documents"],
+                path: "/institution"
+            },
+            {
+                title: "Contact Details",
+                icon: <FaPhoneAlt className="text-lg" />,
+                listing: ["Mailing Address"],
+                path: "/contact-details"
+            },
+            {
+                title: "Account Settings",
+                icon: <FaCog className="text-lg" />,
+                listing: [],
+                path: "/account-settings"
+            },
+            {
+                title: "Account Managers",
+                icon: <FaUsers className="text-lg" />,
+                listing: [],
+                path: "/account-managers"
+            },
+            {
+                title: "Complete",
+                icon: <FaCheckCircle className="text-lg" />,
+                listing: [],
+                path: "/complete"
+            },
+        ]
+    }
+
+    const sideItem = getSidebarItems()
+
     // Map URL paths to section names
     const getSectionFromPath = (path) => {
         const sectionMap = {
+            // Institute sections
             'institution': 'Institution',
             'overview': 'Overview',
             'registered-address': 'Registered Address',
@@ -58,39 +253,82 @@ const Sidebar = ({ currentSection }) => {
             'about-you': 'About You',
             'documents': 'Documents',
             'mailing-address': 'Mailing Address',
-          
+            
+            // Teacher sections
+            'teaching-subjects': 'Teaching Subjects',
+            'class-teacher': 'Class Teacher',
+            'experience': 'Experience',
+            'qualification': 'Qualification',
+            'certifications': 'Certifications',
+            'achievements': 'Achievements',
+            'contact-details': 'Contact Details',
+            'address-details': 'Address Details',
+            'bank-details': 'Bank Details',
+            'emergency-contact': 'Emergency Contact',
+            'medical-information': 'Medical Information',
+            'class-schedule': 'Class Schedule',
+            'exam-duty': 'Exam Duty',
+            'meeting-schedule': 'Meeting Schedule',
+            'create-assignment': 'Create Assignment',
+            'pending-review': 'Pending Review',
+            'completed': 'Completed',
+            'drafts': 'Drafts',
+            'mark-attendance': 'Mark Attendance',
+            'attendance-report': 'Attendance Report',
+            'defaulter-list': 'Defaulter List',
+            'my-class-students': 'My Class Students',
+            'all-students': 'All Students',
+            'student-reports': 'Student Reports',
+            'apply-leave': 'Apply Leave',
+            'leave-history': 'Leave History',
+            'leave-balance': 'Leave Balance',
+            'create-exam': 'Create Exam',
+            'enter-marks': 'Enter Marks',
+            'results': 'Results',
+            'report-cards': 'Report Cards',
+            'profile-settings': 'Profile Settings',
+            'privacy': 'Privacy',
+            'notifications': 'Notifications',
+            'language': 'Language',
+            'theme': 'Theme',
+            'security': 'Security'
         }
         const pathSegment = path.split('/').pop()
-        return sectionMap[pathSegment] || 'Institution'
+        return sectionMap[pathSegment] || (userRole === 'teacher' ? 'About You' : 'Institution')
     }
 
     // Set active states based on URL or prop
     useEffect(() => {
         const currentSectionName = currentSection || getSectionFromPath(location.pathname)
         
-        // Check if we're in Contact Details section
-        if (location.pathname.includes('/contact-details')) {
-            setActiveMain(1) // Contact Details is at index 1
-            // Find and set active submenu item
-            const submenuIndex = sideItem[1].listing.indexOf(currentSectionName)
-            if (submenuIndex !== -1) {
-                setActiveSub(submenuIndex)
+        // Check which main section we're in based on URL
+        if (location.pathname.includes('/teacher/')) {
+            // Find which main menu item contains this submenu item
+            const mainIndex = sideItem.findIndex(item => 
+                item.listing.includes(currentSectionName)
+            )
+            if (mainIndex !== -1) {
+                setActiveMain(mainIndex)
+                const submenuIndex = sideItem[mainIndex].listing.indexOf(currentSectionName)
+                if (submenuIndex !== -1) {
+                    setActiveSub(submenuIndex)
+                }
             }
-        } else if (location.pathname.includes('/institution')) {
-            // Institute Details section
+        } else if (location.pathname.includes('/institution') || location.pathname.includes('/contact-details')) {
             setActiveMain(0)
-            const submenuIndex = sideItem[0].listing.indexOf(currentSectionName)
+            const submenuIndex = sideItem[0]?.listing.indexOf(currentSectionName)
             if (submenuIndex !== -1) {
                 setActiveSub(submenuIndex)
             }
         }
-    }, [location.pathname, currentSection])
+    }, [location.pathname, currentSection, userRole])
 
     const handleLogout = () => {
         localStorage.removeItem('token')
         localStorage.removeItem('userData')
         localStorage.removeItem('instituteFormData')
         localStorage.removeItem('contactFormData')
+        localStorage.removeItem('teacherFormData')
         navigate('/login')
     }
 
@@ -102,53 +340,38 @@ const Sidebar = ({ currentSection }) => {
         // Navigate to first submenu item if it has listing
         if (item.listing.length > 0) {
             const firstSubItem = item.listing[0]
-            if (mainIndex === 0) {
-                // Institute Details submenu
-                const path = firstSubItem.toLowerCase().replace(/\s+/g, '-')
-                navigate(`/institution/${path}`)
-            } else if (mainIndex === 1) {
-                // Contact Details submenu
-                const path = firstSubItem.toLowerCase().replace(/\s+/g, '-')
-                navigate(`/contact-details/${path}`)
+            const path = firstSubItem.toLowerCase().replace(/\s+/g, '-')
+            
+            if (userRole === 'teacher') {
+                navigate(`/teacher/${item.path.split('/').pop()}/${path}`)
+            } else {
+                if (mainIndex === 0) {
+                    navigate(`/institution/${path}`)
+                } else if (mainIndex === 1) {
+                    navigate(`/contact-details/${path}`)
+                }
             }
         } else {
-            // Handle other main menu items without submenu
-            switch(item.title) {
-                case 'Account Settings':
-                    navigate('/account-settings')
-                    break
-                case 'Account Managers':
-                    navigate('/account-managers')
-                    break
-                case 'Complete':
-                    navigate('/complete')
-                    break
-                default:
-                    break
-            }
+            navigate(item.path)
         }
     }
 
     // Handle submenu item click
     const handleSubItemClick = (subItem, subIndex, mainIndex) => {
         setActiveSub(subIndex)
-        if (mainIndex === 0) {
-            const path = subItem.toLowerCase().replace(/\s+/g, '-')
-            navigate(`/institution/${path}`)
-        } else if (mainIndex === 1) {
-            const path = subItem.toLowerCase().replace(/\s+/g, '-')
-            navigate(`/contact-details/${path}`)
+        const path = subItem.toLowerCase().replace(/\s+/g, '-')
+        
+        if (userRole === 'teacher') {
+            const basePath = sideItem[mainIndex].path
+            navigate(`${basePath}/${path}`)
+        } else {
+            if (mainIndex === 0) {
+                navigate(`/institution/${path}`)
+            } else if (mainIndex === 1) {
+                navigate(`/contact-details/${path}`)
+            }
         }
     }
-
-    // Icons for main menu items
-    const menuIcons = [
-        <FaUniversity className="text-lg" />,
-        <FaPhoneAlt className="text-lg" />,
-        <FaCog className="text-lg" />,
-        <FaUsers className="text-lg" />,
-        <FaCheckCircle className="text-lg" />
-    ]
 
     // Icons for submenu items
     const submenuIcons = {
@@ -160,41 +383,70 @@ const Sidebar = ({ currentSection }) => {
         "Social Presence": <FaShareAlt />,
         "About You": <FaUserTie />,
         "Documents": <FaFileAlt />,
-       
+        "Mailing Address": <FaEnvelope />,
+        
+        // Teacher Personal Details icons
+        "About You": <FaUser />,
+        "Appearance": <FaEye />,
+        "Social Presence": <FaShareAlt />,
+        
+        // Teacher Academics Details icons
+        "Teaching Subjects": <FaBook />,
+        "Class Teacher": <FaChalkboardTeacher />,
+        "Experience": <FaClock />,
+        "Qualification": <FaGraduationCap />,
+        "Certifications": <FaCertificate />,
+        "Achievements": 
+        <FaTrophy />
+        ,
+        
+        // Teacher Additional Details icons
+        "Contact Details": <FaAddressBook />,
+        "Address Details": <FaMapMarkerAlt />,
+        "Bank Details": <FaCreditCard />,
+        "Emergency Contact": <FaPhone />,
+        "Medical Information": <FaHeart />,
+        
+        // Time Table icons
+        "Class Schedule": <FaCalendarAlt />,
+        "Exam Duty": <FaClipboardList />,
+        "Meeting Schedule": <FaUsers />,
+        
+        // Assignments icons
+        "Create Assignment": <FaPlusCircle />,
+        "Pending Review": <FaClock />,
+        "Completed": <FaCheckCircle />,
+        "Drafts": <FaFileAlt />,
+        
+        // Attendance icons
+        "Mark Attendance": <FaClipboardList />,
+        "Attendance Report": <FaFileAlt />,
+        "Defaulter List": <FaExclamationTriangle />,
+        
+        // Students icons
+        "My Class Students": <FaUserGraduate />,
+        "All Students": <FaUsers />,
+        "Student Reports": <FaFileAlt />,
+        
+        // Leave Management icons
+        "Apply Leave": <FaPlusCircle />,
+        "Leave History": <FaClock />,
+        "Leave Balance": <FaCalendarAlt />,
+        
+        // Exam & Results icons
+        "Create Exam": <FaPlusCircle />,
+        "Enter Marks": <FaEdit />,
+        "Results": <FaCheckCircle />,
+        "Report Cards": <FaFileAlt />,
+        
+        // Settings icons
+        "Profile Settings": <FaUser />,
+        "Privacy": <FaLock />,
+        "Notifications": <FaBell />,
+        "Language": <FaLanguage />,
+        "Theme": <FaMoon />,
+        "Security": <FaLock />
     }
-
-    const sideItem = [
-        {
-            title: "Institute Details",
-            icon: menuIcons[0],
-            listing: ["Institution", "Overview", "Registered Address", "Appearance", "Social Presence", "About You", "Documents"],
-            path: "/institution"
-        },
-        {
-            title: "Contact Details",
-            icon: menuIcons[1],
-            listing: ["Mailing Address"],
-            path: "/contact-details"
-        },
-        {
-            title: "Account Settings",
-            icon: menuIcons[2],
-            listing: [],
-            path: "/account-settings"
-        },
-        {
-            title: "Account Managers",
-            icon: menuIcons[3],
-            listing: [],
-            path: "/account-managers"
-        },
-        {
-            title: "Complete",
-            icon: menuIcons[4],
-            listing: [],
-            path: "/complete"
-        },
-    ]
 
     return (
         <div className='h-screen w-80 bg-gradient-to-b from-[#FFF7ED] to-[#FFEDD5] border-r border-[#8B4513]/20 flex flex-col sticky top-0 shadow-lg'>
@@ -203,11 +455,13 @@ const Sidebar = ({ currentSection }) => {
                 <img src={Logo} alt="Logo" className='w-full h-16 p-4 object-contain' />
             </div>
 
-            {/* Progress Indicator - Only show for Institute Details */}
-            {activeMain === 0 && (
+            {/* Progress Indicator - Only show for Institute Details or Personal Details */}
+            {activeMain === 0 && sideItem[0] && sideItem[0].listing.length > 0 && (
                 <div className='px-4 py-3 bg-gradient-to-r from-[#6A3E2E]/5 to-[#8B4513]/10 border-b border-[#8B4513]/20'>
                     <div className='flex items-center justify-between mb-1'>
-                        <span className='text-xs font-medium text-[#6A3E2E]'>Institute Setup</span>
+                        <span className='text-xs font-medium text-[#6A3E2E]'>
+                            {userRole === 'teacher' ? 'Profile Setup' : 'Institute Setup'}
+                        </span>
                         <span className='text-xs font-bold text-[#FF8C00]'>
                             {activeSub + 1}/{sideItem[0].listing.length}
                         </span>
@@ -220,6 +474,13 @@ const Sidebar = ({ currentSection }) => {
                     </div>
                 </div>
             )}
+
+            {/* Role Indicator */}
+            <div className='px-4 py-2 bg-[#8B4513]/5 border-b border-[#8B4513]/20'>
+                <span className='text-xs font-semibold text-[#8B4513] uppercase tracking-wider'>
+                    {userRole === 'teacher' ? '👨‍🏫 Teacher Portal' : '🏫 Institution Portal'}
+                </span>
+            </div>
 
             {/* Navigation Items */}
             <div className='flex-1 py-6 overflow-y-auto scrollbar-thin scrollbar-thumb-[#8B4513]/30 scrollbar-track-[#FFEDD5]'>
@@ -290,7 +551,9 @@ const Sidebar = ({ currentSection }) => {
                             <div className='flex-1 min-w-0'>
                                 <p className='text-sm font-medium text-[#8B4513] truncate'>{user?.name || 'User'}</p>
                                 <p className='text-xs text-[#6A3E2E]/60 truncate'>{user?.email || ''}</p>
-                                <p className='text-xs text-[#C46200] mt-0.5'>{user?.role || 'Institution Admin'}</p>
+                                <p className='text-xs text-[#C46200] mt-0.5 capitalize'>
+                                    {user?.role || (userRole === 'teacher' ? 'Teacher' : 'Institution Admin')}
+                                </p>
                             </div>
                         </div>
                     </div>

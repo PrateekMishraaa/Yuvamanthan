@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Sidebar from '../../Components/Sidebar/Sidebar'
 import Trouble from '../../Components/Trouble/Trouble'
+import { UserContext } from '../../Context/InstitutesContext'
 
 const AboutInstitution = () => {
+  const { formData, handleChange } = useContext(UserContext)
   const navigate = useNavigate()
   
   // Section order matching sidebar
@@ -68,6 +70,9 @@ const AboutInstitution = () => {
                     </div>
                     <input
                       type="text"
+                      name="InstitutePersonalInfo.Firstname"
+                      value={formData.InstitutePersonalInfo[0]?.Firstname || ''}
+                      onChange={handleChange}
                       placeholder="Enter first name"
                       className='w-full py-3 pl-10 pr-4 border border-[#8B4513]/30 rounded-lg bg-[#FFF7ED]/30 
                                focus:border-[#FF8C00] focus:ring-2 focus:ring-[#FF8C00]/20 outline-none 
@@ -83,7 +88,6 @@ const AboutInstitution = () => {
                 <div className='mb-4'>
                   <label className='block mb-2'>
                     <span className='font-semibold text-[#6A3E2E]'>Last Name</span>
-                    <span className='text-red-500 ml-1'>*</span>
                   </label>
                   <div className='relative'>
                     <div className='absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none'>
@@ -93,6 +97,9 @@ const AboutInstitution = () => {
                     </div>
                     <input
                       type="text"
+                      name="InstitutePersonalInfo.lastName"
+                      value={formData.InstitutePersonalInfo[0]?.lastName || ''}
+                      onChange={handleChange}
                       placeholder="Enter last name"
                       className='w-full py-3 pl-10 pr-4 border border-[#8B4513]/30 rounded-lg bg-[#FFF7ED]/30 
                                focus:border-[#FF8C00] focus:ring-2 focus:ring-[#FF8C00]/20 outline-none 
@@ -117,7 +124,7 @@ const AboutInstitution = () => {
                                  focus:border-[#FF8C00] focus:ring-2 focus:ring-[#FF8C00]/20 outline-none 
                                  transition-all duration-300 text-[#6A3E2E]'
                       >
-                        <option value="" disabled selected>Country Code</option>
+                        <option value="">Select Country Code</option>
                         <option value="+1">+1 (USA)</option>
                         <option value="+44">+44 (UK)</option>
                         <option value="+91">+91 (India)</option>
@@ -136,7 +143,10 @@ const AboutInstitution = () => {
                       </div>
                       <input
                         type="tel"
-                        placeholder="Enter phone number"
+                        name="InstitutePersonalInfo.Phone"
+                        value={formData.InstitutePersonalInfo[0]?.Phone || ''}
+                        onChange={handleChange}
+                        placeholder="Enter 10-digit phone number"
                         maxLength="10"
                         className='w-full py-3 pl-10 pr-4 border border-[#8B4513]/30 rounded-lg bg-[#FFF7ED]/30 
                                  focus:border-[#FF8C00] focus:ring-2 focus:ring-[#FF8C00]/20 outline-none 
@@ -154,8 +164,34 @@ const AboutInstitution = () => {
                     </p>
                   </div>
                 </div>
-              </div>
 
+                {/* Associated With Institute */}
+                <div className='mb-4 md:col-span-2'>
+                  <label className='block mb-2'>
+                    <span className='font-semibold text-[#6A3E2E]'>Associated With Institute</span>
+                  </label>
+                  <div className='relative'>
+                    <div className='absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none'>
+                      <svg className='w-5 h-5 text-[#8B4513]/40' fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 3.5 2 3.5-2 3.5 2z" />
+                      </svg>
+                    </div>
+                    <input
+                      type="text"
+                      name="InstitutePersonalInfo.AssociatedWithInstitute"
+                      value={formData.InstitutePersonalInfo[0]?.AssociatedWithInstitute || ''}
+                      onChange={handleChange}
+                      placeholder="e.g., Director, Principal, Administrator"
+                      className='w-full py-3 pl-10 pr-4 border border-[#8B4513]/30 rounded-lg bg-[#FFF7ED]/30 
+                               focus:border-[#FF8C00] focus:ring-2 focus:ring-[#FF8C00]/20 outline-none 
+                               transition-all duration-300 placeholder:text-[#8B4513]/40 text-[#6A3E2E]'
+                    />
+                  </div>
+                  <p className='text-xs text-[#8B4513]/60 mt-2'>
+                    Your designation or role at the institution
+                  </p>
+                </div>
+              </div>
 
               {/* Additional Info */}
               <div className='mt-6 p-4 bg-[#FFF7ED]/50 rounded-lg border border-[#8B4513]/10'>
