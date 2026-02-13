@@ -90,30 +90,30 @@ const Sidebar = ({ currentSection }) => {
                     listing: ["Institution", "Overview", "Registered Address", "Appearance", "Social Presence", "About You", "Documents"],
                     path: "/institution"
                 },
-                {
-                    title: "Contact Details",
-                    icon: <FaPhoneAlt className="text-lg" />,
-                    listing: ["Mailing Address"],
-                    path: "/contact-details"
-                },
-                {
-                    title: "Account Settings",
-                    icon: <FaCog className="text-lg" />,
-                    listing: [],
-                    path: "/account-settings"
-                },
-                {
-                    title: "Account Managers",
-                    icon: <FaUsers className="text-lg" />,
-                    listing: [],
-                    path: "/account-managers"
-                },
-                {
-                    title: "Complete",
-                    icon: <FaCheckCircle className="text-lg" />,
-                    listing: [],
-                    path: "/complete"
-                },
+                // {
+                //     title: "Contact Details",
+                //     icon: <FaPhoneAlt className="text-lg" />,
+                //     listing: ["Mailing Address"],
+                //     path: "/contact-details"
+                // },
+                // {
+                //     title: "Account Settings",
+                //     icon: <FaCog className="text-lg" />,
+                //     listing: [],
+                //     path: "/account-settings"
+                // },
+                // {
+                //     title: "Account Managers",
+                //     icon: <FaUsers className="text-lg" />,
+                //     listing: [],
+                //     path: "/account-managers"
+                // },
+                // {
+                //     title: "Complete",
+                //     icon: <FaCheckCircle className="text-lg" />,
+                //     listing: [],
+                //     path: "/complete"
+                // },
             ]
         }
         
@@ -126,81 +126,81 @@ const Sidebar = ({ currentSection }) => {
                     listing: ["About You", "Appearance", "Social Presence"],
                     path: "/teacher/personal-details"
                 },
-                {
-                    title: "Academics Details",
-                    icon: <FaBook className="text-lg" />,
-                    listing: [
-                        "Teaching Subjects",
-                        "Class Teacher",
-                        "Experience",
-                        "Qualification",
-                        "Certifications",
-                        "Achievements"
-                    ],
-                    path: "/teacher/academics"
-                },
-                {
-                    title: "Additional Details",
-                    icon: <FaPlusCircle className="text-lg" />,
-                    listing: [
-                        "Contact Details",
-                        "Address Details",
-                        "Bank Details",
-                        "Emergency Contact",
-                        "Documents",
-                        "Medical Information"
-                    ],
-                    path: "/teacher/additional"
-                },
-                {
-                    title: "Time Table",
-                    icon: <FaCalendarAlt className="text-lg" />,
-                    listing: ["Class Schedule", "Exam Duty", "Meeting Schedule"],
-                    path: "/teacher/timetable"
-                },
-                {
-                    title: "Assignments",
-                    icon: <FaTasks className="text-lg" />,
-                    listing: ["Create Assignment", "Pending Review", "Completed", "Drafts"],
-                    path: "/teacher/assignments"
-                },
-                {
-                    title: "Attendance",
-                    icon: <FaClipboardList className="text-lg" />,
-                    listing: ["Mark Attendance", "Attendance Report", "Defaulter List"],
-                    path: "/teacher/attendance"
-                },
-                {
-                    title: "Students",
-                    icon: <FaUserGraduate className="text-lg" />,
-                    listing: ["My Class Students", "All Students", "Student Reports"],
-                    path: "/teacher/students"
-                },
-                {
-                    title: "Leave Management",
-                    icon: <FaClock className="text-lg" />,
-                    listing: ["Apply Leave", "Leave History", "Leave Balance"],
-                    path: "/teacher/leave"
-                },
-                {
-                    title: "Exam & Results",
-                    icon: <FaChalkboardTeacher className="text-lg" />,
-                    listing: ["Create Exam", "Enter Marks", "Results", "Report Cards"],
-                    path: "/teacher/exams"
-                },
-                {
-                    title: "Settings",
-                    icon: <FaCog className="text-lg" />,
-                    listing: [
-                        "Profile Settings",
-                        "Privacy",
-                        "Notifications",
-                        "Language",
-                        "Theme",
-                        "Security"
-                    ],
-                    path: "/teacher/settings"
-                }
+                // {
+                //     title: "Academics Details",
+                //     icon: <FaBook className="text-lg" />,
+                //     listing: [
+                //         "Teaching Subjects",
+                //         "Class Teacher",
+                //         "Experience",
+                //         "Qualification",
+                //         "Certifications",
+                //         "Achievements"
+                //     ],
+                //     path: "/teacher/academics"
+                // },
+                // {
+                //     title: "Additional Details",
+                //     icon: <FaPlusCircle className="text-lg" />,
+                //     listing: [
+                //         "Contact Details",
+                //         "Address Details",
+                //         "Bank Details",
+                //         "Emergency Contact",
+                //         "Documents",
+                //         "Medical Information"
+                //     ],
+                //     path: "/teacher/additional"
+                // },
+                // {
+                //     title: "Time Table",
+                //     icon: <FaCalendarAlt className="text-lg" />,
+                //     listing: ["Class Schedule", "Exam Duty", "Meeting Schedule"],
+                //     path: "/teacher/timetable"
+                // },
+                // {
+                //     title: "Assignments",
+                //     icon: <FaTasks className="text-lg" />,
+                //     listing: ["Create Assignment", "Pending Review", "Completed", "Drafts"],
+                //     path: "/teacher/assignments"
+                // },
+                // {
+                //     title: "Attendance",
+                //     icon: <FaClipboardList className="text-lg" />,
+                //     listing: ["Mark Attendance", "Attendance Report", "Defaulter List"],
+                //     path: "/teacher/attendance"
+                // },
+                // {
+                //     title: "Students",
+                //     icon: <FaUserGraduate className="text-lg" />,
+                //     listing: ["My Class Students", "All Students", "Student Reports"],
+                //     path: "/teacher/students"
+                // },
+                // {
+                //     title: "Leave Management",
+                //     icon: <FaClock className="text-lg" />,
+                //     listing: ["Apply Leave", "Leave History", "Leave Balance"],
+                //     path: "/teacher/leave"
+                // },
+                // {
+                //     title: "Exam & Results",
+                //     icon: <FaChalkboardTeacher className="text-lg" />,
+                //     listing: ["Create Exam", "Enter Marks", "Results", "Report Cards"],
+                //     path: "/teacher/exams"
+                // },
+                // {
+                //     title: "Settings",
+                //     icon: <FaCog className="text-lg" />,
+                //     listing: [
+                //         "Profile Settings",
+                //         "Privacy",
+                //         "Notifications",
+                //         "Language",
+                //         "Theme",
+                //         "Security"
+                //     ],
+                //     path: "/teacher/settings"
+                // }
             ]
         }
         
