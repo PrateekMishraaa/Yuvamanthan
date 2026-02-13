@@ -91,7 +91,7 @@ const Login = () => {
           navigate("/student/dashboard");
           break;
         case "teacher":
-          navigate("/teacher/dashboard");
+          navigate("/teacher/personal-details/about-you");
           break;
         case "institution":
           navigate("/institution/dashboard");

@@ -32,6 +32,8 @@ const YuvamanthanContact = lazy(() => import("./Pages/Engage/YuvamanthanContact"
 // Dashboards
 const Institution = lazy(() => import("./Dashboard/Institution"));
 const Teacher = lazy(() => import("./Dashboard/Teacher"));
+const TeacherAppreance = lazy(()=>import("./Pages/TeacherParts/TeacherAppreance.jsx"))
+const TeacherSocial = lazy(()=>import("./Pages/TeacherParts/TeacherSocial.jsx"))
 const Student = lazy(() => import("./Dashboard/Student"));
 const Admin = lazy(() => import("./Pages/Admin"));
 
@@ -47,6 +49,7 @@ const Appreance = lazy(() => import("./Pages/InstitutionParts/Appreance.jsx"));
 const SocialPresence = lazy(() =>
   import("./Pages/InstitutionParts/SocialPresence.jsx")
 );
+
 
 /* =======================
    APP COMPONENT
@@ -121,10 +124,16 @@ const App = () => {
 
           {/* Teacher */}
           <Route
-            path="/teacher/dashboard"
+            path="/teacher/personal-details/about-you"
             element={<ProtectedRoutes><Teacher /></ProtectedRoutes>}
           />
-
+    <Route path="/teacher/personal-details/appearance"
+    element={<ProtectedRoutes>
+      <TeacherAppreance/>
+    </ProtectedRoutes>}/>
+    <Route path="/teacher/social-media" element={<ProtectedRoutes>
+      <TeacherSocial/>
+    </ProtectedRoutes>}/>
           {/* Student */}
           <Route
             path="/student/dashboard"
