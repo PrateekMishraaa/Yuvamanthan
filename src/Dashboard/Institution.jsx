@@ -10,7 +10,7 @@ const Institution = () => {
   const navigate = useNavigate()
   const { section } = useParams()
 
-  console.log("this is user context data", formData)
+  // console.log("this is user context data", formData)
 
   const institutes = ["Schools", "College", "University", "Coaching Institutes"]
   const universityTypes = [

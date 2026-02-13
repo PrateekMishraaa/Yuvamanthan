@@ -3,7 +3,7 @@ export const TeacherContext = createContext();
 
 const TeacherProvider = ({ children }) => {
     const [profilePicture,setProfilePicture] = useState(null)
-    console.log("this is profile data",profilePicture)
+    // console.log("this is profile data",profilePicture)
     const [teacherFormData, setTeacherFormData] = useState({
         FirstName: "",
         LastName: "",
@@ -19,7 +19,7 @@ const TeacherProvider = ({ children }) => {
         youtube: "",
     });
 
-    console.log("This is for Teacher data", teacherFormData);
+    // console.log("This is for Teacher data", teacherFormData);
 
 
     const handleProfileChange=(e)=>{

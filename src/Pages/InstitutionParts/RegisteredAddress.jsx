@@ -10,8 +10,8 @@ const RegisteredAddress = () => {
   const { formData, setFormData } = useContext(UserContext)
   
   // Debug log to check formData structure
-  console.log("Complete formData:", formData)
-  console.log("Institution Address from context:", formData?.instituteAddress?.[0])
+  // console.log("Complete formData:", formData)
+  // console.log("Institution Address from context:", formData?.instituteAddress?.[0])
   
   // State for dropdown data
   const [countries, setCountries] = useState([])

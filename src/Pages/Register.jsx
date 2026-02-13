@@ -10,7 +10,7 @@ const Register = () => {
   const navigate = useNavigate();
   const [viewPassword, setViewPassword] = useState(true);
   const [selectedRole, setSelectedRole] = useState("");
-  console.log('selected role',selectedRole)
+  // console.log('selected role',selectedRole)
   // console.log('set selected role',setSelectedRole)
   const [loading, setLoading] = useState(false);
 
@@ -22,7 +22,7 @@ const Register = () => {
     password: "",
     role:""
   });
-console.log("This is role based form data",formData)
+// console.log("This is role based form data",formData)
   const handleViewPassword = () => {
     setViewPassword(!viewPassword);
   };
@@ -87,7 +87,7 @@ console.log("This is role based form data",formData)
         // Do NOT send role-specific fields as your backend doesn't expect them yet
       };
 
-      console.log("Sending to backend:", backendData);
+      // console.log("Sending to backend:", backendData);
 
       const response = await axios.post(
         "https://yuvamanthanbackend.onrender.com/api/register",
@@ -98,7 +98,7 @@ console.log("This is role based form data",formData)
           },
         }
       );
-console.log("respose",response)
+// console.log("respose",response)
       Swal.fire({
         icon: "success",
         title: "Registration Successful!",

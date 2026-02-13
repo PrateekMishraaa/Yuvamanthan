@@ -8,7 +8,7 @@ const Appearance = () => {
   const navigate = useNavigate();
   const { formData, handleChange, logo, handleLogoChange, handleLogoRemove } =
     useContext(UserContext);
-  console.log("This is logo", logo, formData);
+  // console.log("This is logo", logo, formData);
 
   const sectionOrder = [
     "Institution",

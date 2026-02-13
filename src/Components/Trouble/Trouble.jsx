@@ -3,7 +3,7 @@ import React from 'react'
 const Trouble = () => {
       const userData = localStorage.getItem('userData')
   const user = userData ? JSON.parse(userData) : null
-  console.log("this is institute user", user?.email)
+  // console.log("this is institute user", user?.email)
   return (
    <>
    <div className='bg-gradient-to-r from-[#FFF7ED] to-[#FFEDD5] p-4 rounded-xl border border-[#8B4513]/20'>

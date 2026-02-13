@@ -10,7 +10,7 @@ const UserProvider = ({ children }) => {
     proofOfAddress: null,
     
   });
-console.log("This is institution docs",institutionDocs)
+// console.log("This is institution docs",institutionDocs)
 const [formData, setFormData] = useState({
   instituteDetails: [{
     typeOfInstitute: "",
@@ -76,7 +76,7 @@ const [formData, setFormData] = useState({
     ManagerTpe: "Moderator" // Default value set as per schema
   }]
 });
-  console.log("This is all formdata", formData);
+  // console.log("This is all formdata", formData);
 
   // Handle all form field changes
   const handleChange = (e) => {

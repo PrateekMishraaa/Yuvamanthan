@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom'
 const Teacher = () => {
   const navigate = useNavigate()
   const { teacherFormData, handleChange } = useContext(TeacherContext)
-  console.log("This is for teacher form data from the teacher context", teacherFormData)
+  // console.log("This is for teacher form data from the teacher context", teacherFormData)
 
   return (
     <section className='flex'>

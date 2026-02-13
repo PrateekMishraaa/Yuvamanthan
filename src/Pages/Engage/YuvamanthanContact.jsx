@@ -37,7 +37,7 @@ const YuvamanthanContact = () => {
 
 
   const handleChange=(e)=>{
-    console.log("this is E value",e)
+    // console.log("this is E value",e)
     setFormData({...formData,[e.target.name]:e.target.value})
   }
 
@@ -52,7 +52,7 @@ const YuvamanthanContact = () => {
           "Content-Type":"application/json"
         }
       })
-      console.log("response from form",response)
+      // console.log("response from form",response)
       Swal.fire("Your Query has been successfully submitted | !Thankyou")
 
       setFormData({

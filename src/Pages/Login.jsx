@@ -70,7 +70,7 @@ const Login = () => {
 
       // Decode token to get role
       const decoded = jwtDecode(token);
-      console.log("Decoded token:", decoded);
+      // console.log("Decoded token:", decoded);
 
       // Get role from decoded token or response
       const userRole = decoded.role || userData.role;
