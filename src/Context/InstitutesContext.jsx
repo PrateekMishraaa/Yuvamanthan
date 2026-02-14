@@ -432,7 +432,7 @@ const UserProvider = ({ children }) => {
 
       // Make API call - using the PUT endpoint that handles both userId and _id
       const response = await axios.put(
-        `http://localhost:5000/api/institutions/institution-profile/${id}`,
+        `https://yuvamanthanbackend.onrender.com/api/institutions/institution-profile/${id}`,
         updatedData,
         {
           headers: {
@@ -616,7 +616,7 @@ const UserProvider = ({ children }) => {
       console.log("Fetching institution data for userId:", fetchId);
 
       const response = await axios.get(
-        `http://localhost:5000/api/institutions/institution/${fetchId}`
+        `https://yuvamanthanbackend.onrender.com/api/institutions/institution/${fetchId}`
       );
       
       if (response.data.success && response.data.data) {
@@ -678,7 +678,7 @@ const UserProvider = ({ children }) => {
       if (!id) return false;
       
       const response = await axios.get(
-        `http://localhost:5000/api/institutions/institution/${id}`
+        `https://yuvamanthanbackend.onrender.com/api/institutions/institution/${id}`
       );
       
       return response.data.success && response.data.data;
