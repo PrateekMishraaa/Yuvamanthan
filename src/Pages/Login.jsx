@@ -15,6 +15,7 @@ const Login = () => {
     email: "",
     password: "",
   });
+  console.log("This is login formdata", formData);
   const [loading, setLoading] = useState(false);
 
   const handleViewPassword = () => {
@@ -42,7 +43,7 @@ const Login = () => {
       setLoading(true);
 
       const response = await axios.post(
-        "https://yuvamanthanbackend.onrender.com/api/login",
+        "http://localhost:5000/api/login",
         formData,
         {
           headers: {
@@ -68,43 +69,57 @@ const Login = () => {
       localStorage.setItem("token", token);
       localStorage.setItem("userData", JSON.stringify(userData));
 
-      // Decode token to get role
+      // Decode token to get role and user ID
       const decoded = jwtDecode(token);
-      // console.log("Decoded token:", decoded);
+      console.log("Decoded token:", decoded);
 
-      // Get role from decoded token or response
+      // Get user ID from decoded token or userData (handle different possible field names)
+      const userId = decoded.id || decoded.userId || decoded._id || userData.id || userData._id;
       const userRole = decoded.role || userData.role;
+
+      // Store user ID in localStorage for easy access
+      if (userId) {
+        localStorage.setItem("userId", userId);
+      } else {
+        console.error("User ID not found in token or user data");
+        Swal.fire({
+          icon: "error",
+          title: "Login Failed",
+          text: "User ID not found in response",
+          confirmButtonColor: "#8B4513"
+        });
+        return;
+      }
 
       Swal.fire({
         icon: "success",
         title: "Login Successful!",
-        text: `Welcome back, ${decoded.firstname || "User"}!`,
+        text: `Welcome back, ${decoded.firstname || userData.firstname || "User"}!`,
         confirmButtonColor: "#8B4513"
       });
 
-      // Navigate based on role
-      switch(userRole) {
+      // Navigate based on role with user ID in params
+      switch (userRole) {
         case "admin":
-          navigate("/admin/dashboard");
+          navigate(`/admin/dashboard/${userId}`);
           break;
         case "student":
-          navigate("/student/dashboard");
+          navigate(`/student/dashboard/${userId}`);
           break;
         case "teacher":
-          navigate("/teacher/personal-details/about-you");
+          navigate(`/teacher/personal-details/about-you/${userId}`);
           break;
         case "institution":
-          navigate("/institution/dashboard");
+          navigate(`/institution/dashboard${userId}`);
           break;
         default:
           navigate("/");
       }
-
     } catch (error) {
       console.log("Login error", error);
-      
+
       let errorMessage = "Invalid email or password";
-      
+
       if (error.response?.data?.message) {
         errorMessage = error.response.data.message;
       } else if (error.response?.status === 404) {
@@ -116,7 +131,7 @@ const Login = () => {
       } else if (!error.response) {
         errorMessage = "Network error. Please check your internet connection.";
       }
-      
+
       Swal.fire({
         icon: "error",
         title: "Login Failed",
@@ -266,8 +281,6 @@ const Login = () => {
               <div className="text-sm text-[#8B4513]/80">Expert Mentors</div>
             </div>
           </div>
-
-    
         </div>
       </section>
 

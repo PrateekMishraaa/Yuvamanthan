@@ -6,11 +6,12 @@ import Trouble from '../Components/Trouble/Trouble.jsx'
 import { UserContext } from '../Context/InstitutesContext.jsx'
 
 const Institution = () => {
+  const { id, section } = useParams()
+  console.log("User ID from params:", id)
+  console.log("Section from params:", section)
+  
   const { formData, setFormData, handleChange } = useContext(UserContext)
   const navigate = useNavigate()
-  const { section } = useParams()
-
-  // console.log("this is user context data", formData)
 
   const institutes = ["Schools", "College", "University", "Coaching Institutes"]
   const universityTypes = [
@@ -62,12 +63,32 @@ const Institution = () => {
   const currentSectionDisplayName = getCurrentSectionDisplayName()
   const currentSectionIndex = sectionOrder.indexOf(currentSectionDisplayName)
 
+  // Fetch user data based on ID
+  useEffect(() => {
+    if (id) {
+      console.log("Loading data for user:", id)
+      // You can fetch user/institution data based on ID here
+      // Example: fetchUserData(id);
+      
+      // Load saved form data from localStorage if available
+      const savedData = localStorage.getItem(`instituteFormData_${id}`)
+      if (savedData) {
+        try {
+          const parsedData = JSON.parse(savedData)
+          setFormData(parsedData)
+        } catch (error) {
+          console.error("Error parsing saved data:", error)
+        }
+      }
+    }
+  }, [id, setFormData])
+
   // Redirect to institution page if no section is provided
   useEffect(() => {
-    if (!section) {
-      navigate('/institution/institution', { replace: true })
+    if (!section && id) {
+      navigate(`/institution/${id}/institution`, { replace: true })
     }
-  }, [section, navigate])
+  }, [section, id, navigate])
 
   // Initialize instituteDetails array if it doesn't exist
   useEffect(() => {
@@ -81,15 +102,17 @@ const Institution = () => {
         }]
       }))
     }
-  }, [])
+  }, [formData.instituteDetails, setFormData])
 
   const handleNext = () => {
     const nextIndex = currentSectionIndex + 1
     if (nextIndex < sectionOrder.length) {
-      localStorage.setItem('instituteFormData', JSON.stringify(formData))
+      // Save data with user-specific key
+      localStorage.setItem(`instituteFormData_${id}`, JSON.stringify(formData))
+      
       const nextSectionDisplayName = sectionOrder[nextIndex]
       const nextPath = sectionToPath[nextSectionDisplayName]
-      navigate(`/institution/${nextPath}`)
+      navigate(`/institution/${id}/${nextPath}`)
     }
   }
 
@@ -98,22 +121,38 @@ const Institution = () => {
     if (prevIndex >= 0) {
       const prevSectionDisplayName = sectionOrder[prevIndex]
       const prevPath = sectionToPath[prevSectionDisplayName]
-      navigate(`/institution/${prevPath}`)
+      navigate(`/institution/${id}/${prevPath}`)
     }
   }
 
-  // Handle checkbox changes for education medium
-  const handleEducationMediumChange = (medium, isChecked) => {
-    // Create a synthetic event object that matches what handleChange expects
+  // Handle checkbox changes for education medium (single select)
+  const handleEducationMediumChange = (medium) => {
     const syntheticEvent = {
       target: {
-        name: 'instituteDetails.educationMedium',
-        value: isChecked ? medium : '',
-        type: 'checkbox',
-        checked: isChecked
+        name: 'instituteDetails.0.educationMedium',
+        value: medium,
+        type: 'text'
       }
     }
     handleChange(syntheticEvent)
+  }
+
+  // Handle select/input changes for array fields
+  const handleArrayFieldChange = (e) => {
+    const { name, value } = e.target
+    
+    if (name === 'typeOfInstitute' || name === 'typeOfUniversity' || name === 'educationMedium') {
+      const syntheticEvent = {
+        target: {
+          name: `instituteDetails.0.${name}`,
+          value: value,
+          type: 'text'
+        }
+      }
+      handleChange(syntheticEvent)
+    } else {
+      handleChange(e)
+    }
   }
 
   // Format section name for display
@@ -145,7 +184,7 @@ const Institution = () => {
 
   return (
     <section className='flex'>
-      <Sidebar currentSection={section || 'institution'} />
+      <Sidebar currentSection={section || 'institution'} userId={id} />
 
       <section className='h-auto w-full bg-gradient-to-br from-[#FFF7ED] to-[#FFEDD5] p-4'>
         <div className='h-auto w-full bg-white rounded-2xl shadow-lg p-6 border border-[#8B4513]/10'>
@@ -159,6 +198,11 @@ const Institution = () => {
               <p className='text-[#8B4513]/70 mt-1'>
                 {getSectionDescription()}
               </p>
+              {id && (
+                <p className='text-xs text-[#8B4513]/50 mt-1'>
+                  User ID: {id}
+                </p>
+              )}
             </div>
             <Trouble />
           </div>
@@ -176,9 +220,9 @@ const Institution = () => {
                       Type of Institute <span className='text-red-500'>*</span>
                     </p>
                     <select
-                      name="instituteDetails.typeOfInstitute"
+                      name="typeOfInstitute"
                       value={formData?.instituteDetails?.[0]?.typeOfInstitute || ''}
-                      onChange={handleChange}
+                      onChange={handleArrayFieldChange}
                       className='py-3 w-72 border border-[#8B4513]/30 rounded-lg px-3 bg-[#FFF7ED]/30 focus:outline-none focus:border-[#8B4513] focus:ring-1 focus:ring-[#8B4513]'
                       required
                     >
@@ -204,9 +248,9 @@ const Institution = () => {
                       Type of University
                     </p>
                     <select
-                      name="instituteDetails.typeOfUniversity"
+                      name="typeOfUniversity"
                       value={formData?.instituteDetails?.[0]?.typeOfUniversity || ''}
-                      onChange={handleChange}
+                      onChange={handleArrayFieldChange}
                       className='py-3 w-full md:w-96 border border-[#8B4513]/30 rounded-lg px-3 bg-[#FFF7ED]/30 focus:outline-none focus:border-[#8B4513] focus:ring-1 focus:ring-[#8B4513]'
                     >
                       <option value="" disabled>Select university type</option>
@@ -226,44 +270,22 @@ const Institution = () => {
                     <div className='flex gap-6'>
                       <label className="flex gap-2 items-center cursor-pointer">
                         <input
-                          type="checkbox"
-                          name="instituteDetails.educationMedium"
-                          checked={formData?.instituteDetails?.[0]?.educationMedium === 'hindi' || 
-                                  formData?.instituteDetails?.[0]?.educationMedium === 'Hindi'}
-                          onChange={(e) => {
-                            const syntheticEvent = {
-                              target: {
-                                name: 'instituteDetails.educationMedium',
-                                value: e.target.checked ? 'Hindi' : '',
-                                type: 'checkbox',
-                                checked: e.target.checked
-                              }
-                            }
-                            handleChange(syntheticEvent)
-                          }}
-                          className="w-4 h-4 accent-[#8B4513] rounded"
+                          type="radio"
+                          name="educationMedium"
+                          checked={formData?.instituteDetails?.[0]?.educationMedium === 'Hindi'}
+                          onChange={() => handleEducationMediumChange('Hindi')}
+                          className="w-4 h-4 accent-[#8B4513]"
                         />
                         <span className='text-[#6A3E2E]'>Hindi</span>
                       </label>
 
                       <label className="flex gap-2 items-center cursor-pointer">
                         <input
-                          type="checkbox"
-                          name="instituteDetails.educationMedium"
-                          checked={formData?.instituteDetails?.[0]?.educationMedium === 'english' || 
-                                  formData?.instituteDetails?.[0]?.educationMedium === 'English'}
-                          onChange={(e) => {
-                            const syntheticEvent = {
-                              target: {
-                                name: 'instituteDetails.educationMedium',
-                                value: e.target.checked ? 'English' : '',
-                                type: 'checkbox',
-                                checked: e.target.checked
-                              }
-                            }
-                            handleChange(syntheticEvent)
-                          }}
-                          className="w-4 h-4 accent-[#8B4513] rounded"
+                          type="radio"
+                          name="educationMedium"
+                          checked={formData?.instituteDetails?.[0]?.educationMedium === 'English'}
+                          onChange={() => handleEducationMediumChange('English')}
+                          className="w-4 h-4 accent-[#8B4513]"
                         />
                         <span className='text-[#6A3E2E]'>English</span>
                       </label>

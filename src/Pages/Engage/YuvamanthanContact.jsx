@@ -321,7 +321,7 @@ const YuvamanthanContact = () => {
                       className="w-full py-3 bg-gradient-to-r from-[#6A3E2E] to-[#8B4513] text-white rounded-lg font-semibold hover:shadow-lg transition-all duration-300 group"
                     >
                       <div className="flex items-center justify-center space-x-2">
-                        <span>Send Message</span>
+                        <button type='submit'>Send Message</button>
                         <Send className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
                       </div>
                     </button>

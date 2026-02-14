@@ -1,129 +1,205 @@
-import React, { createContext, useState } from 'react';
-import axios from "axios"
-import Swal from "sweetalert2"
+import React, { createContext, useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import axios from "axios";
+import Swal from "sweetalert2";
+import { useNavigate } from 'react-router-dom';
+
 export const UserContext = createContext();
 
 const UserProvider = ({ children }) => {
+  // const navigate = useNavigate();
   const [logo, setLogo] = useState(null);
+  const [userId, setUserId] = useState(null); // Changed from institutionId to userId for clarity
+  const [institutionDocId, setInstitutionDocId] = useState(null); // To store the actual institution _id
   const [institutionDocs, setInstitutionDocs] = useState({
     proofOfIdentity: null,
     proofOfAddress: null,
-    
+    otherDocuments: []
   });
-// console.log("This is institution docs",institutionDocs)
-const [formData, setFormData] = useState({
-  instituteDetails: [{
-    typeOfInstitute: "",
-    typeOfUniversity: "",
-    educationMedium: ""
-  }],
-  
-  aboutInstitution: [{
-    instituteName: "",
-    aboutInstitute: ""
-  }],
-  
-  instituteAddress: [{
-    country: "",
-    state: "",
-    district: "",
-    streetAddress: "",
-    city: "",
-    pincode: ""
-  }],
-  
-  appreance: [{
-    instituteLogo: "",
-    instituteWebsite: ""
-  }],
-  
-  socialLinks: [{
-    faceBook: "",
-    twitter: "",
-    linkedIn: "",
-    instagram: "",
-    youtube: ""
-  }],
-  
-  InstitutePersonalInfo: [{
-    Firstname: "",
-    lastName: "",
-    Phone: "",
-    AssociatedWithInstitute: ""
-  }],
-  
-  instituteDocuments: [{
-    ProofOfIdentity: "",
-    ProofOfAddress: ""
-  }],
-  
-  MailingAddress: [{
-    Country: "",
-    State: "",
-    District: "",
-    StreetAddress: "",
-    City: "",
-    Pincode: ""
-  }],
-  
-  StudentTeacherWithoutVerification: false,
-  
-  AccountManagerDetails: [{
-    Fullname: "",
-    Designation: "",
-    Email: "",
-    Phone: "",
-    ManagerTpe: "Moderator" // Default value set as per schema
-  }]
-});
-  // console.log("This is all formdata", formData);
+
+  // Get user ID from multiple sources
+  useEffect(() => {
+    // Try to get ID from multiple storage keys
+    const storedId = localStorage.getItem('userId') || 
+                     localStorage.getItem('id') ||
+                     localStorage.getItem('institutionId');
+    
+    // Also try to get from URL params if available
+    try {
+      const urlParams = new URLSearchParams(window.location.search);
+      const urlId = urlParams.get('id');
+      if (urlId) {
+        setUserId(urlId);
+        localStorage.setItem('userId', urlId);
+      } else if (storedId) {
+        setUserId(storedId);
+        localStorage.setItem('userId', storedId);
+      }
+    } catch (error) {
+      console.error('Error parsing URL:', error);
+      if (storedId) {
+        setUserId(storedId);
+      }
+    }
+  }, []);
+
+  // Function to update ID from props or params
+  const updateUserId = (id) => {
+    if (id) {
+      setUserId(id);
+      localStorage.setItem('userId', id);
+    }
+  };
+
+  const [formData, setFormData] = useState({
+    instituteDetails: [{
+      typeOfInstitute: "",
+      typeOfUniversity: "",
+      educationMedium: ""
+    }],
+    
+    aboutInstitution: [{
+      instituteName: "",
+      aboutInstitute: ""
+    }],
+    
+    instituteAddress: [{
+      country: "",
+      state: "",
+      district: "",
+      streetAddress: "",
+      city: "",
+      pincode: ""
+    }],
+    
+    appearance: [{
+      instituteLogo: "",
+      instituteWebsite: ""
+    }],
+    
+    socialLinks: [{
+      faceBook: "",
+      twitter: "",
+      linkedIn: "",
+      instagram: "",
+      youtube: ""
+    }],
+    
+    InstitutePersonalInfo: [{
+      Firstname: "",
+      lastName: "",
+      Phone: "",
+      AssociatedWithInstitute: ""
+    }],
+    
+    instituteDocuments: [{
+      ProofOfIdentity: "",
+      ProofOfAddress: ""
+    }],
+    
+    MailingAddress: [{
+      Country: "",
+      State: "",
+      District: "",
+      StreetAddress: "",
+      City: "",
+      Pincode: ""
+    }],
+    
+    StudentTeacherWithoutVerification: false,
+    
+    AccountManagerDetails: [{
+      Fullname: "",
+      Designation: "",
+      Email: "",
+      Phone: "",
+      ManagerType: "Moderator"
+    }]
+  });
+
+  console.log("Form data from context:", formData);
+  console.log("Current userId:", userId);
+
+  // Load saved form data when ID changes
+  useEffect(() => {
+    if (userId) {
+      const savedData = localStorage.getItem(`instituteFormData_${userId}`);
+      if (savedData) {
+        try {
+          const parsedData = JSON.parse(savedData);
+          setFormData(prev => ({
+            ...prev,
+            ...parsedData
+          }));
+        } catch (error) {
+          console.error('Error parsing saved form data:', error);
+        }
+      }
+    }
+  }, [userId]);
 
   // Handle all form field changes
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     
-    // Handle nested paths like 'AboutYou.firstName'
     if (name.includes('.')) {
-      const [section, field, subField] = name.split('.');
+      const parts = name.split('.');
       
-      setFormData(prev => {
-        if (subField) {
-          // Handle triple nested (e.g., educationMedium.hindi)
-          return {
+      if (parts.length === 3) {
+        const [section, indexStr, field] = parts;
+        const index = parseInt(indexStr);
+        
+        setFormData(prev => {
+          const newData = {
+            ...prev,
+            [section]: prev[section].map((item, i) => 
+              i === index ? { ...item, [field]: value } : item
+            )
+          };
+          
+          if (userId) {
+            localStorage.setItem(`instituteFormData_${userId}`, JSON.stringify(newData));
+          }
+          
+          return newData;
+        });
+      } else if (parts.length === 2) {
+        const [section, field] = parts;
+        setFormData(prev => {
+          const newData = {
             ...prev,
             [section]: {
               ...prev[section],
-              [field]: {
-                ...prev[section]?.[field],
-                [subField]: type === 'checkbox' ? checked : value
-              }
+              [field]: type === 'checkbox' ? checked : value
             }
           };
-        } else {
-          // Handle double nested (e.g., AboutYou.firstName)
-          return {
-            ...prev,
-            [section]: {
-              ...prev[section],
-              [field]: value
-            }
-          };
-        }
-      });
+          
+          if (userId) {
+            localStorage.setItem(`instituteFormData_${userId}`, JSON.stringify(newData));
+          }
+          
+          return newData;
+        });
+      }
     } else {
-      // Handle top-level fields
-      setFormData(prev => ({
-        ...prev,
-        [name]: type === 'checkbox' ? checked : value
-      }));
+      setFormData(prev => {
+        const newData = {
+          ...prev,
+          [name]: type === 'checkbox' ? checked : value
+        };
+        
+        if (userId) {
+          localStorage.setItem(`instituteFormData_${userId}`, JSON.stringify(newData));
+        }
+        
+        return newData;
+      });
     }
   };
-
 
   // Handle document upload
   const handleDocumentUpload = (docType, file) => {
     if (file) {
-      // Check file type
       const validTypes = [
         'application/pdf', 
         'image/jpeg', 
@@ -134,21 +210,26 @@ const [formData, setFormData] = useState({
       ];
       
       if (!validTypes.includes(file.type)) {
-        alert('Please upload a valid file (PDF, JPEG, PNG, DOC, DOCX)');
+        Swal.fire({
+          icon: 'error',
+          title: 'Invalid File',
+          text: 'Please upload a valid file (PDF, JPEG, PNG, DOC, DOCX)'
+        });
         return;
       }
 
-      // Check file size (max 5MB)
-      const maxSize = 5 * 1024 * 1024; // 5MB
+      const maxSize = 5 * 1024 * 1024;
       if (file.size > maxSize) {
-        alert('File size should be less than 5MB');
+        Swal.fire({
+          icon: 'error',
+          title: 'File Too Large',
+          text: 'File size should be less than 5MB'
+        });
         return;
       }
 
-      // Create preview URL for images, otherwise just store file info
       const previewUrl = file.type.startsWith('image/') ? URL.createObjectURL(file) : null;
       
-      // Update institutionDocs state
       setInstitutionDocs(prev => ({
         ...prev,
         [docType]: {
@@ -161,159 +242,89 @@ const [formData, setFormData] = useState({
         }
       }));
 
-      // Save to formData documents section
-      setFormData(prev => ({
-        ...prev,
-        documents: {
-          ...prev.documents,
-          [docType]: {
-            file,
-            preview: previewUrl,
-            name: file.name,
-            type: file.type,
-            size: file.size,
-            uploadedAt: new Date().toISOString()
-          }
+      const fieldName = docType === 'proofOfIdentity' ? 'ProofOfIdentity' : 'ProofOfAddress';
+      
+      setFormData(prev => {
+        const newData = {
+          ...prev,
+          instituteDocuments: [
+            {
+              ...prev.instituteDocuments[0],
+              [fieldName]: file.name
+            }
+          ]
+        };
+        
+        if (userId) {
+          localStorage.setItem(`instituteFormData_${userId}`, JSON.stringify(newData));
         }
-      }));
-    }
-  };
-
-  // Handle multiple document upload (for other documents)
-  const handleOtherDocumentsUpload = (files) => {
-    const fileArray = Array.from(files);
-    const uploadedFiles = [];
-    
-    fileArray.forEach(file => {
-      // Check file type
-      const validTypes = [
-        'application/pdf', 
-        'image/jpeg', 
-        'image/png', 
-        'image/jpg',
-        'application/msword',
-        'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-      ];
-      
-      if (!validTypes.includes(file.type)) {
-        alert(`Invalid file type: ${file.name}. Please upload PDF, JPEG, PNG, DOC, DOCX`);
-        return;
-      }
-
-      // Check file size (max 5MB)
-      const maxSize = 5 * 1024 * 1024; // 5MB
-      if (file.size > maxSize) {
-        alert(`File too large: ${file.name}. Size should be less than 5MB`);
-        return;
-      }
-
-      const previewUrl = file.type.startsWith('image/') ? URL.createObjectURL(file) : null;
-      
-      uploadedFiles.push({
-        file,
-        preview: previewUrl,
-        name: file.name,
-        type: file.type,
-        size: file.size,
-        uploadedAt: new Date().toISOString()
+        
+        return newData;
       });
-    });
-
-    // Update institutionDocs state
-    setInstitutionDocs(prev => ({
-      ...prev,
-      otherDocuments: [...(prev.otherDocuments || []), ...uploadedFiles]
-    }));
-
-    // Save to formData
-    setFormData(prev => ({
-      ...prev,
-      documents: {
-        ...prev.documents,
-        otherDocuments: [...(prev.documents.otherDocuments || []), ...uploadedFiles]
-      }
-    }));
+    }
   };
 
   // Handle document removal
-  const handleDocumentRemove = (docType, index = null) => {
-    // Revoke object URL to prevent memory leaks
-    if (docType === 'otherDocuments' && index !== null) {
-      // Remove from otherDocuments array
-      setInstitutionDocs(prev => {
-        const docToRemove = prev.otherDocuments?.[index];
-        if (docToRemove?.preview) {
-          URL.revokeObjectURL(docToRemove.preview);
-        }
-        
-        const updatedDocs = [...(prev.otherDocuments || [])];
-        updatedDocs.splice(index, 1);
-        
-        return {
-          ...prev,
-          otherDocuments: updatedDocs
-        };
-      });
-
-      setFormData(prev => {
-        const updatedDocs = [...(prev.documents.otherDocuments || [])];
-        updatedDocs.splice(index, 1);
-        
-        return {
-          ...prev,
-          documents: {
-            ...prev.documents,
-            otherDocuments: updatedDocs
-          }
-        };
-      });
-    } else {
-      // Remove single document
-      setInstitutionDocs(prev => {
-        const docToRemove = prev[docType];
-        if (docToRemove?.preview) {
-          URL.revokeObjectURL(docToRemove.preview);
-        }
-        
-        return {
-          ...prev,
-          [docType]: null
-        };
-      });
-
-      setFormData(prev => ({
+  const handleDocumentRemove = (docType) => {
+    setInstitutionDocs(prev => {
+      const docToRemove = prev[docType];
+      if (docToRemove?.preview) {
+        URL.revokeObjectURL(docToRemove.preview);
+      }
+      return {
         ...prev,
-        documents: {
-          ...prev.documents,
-          [docType]: null
-        }
-      }));
-    }
+        [docType]: null
+      };
+    });
+
+    const fieldName = docType === 'proofOfIdentity' ? 'ProofOfIdentity' : 'ProofOfAddress';
+    
+    setFormData(prev => {
+      const newData = {
+        ...prev,
+        instituteDocuments: [
+          {
+            ...prev.instituteDocuments[0],
+            [fieldName]: ""
+          }
+        ]
+      };
+      
+      if (userId) {
+        localStorage.setItem(`instituteFormData_${userId}`, JSON.stringify(newData));
+      }
+      
+      return newData;
+    });
   };
 
-  // Handle logo file upload
+  // Handle logo change
   const handleLogoChange = (e) => {
     const file = e.target.files[0];
     
     if (file) {
-      // Check file type
       const validTypes = ['image/jpeg', 'image/png', 'image/svg+xml', 'image/webp'];
       if (!validTypes.includes(file.type)) {
-        alert('Please upload a valid image file (JPEG, PNG, SVG, WEBP)');
+        Swal.fire({
+          icon: 'error',
+          title: 'Invalid File',
+          text: 'Please upload a valid image file (JPEG, PNG, SVG, WEBP)'
+        });
         return;
       }
 
-      // Check file size (max 2MB)
-      const maxSize = 2 * 1024 * 1024; // 2MB
+      const maxSize = 2 * 1024 * 1024;
       if (file.size > maxSize) {
-        alert('File size should be less than 2MB');
+        Swal.fire({
+          icon: 'error',
+          title: 'File Too Large',
+          text: 'File size should be less than 2MB'
+        });
         return;
       }
 
-      // Create preview URL
       const previewUrl = URL.createObjectURL(file);
       
-      // Update both logo state and formData
       setLogo({
         file,
         preview: previewUrl,
@@ -322,278 +333,360 @@ const [formData, setFormData] = useState({
         size: file.size
       });
 
-      // Save to formData as well
-      setFormData(prev => ({
-        ...prev,
-        appearance: {
-          ...prev.appearance,
-          logo: {
-            file,
-            preview: previewUrl,
-            name: file.name,
-            type: file.type,
-            size: file.size
-          }
+      setFormData(prev => {
+        const newData = {
+          ...prev,
+          appearance: [
+            {
+              ...prev.appearance[0],
+              instituteLogo: file.name
+            }
+          ]
+        };
+        
+        if (userId) {
+          localStorage.setItem(`instituteFormData_${userId}`, JSON.stringify(newData));
         }
-      }));
+        
+        return newData;
+      });
     }
   };
 
   // Handle logo removal
   const handleLogoRemove = () => {
-    // Revoke object URL to prevent memory leaks
     if (logo?.preview) {
       URL.revokeObjectURL(logo.preview);
     }
-    
     setLogo(null);
     
-    setFormData(prev => ({
-      ...prev,
-      appearance: {
-        ...prev.appearance,
-        logo: null
+    setFormData(prev => {
+      const newData = {
+        ...prev,
+        appearance: [
+          {
+            ...prev.appearance[0],
+            instituteLogo: ""
+          }
+        ]
+      };
+      
+      if (userId) {
+        localStorage.setItem(`instituteFormData_${userId}`, JSON.stringify(newData));
       }
-    }));
-    
-    // Reset file input
-    const fileInput = document.querySelector('input[type="file"]');
-    if (fileInput) fileInput.value = '';
+      
+      return newData;
+    });
   };
 
+  // Handle form submission - UPDATED to work with your backend
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  
-  try {
-    // Validate required fields before submission
-    const validationErrors = [];
+    if (e) e.preventDefault();
     
-    // Check instituteDetails
-    if (!formData.instituteDetails[0]?.typeOfInstitute) validationErrors.push("Type of Institute is required");
-    if (!formData.instituteDetails[0]?.typeOfUniversity) validationErrors.push("Type of University is required");
-    if (!formData.instituteDetails[0]?.educationMedium) validationErrors.push("Education Medium is required");
-    
-    // Check aboutInstitution
-    if (!formData.aboutInstitution[0]?.instituteName) validationErrors.push("Institute Name is required");
-    if (!formData.aboutInstitution[0]?.aboutInstitute) validationErrors.push("About Institute is required");
-    
-    // Check instituteAddress
-    if (!formData.instituteAddress[0]?.country) validationErrors.push("Country is required");
-    if (!formData.instituteAddress[0]?.state) validationErrors.push("State is required");
-    if (!formData.instituteAddress[0]?.district) validationErrors.push("District is required");
-    if (!formData.instituteAddress[0]?.streetAddress) validationErrors.push("Street Address is required");
-    if (!formData.instituteAddress[0]?.city) validationErrors.push("City is required");
-    if (!formData.instituteAddress[0]?.pincode) validationErrors.push("Pincode is required");
-    
-    // Check appearance
-    if (!formData.appreance[0]?.instituteLogo) validationErrors.push("Institute Logo is required");
-    if (!formData.appreance[0]?.instituteWebsite) validationErrors.push("Institute Website is required");
-    
-    // Check InstitutePersonalInfo
-    if (!formData.InstitutePersonalInfo[0]?.Firstname) validationErrors.push("First Name is required");
-    if (!formData.InstitutePersonalInfo[0]?.Phone) validationErrors.push("Phone number is required");
-    if (formData.InstitutePersonalInfo[0]?.Phone && formData.InstitutePersonalInfo[0].Phone.length !== 10) {
-      validationErrors.push("Phone number must be 10 digits");
-    }
-    
-    // Check instituteDocuments
-    if (!formData.instituteDocuments[0]?.ProofOfIdentity) validationErrors.push("Proof of Identity is required");
-    if (!formData.instituteDocuments[0]?.ProofOfAddress) validationErrors.push("Proof of Address is required");
-    
-    // Check MailingAddress
-    if (!formData.MailingAddress[0]?.Country) validationErrors.push("Mailing Country is required");
-    if (!formData.MailingAddress[0]?.State) validationErrors.push("Mailing State is required");
-    if (!formData.MailingAddress[0]?.District) validationErrors.push("Mailing District is required");
-    if (!formData.MailingAddress[0]?.StreetAddress) validationErrors.push("Mailing Street Address is required");
-    if (!formData.MailingAddress[0]?.City) validationErrors.push("Mailing City is required");
-    if (!formData.MailingAddress[0]?.Pincode) validationErrors.push("Mailing Pincode is required");
-    if (formData.MailingAddress[0]?.Pincode && formData.MailingAddress[0].Pincode.length !== 6) {
-      validationErrors.push("Pincode must be 6 digits");
-    }
-    
-    // Check AccountManagerDetails
-    if (!formData.AccountManagerDetails[0]?.Fullname) validationErrors.push("Account Manager Full Name is required");
-    if (!formData.AccountManagerDetails[0]?.Designation) validationErrors.push("Account Manager Designation is required");
-    if (!formData.AccountManagerDetails[0]?.Email) validationErrors.push("Account Manager Email is required");
-    if (!formData.AccountManagerDetails[0]?.Phone) validationErrors.push("Account Manager Phone is required");
-    if (formData.AccountManagerDetails[0]?.Phone && formData.AccountManagerDetails[0].Phone.length !== 10) {
-      validationErrors.push("Account Manager Phone must be 10 digits");
-    }
+    try {
+      // Get userId (not institution _id)
+      const id = userId || localStorage.getItem('userId') || localStorage.getItem('id');
+      
+      console.log("Attempting to submit with userId:", id);
+      
+      if (!id) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'User ID not found. Please login again.',
+          confirmButtonColor: '#3085d6'
+        });
+        return;
+      }
 
-    if (validationErrors.length > 0) {
+      // Update userId in state
+      setUserId(id);
+      localStorage.setItem('userId', id);
+
+      // Show loading
+      Swal.fire({
+        title: 'Submitting...',
+        text: 'Please wait',
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
+
+      // Prepare the update data
+      const updatedData = {
+        instituteDetails: formData.instituteDetails,
+        aboutInstitution: formData.aboutInstitution,
+        instituteAddress: formData.instituteAddress,
+        appearance: formData.appearance,
+        socialLinks: formData.socialLinks,
+        InstitutePersonalInfo: formData.InstitutePersonalInfo,
+        instituteDocuments: formData.instituteDocuments,
+        MailingAddress: formData.MailingAddress,
+        StudentTeacherWithoutVerification: formData.StudentTeacherWithoutVerification,
+        AccountManagerDetails: formData.AccountManagerDetails
+      };
+
+      console.log("Submitting data for userId:", id);
+      console.log("Updated data:", updatedData);
+
+      // Make API call - using the PUT endpoint that handles both userId and _id
+      const response = await axios.put(
+        `http://localhost:5000/api/institutions/institution-profile/${id}`,
+        updatedData,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          timeout: 30000
+        }
+      );
+
+      console.log("Submission response:", response);
+
+      if (response.status === 200 || response.status === 201) {
+        // Save the institution document ID if returned
+        if (response.data.data && response.data.data._id) {
+          setInstitutionDocId(response.data.data._id);
+          localStorage.setItem('institutionDocId', response.data.data._id);
+        }
+        
+        // Clear saved form data after successful submission
+        localStorage.removeItem(`instituteFormData_${id}`);
+        
+        const message = response.status === 201 
+          ? 'Institution profile created successfully' 
+          : 'Institution profile updated successfully';
+        
+        await Swal.fire({
+          icon: 'success',
+          title: 'Success!',
+          text: response.data.message || message,
+          confirmButtonColor: '#3085d6',
+          timer: 3000
+        });
+        
+
+        setFormData({
+           instituteDetails: [{
+      typeOfInstitute: "",
+      typeOfUniversity: "",
+      educationMedium: ""
+    }],
+    
+    aboutInstitution: [{
+      instituteName: "",
+      aboutInstitute: ""
+    }],
+    
+    instituteAddress: [{
+      country: "",
+      state: "",
+      district: "",
+      streetAddress: "",
+      city: "",
+      pincode: ""
+    }],
+    
+    appearance: [{
+      instituteLogo: "",
+      instituteWebsite: ""
+    }],
+    
+    socialLinks: [{
+      faceBook: "",
+      twitter: "",
+      linkedIn: "",
+      instagram: "",
+      youtube: ""
+    }],
+    
+    InstitutePersonalInfo: [{
+      Firstname: "",
+      lastName: "",
+      Phone: "",
+      AssociatedWithInstitute: ""
+    }],
+    
+    instituteDocuments: [{
+      ProofOfIdentity: "",
+      ProofOfAddress: ""
+    }],
+    
+    MailingAddress: [{
+      Country: "",
+      State: "",
+      District: "",
+      StreetAddress: "",
+      City: "",
+      Pincode: ""
+    }],
+    
+    StudentTeacherWithoutVerification: false,
+    
+    AccountManagerDetails: [{
+      Fullname: "",
+      Designation: "",
+      Email: "",
+      Phone: "",
+      ManagerType: "Moderator"
+    }]
+        })
+        // Navigate to dashboard
+        // navigate('/institution/dashboard');
+      }
+    } catch (error) {
+      console.error('Submission error:', error);
+      
+      let errorMessage = 'Something went wrong. Please try again.';
+      
+      if (error.response) {
+        console.log("Error response data:", error.response.data);
+        errorMessage = error.response.data.message || 
+                      error.response.data.error || 
+                      `Server error: ${error.response.status}`;
+        
+        if (error.response.data.errors) {
+          errorMessage = error.response.data.errors.join(', ');
+        }
+      } else if (error.request) {
+        errorMessage = 'No response from server. Please check your connection.';
+      } else if (error.code === 'ECONNABORTED') {
+        errorMessage = 'Request timeout. Please try again.';
+      }
+
       Swal.fire({
         icon: 'error',
-        title: 'Validation Error',
-        html: validationErrors.join('<br/>'),
+        title: 'Operation Failed',
+        text: errorMessage,
         confirmButtonColor: '#3085d6'
       });
-      return;
     }
+  };
 
-    // Show loading state
-    Swal.fire({
-      title: 'Submitting...',
-      text: 'Please wait',
-      allowOutsideClick: false,
-      didOpen: () => {
-        Swal.showLoading();
+  // Reset form
+  const resetForm = () => {
+    if (logo?.preview) {
+      URL.revokeObjectURL(logo.preview);
+    }
+    setLogo(null);
+    
+    Object.values(institutionDocs).forEach(doc => {
+      if (doc?.preview) {
+        URL.revokeObjectURL(doc.preview);
       }
     });
 
-    // Create FormData object for file uploads
-    const submitData = new FormData();
-    
-    // Add all form fields as JSON strings
-    submitData.append('instituteDetails', JSON.stringify(formData.instituteDetails));
-    submitData.append('aboutInstitution', JSON.stringify(formData.aboutInstitution));
-    submitData.append('instituteAddress', JSON.stringify(formData.instituteAddress));
-    submitData.append('appreance', JSON.stringify(formData.appreance));
-    submitData.append('socialLinks', JSON.stringify(formData.socialLinks));
-    submitData.append('InstitutePersonalInfo', JSON.stringify(formData.InstitutePersonalInfo));
-    submitData.append('MailingAddress', JSON.stringify(formData.MailingAddress));
-    submitData.append('StudentTeacherWithoutVerification', formData.StudentTeacherWithoutVerification);
-    submitData.append('AccountManagerDetails', JSON.stringify(formData.AccountManagerDetails));
-
-    // Handle file uploads
-    // Add logo file
-    if (logo?.file) {
-      submitData.append('logo', logo.file);
-    }
-
-    // Add document files
-    if (institutionDocs?.proofOfIdentity?.file) {
-      submitData.append('proofOfIdentity', institutionDocs.proofOfIdentity.file);
-    }
-    
-    if (institutionDocs?.proofOfAddress?.file) {
-      submitData.append('proofOfAddress', institutionDocs.proofOfAddress.file);
-    }
-
-    // Add other documents if any
-    if (institutionDocs?.otherDocuments?.length > 0) {
-      institutionDocs.otherDocuments.forEach((doc, index) => {
-        submitData.append(`otherDocuments`, doc.file);
-      });
-    }
-
-    // Make API call
-    const response = await axios.post(
-      'http://localhost:5000/api/institutions/register',
-      submitData,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-        timeout: 30000 // 30 seconds timeout
-      }
-    );
-
-    // Handle success response
-    if (response.data.success || response.status === 200 || response.status === 201) {
-      Swal.fire({
-        icon: 'success',
-        title: 'Success!',
-        text: response.data.message || 'Institution registered successfully',
-        confirmButtonColor: '#3085d6',
-        timer: 3000
-      });
-
-      // Reset form after successful submission
-      resetForm();
-      
-    } else {
-      throw new Error(response.data.message || 'Registration failed');
-    }
-
-  } catch (error) {
-    console.error('Submission error:', error);
-    
-    // Handle different types of errors
-    let errorMessage = 'Something went wrong. Please try again.';
-    
-    if (error.response) {
-      // Server responded with error status
-      errorMessage = error.response.data.message || 
-                    error.response.data.error || 
-                    `Server error: ${error.response.status}`;
-      
-      // Handle specific error cases
-      if (error.response.status === 400) {
-        errorMessage = error.response.data.errors ? 
-                      Object.values(error.response.data.errors).join(', ') : 
-                      'Invalid data submitted';
-      } else if (error.response.status === 409) {
-        errorMessage = 'Institute already exists';
-      } else if (error.response.status === 413) {
-        errorMessage = 'Files are too large. Please reduce file sizes.';
-      } else if (error.response.status === 500) {
-        errorMessage = 'Server error. Please try again later.';
-      }
-      
-    } else if (error.request) {
-      // Request was made but no response
-      errorMessage = 'No response from server. Please check your connection.';
-    } else if (error.code === 'ECONNABORTED') {
-      errorMessage = 'Request timeout. Please try again.';
-    }
-
-    Swal.fire({
-      icon: 'error',
-      title: 'Submission Failed',
-      text: errorMessage,
-      confirmButtonColor: '#3085d6'
+    setInstitutionDocs({
+      proofOfIdentity: null,
+      proofOfAddress: null,
+      otherDocuments: []
     });
-  }
-};
 
-// Reset form function
-const resetForm = () => {
-  // Clear logo
-  if (logo?.preview) {
-    URL.revokeObjectURL(logo.preview);
-  }
-  setLogo(null);
-  
-  // Clear document previews
-  if (institutionDocs.proofOfIdentity?.preview) {
-    URL.revokeObjectURL(institutionDocs.proofOfIdentity.preview);
-  }
-  if (institutionDocs.proofOfAddress?.preview) {
-    URL.revokeObjectURL(institutionDocs.proofOfAddress.preview);
-  }
-  if (institutionDocs.otherDocuments) {
-    institutionDocs.otherDocuments.forEach(doc => {
-      if (doc.preview) URL.revokeObjectURL(doc.preview);
-    });
-  }
+    const emptyFormData = {
+      instituteDetails: [{ typeOfInstitute: "", typeOfUniversity: "", educationMedium: "" }],
+      aboutInstitution: [{ instituteName: "", aboutInstitute: "" }],
+      instituteAddress: [{ country: "", state: "", district: "", streetAddress: "", city: "", pincode: "" }],
+      appearance: [{ instituteLogo: "", instituteWebsite: "" }],
+      socialLinks: [{ faceBook: "", twitter: "", linkedIn: "", instagram: "", youtube: "" }],
+      InstitutePersonalInfo: [{ Firstname: "", lastName: "", Phone: "", AssociatedWithInstitute: "" }],
+      instituteDocuments: [{ ProofOfIdentity: "", ProofOfAddress: "" }],
+      MailingAddress: [{ Country: "", State: "", District: "", StreetAddress: "", City: "", Pincode: "" }],
+      StudentTeacherWithoutVerification: false,
+      AccountManagerDetails: [{ Fullname: "", Designation: "", Email: "", Phone: "", ManagerType: "Moderator" }]
+    };
 
-  // Reset institution docs
-  setInstitutionDocs({
-    proofOfIdentity: null,
-    proofOfAddress: null,
-    otherDocuments: []
-  });
+    setFormData(emptyFormData);
+    
+    if (userId) {
+      localStorage.removeItem(`instituteFormData_${userId}`);
+    }
+  };
 
-  // Reset form data to initial state
-  setFormData({
-    instituteDetails: [{ typeOfInstitute: "", typeOfUniversity: "", educationMedium: "" }],
-    aboutInstitution: [{ instituteName: "", aboutInstitute: "" }],
-    instituteAddress: [{ country: "", state: "", district: "", streetAddress: "", city: "", pincode: "" }],
-    appreance: [{ instituteLogo: "", instituteWebsite: "" }],
-    socialLinks: [{ faceBook: "", twitter: "", linkedIn: "", instagram: "", youtube: "" }],
-    InstitutePersonalInfo: [{ Firstname: "", lastName: "", Phone: "", AssociatedWithInstitute: "" }],
-    instituteDocuments: [{ ProofOfIdentity: "", ProofOfAddress: "" }],
-    MailingAddress: [{ Country: "", State: "", District: "", StreetAddress: "", City: "", Pincode: "" }],
-    StudentTeacherWithoutVerification: false,
-    AccountManagerDetails: [{ Fullname: "", Designation: "", Email: "", Phone: "", ManagerTpe: "Moderator" }]
-  });
+  // Fetch institution data - UPDATED to work with your backend
+  const fetchInstitutionData = async (id) => {
+    try {
+      const fetchId = id || userId || localStorage.getItem('userId');
+      
+      if (!fetchId) {
+        console.error('No ID provided for fetching institution data');
+        return;
+      }
 
-  // Reset file inputs
-  const fileInputs = document.querySelectorAll('input[type="file"]');
-  fileInputs.forEach(input => {
-    if (input) input.value = '';
-  });
-};
+      console.log("Fetching institution data for userId:", fetchId);
+
+      const response = await axios.get(
+        `http://localhost:5000/api/institutions/institution/${fetchId}`
+      );
+      
+      if (response.data.success && response.data.data) {
+        const data = response.data.data;
+        
+        // Save the institution document ID
+        if (data._id) {
+          setInstitutionDocId(data._id);
+          localStorage.setItem('institutionDocId', data._id);
+        }
+        
+        const fetchedData = {
+          instituteDetails: data.instituteDetails || [{ typeOfInstitute: "", typeOfUniversity: "", educationMedium: "" }],
+          aboutInstitution: data.aboutInstitution || [{ instituteName: "", aboutInstitute: "" }],
+          instituteAddress: data.instituteAddress || [{ country: "", state: "", district: "", streetAddress: "", city: "", pincode: "" }],
+          appearance: data.appearance || [{ instituteLogo: "", instituteWebsite: "" }],
+          socialLinks: data.socialLinks || [{ faceBook: "", twitter: "", linkedIn: "", instagram: "", youtube: "" }],
+          InstitutePersonalInfo: data.InstitutePersonalInfo || [{ Firstname: "", lastName: "", Phone: "", AssociatedWithInstitute: "" }],
+          instituteDocuments: data.instituteDocuments || [{ ProofOfIdentity: "", ProofOfAddress: "" }],
+          MailingAddress: data.MailingAddress || [{ Country: "", State: "", District: "", StreetAddress: "", City: "", Pincode: "" }],
+          StudentTeacherWithoutVerification: data.StudentTeacherWithoutVerification || false,
+          AccountManagerDetails: data.AccountManagerDetails || [{ Fullname: "", Designation: "", Email: "", Phone: "", ManagerType: "Moderator" }]
+        };
+        
+        setFormData(fetchedData);
+        
+        // Save to localStorage
+        localStorage.setItem(`instituteFormData_${fetchId}`, JSON.stringify(fetchedData));
+        
+        console.log("Institution data fetched successfully:", fetchedData);
+      }
+    } catch (error) {
+      console.error('Error fetching institution data:', error);
+      
+      // If 404, that's fine - means no institution exists yet
+      if (error.response?.status === 404) {
+        console.log('No institution found for this user. Please create one.');
+        // Don't show error for 404, just log it
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Failed to load institution data',
+          confirmButtonColor: '#3085d6'
+        });
+      }
+    }
+  };
+
+  // Upload files separately
+  const uploadFiles = async () => {
+    console.log("File upload functionality would go here");
+  };
+
+  // Check if institution exists
+  const checkInstitutionExists = async () => {
+    try {
+      const id = userId || localStorage.getItem('userId');
+      if (!id) return false;
+      
+      const response = await axios.get(
+        `http://localhost:5000/api/institutions/institution/${id}`
+      );
+      
+      return response.data.success && response.data.data;
+    } catch (error) {
+      return false;
+    }
+  };
+
   return (
     <UserContext.Provider value={{ 
       formData, 
@@ -606,9 +699,15 @@ const resetForm = () => {
       institutionDocs,
       setInstitutionDocs,
       handleDocumentUpload,
-      handleOtherDocumentsUpload,
       handleDocumentRemove,
-      handleSubmit
+      handleSubmit,
+      userId, // Changed from institutionId to userId
+      setUserId: updateUserId, // Changed from setInstitutionId
+      institutionDocId, // Added to expose the actual institution _id
+      fetchInstitutionData,
+      resetForm,
+      uploadFiles,
+      checkInstitutionExists // Added helper function
     }}>
       {children}
     </UserContext.Provider>

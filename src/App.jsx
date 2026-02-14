@@ -50,7 +50,6 @@ const SocialPresence = lazy(() =>
   import("./Pages/InstitutionParts/SocialPresence.jsx")
 );
 
-
 /* =======================
    APP COMPONENT
 ======================= */
@@ -60,7 +59,6 @@ const App = () => {
     <Router>
       <Suspense fallback={<div className="page-loader">Loading page...</div>}>
         <Routes>
-
           {/* Public Routes */}
           <Route path="/" element={<HomePage />} />
           <Route path="/register" element={<Register />} />
@@ -82,74 +80,230 @@ const App = () => {
           <Route path="/engage/news" element={<YuvamanthanNews />} />
           <Route path="/engage/contact-us" element={<YuvamanthanContact />} />
 
-          {/* Institution - Dynamic Route for Multi-step Form */}
+          {/* ========== INSTITUTION ROUTES ========== */}
+          {/* Main Institution Routes with ID */}
+          <Route
+            path="/institution/:id"
+            element={
+              <ProtectedRoutes>
+                <Institution />
+              </ProtectedRoutes>
+            }
+          />
+          <Route
+            path="/institution/:id/:section"
+            element={
+              <ProtectedRoutes>
+                <Institution />
+              </ProtectedRoutes>
+            }
+          />
+
+          {/* Institution Part Routes with ID */}
+          <Route
+            path="/institution/:id/overview"
+            element={
+              <ProtectedRoutes>
+                <OverView />
+              </ProtectedRoutes>
+            }
+          />
+          <Route
+            path="/institution/:id/registered-address"
+            element={
+              <ProtectedRoutes>
+                <RegisteredAddress />
+              </ProtectedRoutes>
+            }
+          />
+          <Route
+            path="/institution/:id/appearance"
+            element={
+              <ProtectedRoutes>
+                <Appreance />
+              </ProtectedRoutes>
+            }
+          />
+          <Route
+            path="/institution/:id/social-presence"
+            element={
+              <ProtectedRoutes>
+                <SocialPresence />
+              </ProtectedRoutes>
+            }
+          />
+          <Route 
+            path="/institution/:id/about-you" 
+            element={
+              <ProtectedRoutes>
+                <AboutInstitution />
+              </ProtectedRoutes>
+            }
+          />
+          <Route 
+            path="/institution/:id/documents" 
+            element={
+              <ProtectedRoutes>
+                <InstitutionDocuments />
+              </ProtectedRoutes>
+            }
+          />
+          
+          {/* Contact Details Route with ID */}
+          <Route 
+            path="/contact-details/:id/mailing-address" 
+            element={
+              <ProtectedRoutes>
+                <InstitutionMail />
+              </ProtectedRoutes>
+            }
+          />
+
+          {/* ========== TEACHER ROUTES ========== */}
+          {/* Main Teacher Routes with ID */}
+          <Route
+            path="/teacher/:id/personal-details/about-you"
+            element={
+              <ProtectedRoutes>
+                <Teacher />
+              </ProtectedRoutes>
+            }
+          />
+          <Route
+            path="/teacher/:id/personal-details/appearance"
+            element={
+              <ProtectedRoutes>
+                <TeacherAppreance />
+              </ProtectedRoutes>
+            }
+          />
+          <Route 
+            path="/teacher/:id/social-media" 
+            element={
+              <ProtectedRoutes>
+                <TeacherSocial />
+              </ProtectedRoutes>
+            }
+          />
+          
+          {/* Additional Teacher Routes if needed */}
+          <Route
+            path="/teacher/:id/personal-details/*"
+            element={
+              <ProtectedRoutes>
+                <Teacher />
+              </ProtectedRoutes>
+            }
+          />
+
+          {/* ========== STUDENT ROUTES ========== */}
+          <Route
+            path="/student/:id/dashboard"
+            element={
+              <ProtectedRoutes>
+                <Student />
+              </ProtectedRoutes>
+            }
+          />
+          
+          {/* Student Dashboard with optional sections */}
+          <Route
+            path="/student/:id/:section"
+            element={
+              <ProtectedRoutes>
+                <Student />
+              </ProtectedRoutes>
+            }
+          />
+
+          {/* ========== ADMIN ROUTES ========== */}
+          <Route
+            path="/admin/:id/dashboard"
+            element={
+              <ProtectedRoutes>
+                <Admin />
+              </ProtectedRoutes>
+            }
+          />
+          
+          {/* Admin Routes with sections */}
+          <Route
+            path="/admin/:id/:section"
+            element={
+              <ProtectedRoutes>
+                <Admin />
+              </ProtectedRoutes>
+            }
+          />
+
+          {/* ========== REDIRECT ROUTES (for backward compatibility) ========== */}
+          {/* These will redirect to the new routes with ID from localStorage */}
           <Route
             path="/institution"
-            element={<ProtectedRoutes><Institution /></ProtectedRoutes>}
+            element={
+              <ProtectedRoutes>
+                <RedirectToId basePath="/institution" />
+              </ProtectedRoutes>
+            }
           />
-          <Route
-            path="/institution/:section"
-            element={<ProtectedRoutes><Institution /></ProtectedRoutes>}
-          />
-
-          {/* Individual Institution Part Routes (Optional - you can keep these for direct access) */}
-          <Route
-            path="/institution/overview"
-            element={<ProtectedRoutes><OverView /></ProtectedRoutes>}
-          />
-          <Route
-            path="/institution/registered-address"
-            element={<ProtectedRoutes><RegisteredAddress /></ProtectedRoutes>}
-          />
-          <Route
-            path="/institution/appearance"
-            element={<ProtectedRoutes><Appreance /></ProtectedRoutes>}
-          />
-          <Route
-            path="/institution/social-presence"
-            element={<ProtectedRoutes><SocialPresence /></ProtectedRoutes>}
-          />
-          <Route 
-            path="/institution/about-you" 
-            element={<ProtectedRoutes><AboutInstitution/></ProtectedRoutes>}
-          />
-          <Route 
-            path="/institution/documents" 
-            element={<ProtectedRoutes><InstitutionDocuments/></ProtectedRoutes>}
-          />
-          <Route 
-            path="/contact-details/mailing-address" 
-            element={<ProtectedRoutes><InstitutionMail/></ProtectedRoutes>}
-          />
-
-          {/* Teacher */}
           <Route
             path="/teacher/personal-details/about-you"
-            element={<ProtectedRoutes><Teacher /></ProtectedRoutes>}
+            element={
+              <ProtectedRoutes>
+                <RedirectToId basePath="/teacher/personal-details/about-you" />
+              </ProtectedRoutes>
+            }
           />
-    <Route path="/teacher/personal-details/appearance"
-    element={<ProtectedRoutes>
-      <TeacherAppreance/>
-    </ProtectedRoutes>}/>
-    <Route path="/teacher/social-media" element={<ProtectedRoutes>
-      <TeacherSocial/>
-    </ProtectedRoutes>}/>
-          {/* Student */}
           <Route
             path="/student/dashboard"
-            element={<ProtectedRoutes><Student /></ProtectedRoutes>}
+            element={
+              <ProtectedRoutes>
+                <RedirectToId basePath="/student/dashboard" />
+              </ProtectedRoutes>
+            }
           />
-
-          {/* Admin */}
           <Route
             path="/admin/dashboard"
-            element={<ProtectedRoutes><Admin /></ProtectedRoutes>}
+            element={
+              <ProtectedRoutes>
+                <RedirectToId basePath="/admin/dashboard" />
+              </ProtectedRoutes>
+            }
           />
 
+          {/* Catch-all redirect for any unmatched routes */}
+          <Route path="*" element={<NavigateToLogin />} />
         </Routes>
       </Suspense>
     </Router>
   );
+};
+
+// Helper component to redirect to ID-based routes
+const RedirectToId = ({ basePath }) => {
+  const navigate = useNavigate();
+  const userId = localStorage.getItem('userId');
+  
+  React.useEffect(() => {
+    if (userId) {
+      navigate(`${basePath}/${userId}`, { replace: true });
+    } else {
+      navigate('/login', { replace: true });
+    }
+  }, [userId, basePath, navigate]);
+  
+  return <div>Redirecting...</div>;
+};
+
+// Helper component to navigate to login
+const NavigateToLogin = () => {
+  const navigate = useNavigate();
+  
+  React.useEffect(() => {
+    navigate('/login', { replace: true });
+  }, [navigate]);
+  
+  return <div>Redirecting to login...</div>;
 };
 
 export default App;

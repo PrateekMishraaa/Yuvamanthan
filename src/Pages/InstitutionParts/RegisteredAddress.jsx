@@ -7,25 +7,18 @@ import { UserContext } from '../../Context/InstitutesContext.jsx'
 
 const RegisteredAddress = () => {
   const navigate = useNavigate()
-  const { formData, setFormData } = useContext(UserContext)
+  const { formData, setFormData, handleChange } = useContext(UserContext)
   
   // Debug log to check formData structure
-  // console.log("Complete formData:", formData)
-  // console.log("Institution Address from context:", formData?.instituteAddress?.[0])
+  console.log("Institute Address from context:", formData?.instituteAddress?.[0])
   
   // State for dropdown data
   const [countries, setCountries] = useState([])
   const [states, setStates] = useState([])
   const [cities, setCities] = useState([])
   
-  // State for selected values
-  const [selectedCountry, setSelectedCountry] = useState(formData?.instituteAddress?.[0]?.country || "")
-  const [selectedState, setSelectedState] = useState(formData?.instituteAddress?.[0]?.state || "")
-  const [selectedCity, setSelectedCity] = useState(formData?.instituteAddress?.[0]?.city || "")
-  
   // Initialize instituteAddress structure if it doesn't exist
   useEffect(() => {
-    // Check if instituteAddress exists and has at least one item
     if (!formData.instituteAddress || formData.instituteAddress.length === 0) {
       setFormData(prev => ({
         ...prev,
@@ -41,7 +34,7 @@ const RegisteredAddress = () => {
         ]
       }))
     }
-  }, []) // Empty dependency array - run only once on mount
+  }, [formData.instituteAddress, setFormData])
   
   // Load all countries on component mount
   useEffect(() => {
@@ -51,115 +44,146 @@ const RegisteredAddress = () => {
   
   // Load states when country is selected
   useEffect(() => {
-    if (selectedCountry) {
-      const countryStates = State.getStatesOfCountry(selectedCountry)
+    const countryCode = formData?.instituteAddress?.[0]?.country
+    if (countryCode) {
+      const countryStates = State.getStatesOfCountry(countryCode)
       setStates(countryStates)
     } else {
       setStates([])
     }
-  }, [selectedCountry])
+  }, [formData?.instituteAddress?.[0]?.country])
   
   // Load cities when state is selected
   useEffect(() => {
-    if (selectedState && selectedCountry) {
-      const stateCities = City.getCitiesOfState(
-        selectedCountry, 
-        selectedState
-      )
+    const countryCode = formData?.instituteAddress?.[0]?.country
+    const stateCode = formData?.instituteAddress?.[0]?.state
+    
+    if (countryCode && stateCode) {
+      const stateCities = City.getCitiesOfState(countryCode, stateCode)
       setCities(stateCities)
     } else {
       setCities([])
     }
-  }, [selectedState, selectedCountry])
+  }, [formData?.instituteAddress?.[0]?.country, formData?.instituteAddress?.[0]?.state])
   
   // Handle country change
   const handleCountryChange = (e) => {
     const countryCode = e.target.value
-    setSelectedCountry(countryCode)
-    setSelectedState("")
-    setSelectedCity("")
-    
     const country = countries.find(c => c.isoCode === countryCode)
     
-    setFormData(prev => ({
-      ...prev,
-      instituteAddress: [
-        {
-          ...prev.instituteAddress?.[0],
-          country: country?.name || countryCode,
-          state: "",
-          district: "",
-          city: ""
-        }
-      ]
-    }))
+    // Create synthetic event for context handleChange
+    const syntheticEvent = {
+      target: {
+        name: 'instituteAddress.0.country',
+        value: countryCode,
+        type: 'text'
+      }
+    }
+    handleChange(syntheticEvent)
+    
+    // Clear dependent fields
+    const clearStateEvent = {
+      target: {
+        name: 'instituteAddress.0.state',
+        value: '',
+        type: 'text'
+      }
+    }
+    handleChange(clearStateEvent)
+    
+    const clearCityEvent = {
+      target: {
+        name: 'instituteAddress.0.city',
+        value: '',
+        type: 'text'
+      }
+    }
+    handleChange(clearCityEvent)
+    
+    const clearDistrictEvent = {
+      target: {
+        name: 'instituteAddress.0.district',
+        value: '',
+        type: 'text'
+      }
+    }
+    handleChange(clearDistrictEvent)
   }
   
   // Handle state change
   const handleStateChange = (e) => {
     const stateCode = e.target.value
-    setSelectedState(stateCode)
-    setSelectedCity("")
     
-    const state = states.find(s => s.isoCode === stateCode)
+    // Create synthetic event for context handleChange
+    const syntheticEvent = {
+      target: {
+        name: 'instituteAddress.0.state',
+        value: stateCode,
+        type: 'text'
+      }
+    }
+    handleChange(syntheticEvent)
     
-    setFormData(prev => ({
-      ...prev,
-      instituteAddress: [
-        {
-          ...prev.instituteAddress?.[0],
-          state: state?.name || stateCode,
-          district: "",
-          city: ""
-        }
-      ]
-    }))
+    // Clear dependent fields
+    const clearCityEvent = {
+      target: {
+        name: 'instituteAddress.0.city',
+        value: '',
+        type: 'text'
+      }
+    }
+    handleChange(clearCityEvent)
+    
+    const clearDistrictEvent = {
+      target: {
+        name: 'instituteAddress.0.district',
+        value: '',
+        type: 'text'
+      }
+    }
+    handleChange(clearDistrictEvent)
   }
   
   // Handle city change
   const handleCityChange = (e) => {
     const cityName = e.target.value
-    setSelectedCity(cityName)
     
-    setFormData(prev => ({
-      ...prev,
-      instituteAddress: [
-        {
-          ...prev.instituteAddress?.[0],
-          city: cityName
-        }
-      ]
-    }))
+    const syntheticEvent = {
+      target: {
+        name: 'instituteAddress.0.city',
+        value: cityName,
+        type: 'text'
+      }
+    }
+    handleChange(syntheticEvent)
   }
   
   // Handle district change
   const handleDistrictChange = (e) => {
     const districtName = e.target.value
     
-    setFormData(prev => ({
-      ...prev,
-      instituteAddress: [
-        {
-          ...prev.instituteAddress?.[0],
-          district: districtName
-        }
-      ]
-    }))
+    const syntheticEvent = {
+      target: {
+        name: 'instituteAddress.0.district',
+        value: districtName,
+        type: 'text'
+      }
+    }
+    handleChange(syntheticEvent)
   }
   
   // Handle street address change
   const handleStreetAddressChange = (e) => {
     const streetAddress = e.target.value
     
-    setFormData(prev => ({
-      ...prev,
-      instituteAddress: [
-        {
-          ...prev.instituteAddress?.[0],
-          streetAddress: streetAddress
-        }
-      ]
-    }))
+    const syntheticEvent = {
+      target: {
+        name: 'instituteAddress.0.streetAddress',
+        value: streetAddress,
+        type: 'text'
+      }
+    }
+    handleChange(syntheticEvent)
   }
   
   // Handle pincode change
@@ -167,25 +191,26 @@ const RegisteredAddress = () => {
     // Only allow numbers
     const value = e.target.value.replace(/[^0-9]/g, '')
     
-    setFormData(prev => ({
-      ...prev,
-      instituteAddress: [
-        {
-          ...prev.instituteAddress?.[0],
-          pincode: value
-        }
-      ]
-    }))
+    const syntheticEvent = {
+      target: {
+        name: 'instituteAddress.0.pincode',
+        value: value,
+        type: 'text'
+      }
+    }
+    handleChange(syntheticEvent)
   }
 
   // Get country name from ISO code (for display)
   const getCountryName = (isoCode) => {
+    if (!isoCode) return ''
     const country = countries.find(c => c.isoCode === isoCode)
-    return country?.name || isoCode
+    return country ? `${country.flag} ${country.name}` : isoCode
   }
 
   // Get state name from ISO code (for display)
   const getStateName = (isoCode) => {
+    if (!isoCode) return ''
     const state = states.find(s => s.isoCode === isoCode)
     return state?.name || isoCode
   }
@@ -216,6 +241,9 @@ const RegisteredAddress = () => {
   const currentSectionIndex = sectionOrder.indexOf("Registered Address")
 
   const handleNext = () => {
+    // Save to localStorage before navigating
+    localStorage.setItem('instituteFormData', JSON.stringify(formData))
+    
     const nextIndex = currentSectionIndex + 1
     if (nextIndex < sectionOrder.length) {
       const nextSection = sectionOrder[nextIndex]
@@ -252,6 +280,13 @@ const RegisteredAddress = () => {
     )
   }
 
+  // Get display value for country select
+  const getCountryDisplayValue = () => {
+    const countryCode = formData?.instituteAddress?.[0]?.country
+    const country = countries.find(c => c.isoCode === countryCode)
+    return countryCode ? `${country?.flag || ''} ${country?.name || countryCode}` : ''
+  }
+
   return (
     <>
       <section className='flex'>
@@ -279,7 +314,7 @@ const RegisteredAddress = () => {
                     <span className='text-red-500 ml-1'>*</span>
                   </label>
                   <select
-                    value={selectedCountry}
+                    value={formData?.instituteAddress?.[0]?.country || ''}
                     onChange={handleCountryChange}
                     className='w-full py-3 px-4 border border-[#8B4513]/30 rounded-lg bg-[#FFF7ED]/30 
                              focus:border-[#FF8C00] focus:ring-2 focus:ring-[#FF8C00]/20 outline-none 
@@ -301,16 +336,16 @@ const RegisteredAddress = () => {
                     <span className='text-red-500 ml-1'>*</span>
                   </label>
                   <select
-                    value={selectedState}
+                    value={formData?.instituteAddress?.[0]?.state || ''}
                     onChange={handleStateChange}
-                    disabled={!selectedCountry}
+                    disabled={!formData?.instituteAddress?.[0]?.country}
                     className='w-full py-3 px-4 border border-[#8B4513]/30 rounded-lg bg-[#FFF7ED]/30 
                              focus:border-[#FF8C00] focus:ring-2 focus:ring-[#FF8C00]/20 outline-none 
                              transition-all duration-300 text-[#6A3E2E]
                              disabled:opacity-50 disabled:cursor-not-allowed'
                   >
                     <option value="" disabled>
-                      {selectedCountry ? 'Select state' : 'Select country first'}
+                      {formData?.instituteAddress?.[0]?.country ? 'Select state' : 'Select country first'}
                     </option>
                     {states.map((state) => (
                       <option key={state.isoCode} value={state.isoCode}>
@@ -345,16 +380,16 @@ const RegisteredAddress = () => {
                   </label>
                   {cities.length > 0 ? (
                     <select
-                      value={selectedCity}
+                      value={formData?.instituteAddress?.[0]?.city || ''}
                       onChange={handleCityChange}
-                      disabled={!selectedState}
+                      disabled={!formData?.instituteAddress?.[0]?.state}
                       className='w-full py-3 px-4 border border-[#8B4513]/30 rounded-lg bg-[#FFF7ED]/30 
                                focus:border-[#FF8C00] focus:ring-2 focus:ring-[#FF8C00]/20 outline-none 
                                transition-all duration-300 text-[#6A3E2E]
                                disabled:opacity-50 disabled:cursor-not-allowed'
                     >
                       <option value="" disabled>
-                        {selectedState ? 'Select city' : 'Select state first'}
+                        {formData?.instituteAddress?.[0]?.state ? 'Select city' : 'Select state first'}
                       </option>
                       {cities.map((city) => (
                         <option key={city.name} value={city.name}>
@@ -373,7 +408,7 @@ const RegisteredAddress = () => {
                                transition-all duration-300 placeholder:text-[#8B4513]/40 text-[#6A3E2E]'
                     />
                   )}
-                  {cities.length === 0 && selectedState && (
+                  {cities.length === 0 && formData?.instituteAddress?.[0]?.state && (
                     <p className='text-xs text-[#8B4513]/60 mt-1'>
                       No cities found in dropdown. Please enter manually.
                     </p>
@@ -435,8 +470,8 @@ const RegisteredAddress = () => {
                       <p className='text-sm text-[#8B4513]/70 mt-1'>
                         {formData.instituteAddress[0].streetAddress}, {formData.instituteAddress[0].city}, 
                         {formData.instituteAddress[0].district && ` ${formData.instituteAddress[0].district},`} 
-                        {formData.instituteAddress[0].state && ` ${formData.instituteAddress[0].state},`} 
-                        {formData.instituteAddress[0].country} - {formData.instituteAddress[0].pincode}
+                        {getStateName(formData.instituteAddress[0].state)}, 
+                        {getCountryName(formData.instituteAddress[0].country)} - {formData.instituteAddress[0].pincode}
                       </p>
                     </div>
                   </div>

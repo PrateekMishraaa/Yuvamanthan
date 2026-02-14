@@ -6,9 +6,10 @@ import { UserContext } from "../../Context/InstitutesContext.jsx";
 
 const Appearance = () => {
   const navigate = useNavigate();
-  const { formData, handleChange, logo, handleLogoChange, handleLogoRemove } =
+  const { formData, handleChange, logo, handleLogoChange, handleLogoRemove, setFormData } =
     useContext(UserContext);
-  // console.log("This is logo", logo, formData);
+  
+  console.log("Form data appearance:", formData?.appearance); // Check what's in context
 
   const sectionOrder = [
     "Institution",
@@ -37,6 +38,8 @@ const Appearance = () => {
   const handleNext = () => {
     const nextIndex = currentSectionIndex + 1;
     if (nextIndex < sectionOrder.length) {
+      // Save to localStorage before navigating
+      localStorage.setItem('instituteFormData', JSON.stringify(formData));
       const nextSection = sectionOrder[nextIndex];
       const nextPath = sectionToPath[nextSection];
       navigate(`/institution/${nextPath}`);
@@ -52,87 +55,133 @@ const Appearance = () => {
     }
   };
 
-  // Handle website URL change - FIXED to match schema field name
-  const handleWebsiteChange = (e) => {
-    const { value } = e.target;
-    // Update the instituteWebsite field in appreance array
-    setFormData((prev) => ({
-      ...prev,
-      appreance: [
-        {
-          ...prev.appreance[0],
-          instituteWebsite: value,
-        },
-      ],
-    }));
-  };
-
-  // Check if form is valid to enable next button
-  const isFormValid = () => {
-    // Check if logo exists (either in logo state or in formData)
-    const hasLogo = logo?.file || formData?.appreance?.[0]?.instituteLogo;
-    // Check if website URL exists and is not empty
-    const hasWebsite =
-      formData?.appreance?.[0]?.instituteWebsite?.trim() !== "";
-
-    return hasLogo && hasWebsite;
-  };
-
-  // Get logo preview URL
-  const getLogoPreview = () => {
-    if (logo?.preview) return logo.preview;
-    if (formData?.appreance?.[0]?.instituteLogo) {
-      // If it's stored as an object with preview
-      if (
-        typeof formData.appreance[0].instituteLogo === "object" &&
-        formData.appreance[0].instituteLogo.preview
-      ) {
-        return formData.appreance[0].instituteLogo.preview;
-      }
-    }
-    return null;
-  };
-
-  // Handle logo upload with formData update
-  const handleLogoUpload = (e) => {
-    handleLogoChange(e);
-
-    // Also update formData.appreance[0].instituteLogo
-    const file = e.target.files[0];
-    if (file) {
-      const previewUrl = URL.createObjectURL(file);
-      setFormData((prev) => ({
+  // Initialize appearance array if it doesn't exist
+  const initializeAppearance = () => {
+    if (!formData.appearance || formData.appearance.length === 0) {
+      setFormData(prev => ({
         ...prev,
-        appreance: [
-          {
-            ...prev.appreance[0],
-            instituteLogo: {
-              file,
-              preview: previewUrl,
-              name: file.name,
-              type: file.type,
-              size: file.size,
-            },
-          },
-        ],
+        appearance: [{
+          instituteLogo: "",
+          instituteWebsite: ""
+        }]
       }));
     }
   };
 
-  // Handle logo removal with formData update
-  const handleLogoRemoval = () => {
-    handleLogoRemove();
+  // Call initialization on component mount
+  React.useEffect(() => {
+    initializeAppearance();
+  }, []);
 
-    // Also clear formData.appreance[0].instituteLogo
-    setFormData((prev) => ({
-      ...prev,
-      appreance: [
-        {
-          ...prev.appreance[0],
-          instituteLogo: "",
-        },
-      ],
-    }));
+  // Handle website URL change - FIXED to use correct field name and array indexing
+  const handleWebsiteChange = (e) => {
+    const { value } = e.target;
+    
+    // Use the context's handleChange with proper array indexing
+    const syntheticEvent = {
+      target: {
+        name: 'appearance.0.instituteWebsite', // Note: using 'appearance' not 'appreance'
+        value: value,
+        type: 'text'
+      }
+    };
+    handleChange(syntheticEvent);
+  };
+
+  // Check if form is valid to enable next button
+  const isFormValid = () => {
+    // Safely check if appearance exists and has values
+    const appearanceData = formData?.appearance?.[0];
+    
+    // For now, only check if website URL exists and is not empty
+    // Logo validation is temporarily removed
+    const hasWebsite = appearanceData?.instituteWebsite?.trim() !== "";
+
+    return hasWebsite; // Only website is required now
+  };
+
+  // Get logo preview URL - COMMENTED OUT FOR NOW
+  // const getLogoPreview = () => {
+  //   if (logo?.preview) return logo.preview;
+  //   
+  //   const appearanceData = formData?.appearance?.[0];
+  //   if (appearanceData?.instituteLogo) {
+  //     // If it's stored as an object with preview
+  //     if (
+  //       typeof appearanceData.instituteLogo === "object" &&
+  //       appearanceData.instituteLogo.preview
+  //     ) {
+  //       return appearanceData.instituteLogo.preview;
+  //     }
+  //   }
+  //   return null;
+  // };
+
+  // Handle logo upload with formData update - COMMENTED OUT FOR NOW
+  // const handleLogoUpload = (e) => {
+  //   handleLogoChange(e);
+  //
+  //   // Also update formData.appearance[0].instituteLogo
+  //   const file = e.target.files[0];
+  //   if (file) {
+  //     const previewUrl = URL.createObjectURL(file);
+  //     
+  //     // Initialize appearance array if needed
+  //     if (!formData.appearance || formData.appearance.length === 0) {
+  //       setFormData(prev => ({
+  //         ...prev,
+  //         appearance: [{
+  //           instituteLogo: {
+  //             file,
+  //             preview: previewUrl,
+  //             name: file.name,
+  //             type: file.type,
+  //             size: file.size,
+  //           },
+  //           instituteWebsite: ""
+  //         }]
+  //       }));
+  //     } else {
+  //       setFormData((prev) => ({
+  //         ...prev,
+  //         appearance: [
+  //           {
+  //             ...prev.appearance[0],
+  //             instituteLogo: {
+  //               file,
+  //               preview: previewUrl,
+  //               name: file.name,
+  //               type: file.type,
+  //               size: file.size,
+  //             },
+  //           },
+  //         ],
+  //       }));
+  //     }
+  //   }
+  // };
+
+  // Handle logo removal with formData update - COMMENTED OUT FOR NOW
+  // const handleLogoRemoval = () => {
+  //   handleLogoRemove();
+  //
+  //   // Also clear formData.appearance[0].instituteLogo
+  //   if (formData.appearance && formData.appearance.length > 0) {
+  //     setFormData((prev) => ({
+  //       ...prev,
+  //       appearance: [
+  //         {
+  //           ...prev.appearance[0],
+  //           instituteLogo: "",
+  //         },
+  //       ],
+  //     }));
+  //   }
+  // };
+
+  // Safely get appearance value with fallback
+  const getAppearanceValue = () => {
+    return formData?.appearance?.[0]?.instituteWebsite || "";
   };
 
   return (
@@ -156,8 +205,8 @@ const Appearance = () => {
 
             {/* Form Content */}
             <div className="w-full px-4">
-              {/* Institute Logo Upload Section */}
-              <div className="mb-10">
+              {/* Institute Logo Upload Section - COMMENTED OUT FOR NOW */}
+              {/* <div className="mb-10">
                 <div className="flex items-center justify-between mb-4">
                   <div>
                     <h2 className="text-xl font-semibold text-[#6A3E2E]">
@@ -172,7 +221,6 @@ const Appearance = () => {
                 </div>
 
                 <div className="flex flex-col md:flex-row items-start md:items-center gap-8">
-                  {/* Logo Preview Area */}
                   <div className="flex-shrink-0">
                     <div className="w-40 h-40 rounded-2xl border-2 border-dashed border-[#8B4513]/30 bg-gradient-to-br from-[#FFF7ED] to-[#FFEDD5] flex items-center justify-center overflow-hidden">
                       {getLogoPreview() ? (
@@ -204,7 +252,6 @@ const Appearance = () => {
                     </div>
                   </div>
 
-                  {/* Upload Controls */}
                   <div className="flex-grow space-y-4">
                     <div className="flex flex-col sm:flex-row gap-4">
                       <label className="relative">
@@ -232,7 +279,7 @@ const Appearance = () => {
                         </div>
                       </label>
 
-                      {(logo || formData?.appreance?.[0]?.instituteLogo) && (
+                      {(logo || formData?.appearance?.[0]?.instituteLogo) && (
                         <button
                           onClick={handleLogoRemoval}
                           className="px-6 py-3 border-2 border-red-500 text-red-500 rounded-lg font-semibold hover:bg-red-50 hover:bg-red-500 hover:text-white transition-all duration-300 flex items-center gap-2"
@@ -260,7 +307,7 @@ const Appearance = () => {
                     </p>
                   </div>
                 </div>
-              </div>
+              </div> */}
 
               {/* Website URL Section */}
               <div className="mb-10">
@@ -281,9 +328,9 @@ const Appearance = () => {
                     <span className="pl-4 text-[#8B4513]/60">https://</span>
                     <input
                       type="url"
-                      name="appreance.instituteWebsite"
-                      value={formData?.appreance?.[0]?.instituteWebsite || ""}
-                      onChange={handleChange}
+                      name="appearance.0.instituteWebsite"
+                      value={getAppearanceValue()}
+                      onChange={handleWebsiteChange}
                       placeholder="www.yourinstitute.edu"
                       className="w-full py-3 px-2 bg-transparent border-none outline-none text-[#6A3E2E] placeholder:text-[#8B4513]/40"
                     />

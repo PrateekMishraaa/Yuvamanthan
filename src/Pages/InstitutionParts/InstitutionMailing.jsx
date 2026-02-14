@@ -1,204 +1,140 @@
-import React, { useContext, useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
-import Sidebar from '../../Components/Sidebar/Sidebar'
-import Trouble from '../../Components/Trouble/Trouble'
-import { Country, State, City } from "country-state-city"
-import { UserContext } from "../../Context/InstitutesContext.jsx"
+import React, { useContext, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Sidebar from '../../Components/Sidebar/Sidebar';
+import Trouble from '../../Components/Trouble/Trouble';
+import { Country, State, City } from "country-state-city";
+import { UserContext } from "../../Context/InstitutesContext.jsx";
 
 const InstitutionMailing = () => {
-  const navigate = useNavigate()
-  const { formData, setFormData, handleChange, handleSubmit } = useContext(UserContext)
+  const navigate = useNavigate();
+  const { formData, setFormData, handleSubmit } = useContext(UserContext);
   
-  // State for selected country and state
-  const [selectedCountry, setSelectedCountry] = useState(formData?.MailingAddress?.[0]?.Country || "IN")
-  const [selectedState, setSelectedState] = useState(formData?.MailingAddress?.[0]?.State || "")
-  const [selectedCity, setSelectedCity] = useState(formData?.MailingAddress?.[0]?.City || "")
+  const [selectedCountry, setSelectedCountry] = useState("");
+  const [selectedState, setSelectedState] = useState("");
   
-  // Get all countries
-  const countries = Country.getAllCountries()
+  const countries = Country.getAllCountries();
+  const states = selectedCountry ? State.getStatesOfCountry(selectedCountry) : [];
   
-  // Get states for selected country
-  const states = selectedCountry ? State.getStatesOfCountry(selectedCountry) : []
-  
-  // Get cities for selected state and country
-  const cities = selectedState && selectedCountry 
-    ? City.getCitiesOfState(selectedCountry, selectedState) 
-    : []
-
-  // Section order matching sidebar
-  const sectionOrder = [
-    "Institution",
-    "Overview",
-    "Registered Address",
-    "Appearance",
-    "Social Presence",
-    "About You",
-    "Documents"
-  ]
-
-  // Get current section index
-  const currentSectionIndex = sectionOrder.indexOf("Documents")
-
-  const handlePrevious = () => {
-    const prevIndex = currentSectionIndex - 1
-    if (prevIndex >= 0) {
-      navigate(`/institution/${sectionOrder[prevIndex].toLowerCase().replace(/\s+/g, '-')}`)
-    }
-  }
-
-  // Handle country change
-  const handleCountryChange = (e) => {
-    const countryCode = e.target.value
-    setSelectedCountry(countryCode)
-    setSelectedState("")
-    setSelectedCity("")
-    
-    const country = countries.find(c => c.isoCode === countryCode)
-    
-    // Update formData
-    setFormData(prev => ({
-      ...prev,
-      MailingAddress: [
-        {
-          ...prev.MailingAddress[0],
-          Country: country?.name || "",
-          State: "",
-          District: "",
-          City: "",
-          StreetAddress: prev.MailingAddress[0]?.StreetAddress || "",
-          Pincode: prev.MailingAddress[0]?.Pincode || ""
-        }
-      ]
-    }))
-  }
-
-  // Handle state change
-  const handleStateChange = (e) => {
-    const stateCode = e.target.value
-    setSelectedState(stateCode)
-    setSelectedCity("")
-    
-    const state = states.find(s => s.isoCode === stateCode)
-    
-    // Update formData
-    setFormData(prev => ({
-      ...prev,
-      MailingAddress: [
-        {
-          ...prev.MailingAddress[0],
-          State: state?.name || "",
-          District: "",
-          City: ""
-        }
-      ]
-    }))
-  }
-
-  // Handle city change
-  const handleCityChange = (e) => {
-    const cityName = e.target.value
-    setSelectedCity(cityName)
-    
-    // Update formData
-    setFormData(prev => ({
-      ...prev,
-      MailingAddress: [
-        {
-          ...prev.MailingAddress[0],
-          City: cityName
-        }
-      ]
-    }))
-  }
-
-  // Handle district change
-  const handleDistrictChange = (e) => {
-    const districtName = e.target.value
-    
-    setFormData(prev => ({
-      ...prev,
-      MailingAddress: [
-        {
-          ...prev.MailingAddress[0],
-          District: districtName
-        }
-      ]
-    }))
-  }
-
-  // Handle street address change
-  const handleStreetAddressChange = (e) => {
-    const streetAddress = e.target.value
-    
-    setFormData(prev => ({
-      ...prev,
-      MailingAddress: [
-        {
-          ...prev.MailingAddress[0],
-          StreetAddress: streetAddress
-        }
-      ]
-    }))
-  }
-
-  // Handle pincode change
-  const handlePincodeChange = (e) => {
-    let pincode = e.target.value
-    // Remove non-numeric characters
-    pincode = pincode.replace(/\D/g, '')
-    // Limit to 6 digits
-    pincode = pincode.slice(0, 6)
-    
-    setFormData(prev => ({
-      ...prev,
-      MailingAddress: [
-        {
-          ...prev.MailingAddress[0],
-          Pincode: pincode
-        }
-      ]
-    }))
-  }
-
-  // Check if form is valid
-  const isFormValid = () => {
-    const mailing = formData?.MailingAddress?.[0] || {}
-    return (
-      mailing.Country &&
-      mailing.State &&
-      mailing.District &&
-      mailing.StreetAddress &&
-      mailing.City &&
-      mailing.Pincode &&
-      mailing.Pincode.length === 6
-    )
-  }
-
-  // Initialize formData.MailingAddress if empty
   useEffect(() => {
+    // Initialize if empty
     if (!formData.MailingAddress || formData.MailingAddress.length === 0) {
       setFormData(prev => ({
         ...prev,
-        MailingAddress: [
-          {
-            Country: "",
-            State: "",
-            District: "",
-            StreetAddress: "",
-            City: "",
-            Pincode: ""
-          }
-        ]
-      }))
+        MailingAddress: [{
+          Country: "",
+          State: "",
+          District: "",
+          StreetAddress: "",
+          City: "",
+          Pincode: ""
+        }]
+      }));
+    } else {
+      // Set selected values from formData
+      const countryName = formData.MailingAddress[0]?.Country;
+      if (countryName) {
+        const country = countries.find(c => c.name === countryName);
+        if (country) setSelectedCountry(country.isoCode);
+      }
     }
-  }, [])
+  }, []);
+
+  const handleCountryChange = (e) => {
+    const countryCode = e.target.value;
+    setSelectedCountry(countryCode);
+    setSelectedState("");
+    
+    const country = countries.find(c => c.isoCode === countryCode);
+    
+    setFormData(prev => ({
+      ...prev,
+      MailingAddress: [{
+        ...prev.MailingAddress[0],
+        Country: country?.name || "",
+        State: "",
+        District: "",
+        City: "",
+        Pincode: prev.MailingAddress[0]?.Pincode || ""
+      }]
+    }));
+  };
+
+  const handleStateChange = (e) => {
+    const stateCode = e.target.value;
+    setSelectedState(stateCode);
+    
+    const state = states.find(s => s.isoCode === stateCode);
+    
+    setFormData(prev => ({
+      ...prev,
+      MailingAddress: [{
+        ...prev.MailingAddress[0],
+        State: state?.name || "",
+        District: "",
+        City: ""
+      }]
+    }));
+  };
+
+  const handleDistrictChange = (e) => {
+    setFormData(prev => ({
+      ...prev,
+      MailingAddress: [{
+        ...prev.MailingAddress[0],
+        District: e.target.value
+      }]
+    }));
+  };
+
+  const handleCityChange = (e) => {
+    setFormData(prev => ({
+      ...prev,
+      MailingAddress: [{
+        ...prev.MailingAddress[0],
+        City: e.target.value
+      }]
+    }));
+  };
+
+  const handleStreetAddressChange = (e) => {
+    setFormData(prev => ({
+      ...prev,
+      MailingAddress: [{
+        ...prev.MailingAddress[0],
+        StreetAddress: e.target.value
+      }]
+    }));
+  };
+
+  const handlePincodeChange = (e) => {
+    let pincode = e.target.value.replace(/\D/g, '').slice(0, 6);
+    
+    setFormData(prev => ({
+      ...prev,
+      MailingAddress: [{
+        ...prev.MailingAddress[0],
+        Pincode: pincode
+      }]
+    }));
+  };
+
+  const isFormValid = () => {
+    const mailing = formData?.MailingAddress?.[0] || {};
+    return (
+      mailing.Country?.trim() &&
+      mailing.State?.trim() &&
+      mailing.District?.trim() &&
+      mailing.StreetAddress?.trim() &&
+      mailing.City?.trim() &&
+      mailing.Pincode?.length === 6
+    );
+  };
 
   return (
     <section className='flex'>
       <Sidebar currentSection="Documents" />
       <section className='h-auto w-full bg-gradient-to-br from-[#FFF7ED] to-[#FFEDD5] p-4'>
         <div className='h-auto w-full bg-white rounded-2xl shadow-lg p-6 border border-[#8B4513]/10'>
-          {/* Header Section */}
           <div className='flex justify-between items-start border-b border-[#8B4513]/10 pb-4 mb-6'>
             <div>
               <div className='flex items-center gap-3 mb-2'>
@@ -216,14 +152,12 @@ const InstitutionMailing = () => {
             <Trouble />
           </div>
 
-          {/* Form Content */}
           <div className='w-full px-4'>
             <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
               {/* Country */}
               <div className='space-y-2'>
                 <label className='flex items-center gap-1 text-sm font-semibold text-[#6A3E2E]'>
-                  Country
-                  <span className='text-red-500'>*</span>
+                  Country <span className='text-red-500'>*</span>
                 </label>
                 <select
                   value={selectedCountry}
@@ -232,7 +166,7 @@ const InstitutionMailing = () => {
                            focus:border-[#FF8C00] focus:ring-2 focus:ring-[#FF8C00]/20 outline-none 
                            transition-all duration-300 text-[#6A3E2E]'
                 >
-                  <option value="" disabled>Select country</option>
+                  <option value="">Select country</option>
                   {countries.map((country) => (
                     <option key={country.isoCode} value={country.isoCode}>
                       {country.flag} {country.name}
@@ -244,8 +178,7 @@ const InstitutionMailing = () => {
               {/* State */}
               <div className='space-y-2'>
                 <label className='flex items-center gap-1 text-sm font-semibold text-[#6A3E2E]'>
-                  State
-                  <span className='text-red-500'>*</span>
+                  State <span className='text-red-500'>*</span>
                 </label>
                 <select
                   value={selectedState}
@@ -256,7 +189,7 @@ const InstitutionMailing = () => {
                            transition-all duration-300 text-[#6A3E2E]
                            disabled:opacity-50 disabled:cursor-not-allowed'
                 >
-                  <option value="" disabled>Select state</option>
+                  <option value="">Select state</option>
                   {states.map((state) => (
                     <option key={state.isoCode} value={state.isoCode}>
                       {state.name}
@@ -268,8 +201,7 @@ const InstitutionMailing = () => {
               {/* District */}
               <div className='space-y-2'>
                 <label className='flex items-center gap-1 text-sm font-semibold text-[#6A3E2E]'>
-                  District
-                  <span className='text-red-500'>*</span>
+                  District <span className='text-red-500'>*</span>
                 </label>
                 <input
                   type="text"
@@ -282,69 +214,42 @@ const InstitutionMailing = () => {
                 />
               </div>
 
-              {/* City/District from package or manual input */}
+              {/* City */}
               <div className='space-y-2'>
                 <label className='flex items-center gap-1 text-sm font-semibold text-[#6A3E2E]'>
-                  City
-                  <span className='text-red-500'>*</span>
-                </label>
-                {cities.length > 0 ? (
-                  <select
-                    value={selectedCity}
-                    onChange={handleCityChange}
-                    disabled={!selectedState}
-                    className='w-full py-3 px-4 border border-[#8B4513]/30 rounded-lg bg-[#FFF7ED]/30 
-                             focus:border-[#FF8C00] focus:ring-2 focus:ring-[#FF8C00]/20 outline-none 
-                             transition-all duration-300 text-[#6A3E2E]
-                             disabled:opacity-50 disabled:cursor-not-allowed'
-                  >
-                    <option value="" disabled>Select city</option>
-                    {cities.map((city, index) => (
-                      <option key={index} value={city.name}>
-                        {city.name}
-                      </option>
-                    ))}
-                  </select>
-                ) : (
-                  <input
-                    type="text"
-                    value={formData?.MailingAddress?.[0]?.City || ''}
-                    onChange={handleCityChange}
-                    placeholder="Enter city or town name"
-                    className='w-full py-3 px-4 border border-[#8B4513]/30 rounded-lg bg-[#FFF7ED]/30 
-                             focus:border-[#FF8C00] focus:ring-2 focus:ring-[#FF8C00]/20 outline-none 
-                             transition-all duration-300 placeholder:text-[#8B4513]/40 text-[#6A3E2E]'
-                  />
-                )}
-                {cities.length === 0 && (
-                  <p className='text-xs text-[#8B4513]/60'>
-                    No cities found in dropdown. Please enter manually.
-                  </p>
-                )}
-              </div>
-
-              {/* Street Address */}
-              <div className='space-y-2 md:col-span-2'>
-                <label className='flex items-center gap-1 text-sm font-semibold text-[#6A3E2E]'>
-                  Street Address
-                  <span className='text-red-500'>*</span>
+                  City <span className='text-red-500'>*</span>
                 </label>
                 <input
                   type="text"
-                  value={formData?.MailingAddress?.[0]?.StreetAddress || ''}
-                  onChange={handleStreetAddressChange}
-                  placeholder="House/Shop/Flat No., Building Name, Road/Street, Area/Locality"
+                  value={formData?.MailingAddress?.[0]?.City || ''}
+                  onChange={handleCityChange}
+                  placeholder="Enter city name"
                   className='w-full py-3 px-4 border border-[#8B4513]/30 rounded-lg bg-[#FFF7ED]/30 
                            focus:border-[#FF8C00] focus:ring-2 focus:ring-[#FF8C00]/20 outline-none 
                            transition-all duration-300 placeholder:text-[#8B4513]/40 text-[#6A3E2E]'
                 />
               </div>
 
-              {/* Pincode */}
-              <div className='space-y-2 md:col-span-1'>
+              {/* Street Address */}
+              <div className='space-y-2 md:col-span-2'>
                 <label className='flex items-center gap-1 text-sm font-semibold text-[#6A3E2E]'>
-                  Pincode
-                  <span className='text-red-500'>*</span>
+                  Street Address <span className='text-red-500'>*</span>
+                </label>
+                <textarea
+                  value={formData?.MailingAddress?.[0]?.StreetAddress || ''}
+                  onChange={handleStreetAddressChange}
+                  placeholder="House/Shop/Flat No., Building Name, Road/Street, Area/Locality"
+                  rows="3"
+                  className='w-full py-3 px-4 border border-[#8B4513]/30 rounded-lg bg-[#FFF7ED]/30 
+                           focus:border-[#FF8C00] focus:ring-2 focus:ring-[#FF8C00]/20 outline-none 
+                           transition-all duration-300 placeholder:text-[#8B4513]/40 text-[#6A3E2E] resize-none'
+                />
+              </div>
+
+              {/* Pincode */}
+              <div className='space-y-2'>
+                <label className='flex items-center gap-1 text-sm font-semibold text-[#6A3E2E]'>
+                  Pincode <span className='text-red-500'>*</span>
                 </label>
                 <input
                   type="text"
@@ -356,13 +261,9 @@ const InstitutionMailing = () => {
                            focus:border-[#FF8C00] focus:ring-2 focus:ring-[#FF8C00]/20 outline-none 
                            transition-all duration-300 placeholder:text-[#8B4513]/40 text-[#6A3E2E]'
                 />
-                <p className='text-xs text-[#8B4513]/60'>
-                  6-digit pincode (required)
-                </p>
               </div>
             </div>
 
-            {/* Address Preview */}
             {isFormValid() && (
               <div className='mt-8 p-4 bg-[#FFF7ED] rounded-lg border border-[#8B4513]/20'>
                 <div className='flex items-start gap-2'>
@@ -382,10 +283,9 @@ const InstitutionMailing = () => {
               </div>
             )}
 
-            {/* Navigation Buttons */}
             <div className='flex justify-between items-center gap-4 pt-8 mt-6 border-t border-[#8B4513]/10'>
               <button 
-                onClick={handlePrevious}
+                onClick={() => navigate('/institution/about-you')}
                 className='px-8 py-3 border-2 border-[#8B4513] text-[#8B4513] 
                          rounded-lg font-semibold transition-all duration-300 
                          flex items-center gap-2 group hover:bg-[#FFF7ED] 
@@ -413,21 +313,11 @@ const InstitutionMailing = () => {
                 </svg>
               </button>
             </div>
-
-            {/* Form Progress */}
-            <div className='mt-4 flex justify-center'>
-              <div className='flex items-center gap-2'>
-                <div className='w-2 h-2 bg-[#FF8C00] rounded-full'></div>
-                <span className='text-xs text-[#8B4513]/60'>
-                  Final Step • Mailing Address
-                </span>
-              </div>
-            </div>
           </div>
         </div>
       </section>
     </section>
-  )
-}
+  );
+};
 
-export default InstitutionMailing
+export default InstitutionMailing;

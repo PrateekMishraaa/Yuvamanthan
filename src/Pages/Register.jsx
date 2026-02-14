@@ -90,7 +90,7 @@ const Register = () => {
       // console.log("Sending to backend:", backendData);
 
       const response = await axios.post(
-        "https://yuvamanthanbackend.onrender.com/api/register",
+        "http://localhost:5000/api/register",
         backendData,
         {
           headers: {

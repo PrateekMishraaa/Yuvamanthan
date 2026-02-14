@@ -5,7 +5,7 @@ import Trouble from '../../Components/Trouble/Trouble'
 import { UserContext } from '../../Context/InstitutesContext'
 
 const AboutInstitution = () => {
-  const { formData, handleChange } = useContext(UserContext)
+  const { formData, setFormData, handleChange,handleSubmit } = useContext(UserContext)
   const navigate = useNavigate()
   
   // Section order matching sidebar
@@ -22,18 +22,41 @@ const AboutInstitution = () => {
   // Get current section index
   const currentSectionIndex = sectionOrder.indexOf("About You")
 
-  const handleNext = () => {
-    const nextIndex = currentSectionIndex + 1
-    if (nextIndex < sectionOrder.length) {
-      navigate(`/institution/${sectionOrder[nextIndex].toLowerCase().replace(/\s+/g, '-')}`)
-    }
-  }
+  // const handleNext = () => {
+  //   const nextIndex = currentSectionIndex + 1
+  //   if (nextIndex < sectionOrder.length) {
+  //     navigate(`/institution/${sectionOrder[nextIndex].toLowerCase().replace(/\s+/g, '-')}`)
+  //   }
+  // }
 
   const handlePrevious = () => {
     const prevIndex = currentSectionIndex - 1
     if (prevIndex >= 0) {
       navigate(`/institution/${sectionOrder[prevIndex].toLowerCase().replace(/\s+/g, '-')}`)
     }
+  }
+
+  // Handle field changes for InstitutePersonalInfo array
+  const handleFieldChange = (field, value) => {
+    setFormData(prev => ({
+      ...prev,
+      InstitutePersonalInfo: [
+        {
+          ...prev.InstitutePersonalInfo[0],
+          [field]: value
+        }
+      ]
+    }))
+  }
+
+  // Check if form has required fields filled
+  const isFormValid = () => {
+    const info = formData?.InstitutePersonalInfo?.[0] || {}
+    return (
+      info.Firstname?.trim() !== "" &&
+      info.Phone?.trim() !== "" &&
+      info.Phone?.length === 10
+    )
   }
 
   return (
@@ -70,9 +93,8 @@ const AboutInstitution = () => {
                     </div>
                     <input
                       type="text"
-                      name="InstitutePersonalInfo.Firstname"
-                      value={formData.InstitutePersonalInfo[0]?.Firstname || ''}
-                      onChange={handleChange}
+                      value={formData.InstitutePersonalInfo?.[0]?.Firstname || ''}
+                      onChange={(e) => handleFieldChange('Firstname', e.target.value)}
                       placeholder="Enter first name"
                       className='w-full py-3 pl-10 pr-4 border border-[#8B4513]/30 rounded-lg bg-[#FFF7ED]/30 
                                focus:border-[#FF8C00] focus:ring-2 focus:ring-[#FF8C00]/20 outline-none 
@@ -97,9 +119,8 @@ const AboutInstitution = () => {
                     </div>
                     <input
                       type="text"
-                      name="InstitutePersonalInfo.lastName"
-                      value={formData.InstitutePersonalInfo[0]?.lastName || ''}
-                      onChange={handleChange}
+                      value={formData.InstitutePersonalInfo?.[0]?.lastName || ''}
+                      onChange={(e) => handleFieldChange('lastName', e.target.value)}
                       placeholder="Enter last name"
                       className='w-full py-3 pl-10 pr-4 border border-[#8B4513]/30 rounded-lg bg-[#FFF7ED]/30 
                                focus:border-[#FF8C00] focus:ring-2 focus:ring-[#FF8C00]/20 outline-none 
@@ -143,9 +164,11 @@ const AboutInstitution = () => {
                       </div>
                       <input
                         type="tel"
-                        name="InstitutePersonalInfo.Phone"
-                        value={formData.InstitutePersonalInfo[0]?.Phone || ''}
-                        onChange={handleChange}
+                        value={formData.InstitutePersonalInfo?.[0]?.Phone || ''}
+                        onChange={(e) => {
+                          const value = e.target.value.replace(/\D/g, '').slice(0, 10)
+                          handleFieldChange('Phone', value)
+                        }}
                         placeholder="Enter 10-digit phone number"
                         maxLength="10"
                         className='w-full py-3 pl-10 pr-4 border border-[#8B4513]/30 rounded-lg bg-[#FFF7ED]/30 
@@ -163,6 +186,12 @@ const AboutInstitution = () => {
                       <span className='font-medium'>Landline:</span> Include STD code
                     </p>
                   </div>
+                  {formData.InstitutePersonalInfo?.[0]?.Phone && 
+                   formData.InstitutePersonalInfo[0].Phone.length < 10 && (
+                    <p className='text-xs text-red-500 mt-2'>
+                      Phone number must be exactly 10 digits
+                    </p>
+                  )}
                 </div>
 
                 {/* Associated With Institute */}
@@ -178,9 +207,8 @@ const AboutInstitution = () => {
                     </div>
                     <input
                       type="text"
-                      name="InstitutePersonalInfo.AssociatedWithInstitute"
-                      value={formData.InstitutePersonalInfo[0]?.AssociatedWithInstitute || ''}
-                      onChange={handleChange}
+                      value={formData.InstitutePersonalInfo?.[0]?.AssociatedWithInstitute || ''}
+                      onChange={(e) => handleFieldChange('AssociatedWithInstitute', e.target.value)}
                       placeholder="e.g., Director, Principal, Administrator"
                       className='w-full py-3 pl-10 pr-4 border border-[#8B4513]/30 rounded-lg bg-[#FFF7ED]/30 
                                focus:border-[#FF8C00] focus:ring-2 focus:ring-[#FF8C00]/20 outline-none 
@@ -227,13 +255,14 @@ const AboutInstitution = () => {
 
                 {/* Next Button */}
                 <button 
-                  onClick={handleNext}
-                  disabled={currentSectionIndex === sectionOrder.length - 1}
+                  onClick={handleSubmit}
+                  type='submit'
+                  disabled={!isFormValid()}
                   className={`px-8 py-3 bg-gradient-to-r from-[#8B4513] to-[#FF8C00] text-white 
                            rounded-lg font-semibold hover:shadow-lg 
                            hover:from-[#6A3E2E] hover:to-[#C46200] transition-all duration-300 
                            flex items-center gap-2 group
-                           ${currentSectionIndex === sectionOrder.length - 1
+                           ${!isFormValid()
                              ? 'opacity-50 cursor-not-allowed'
                              : 'cursor-pointer'
                            }`}
@@ -243,6 +272,24 @@ const AboutInstitution = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                   </svg>
                 </button>
+              </div>
+
+              {/* Section Steps Indicator */}
+              <div className='mt-6 flex justify-center'>
+                <div className='flex gap-2'>
+                  {sectionOrder.map((item, index) => (
+                    <div
+                      key={index}
+                      className={`h-2 w-12 rounded-full transition-all duration-300 ${
+                        index === currentSectionIndex
+                          ? 'bg-[#8B4513]'
+                          : index < currentSectionIndex
+                            ? 'bg-[#FFA500]'
+                            : 'bg-[#8B4513]/20'
+                      }`}
+                    />
+                  ))}
+                </div>
               </div>
             </div>
           </div>
