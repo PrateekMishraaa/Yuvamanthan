@@ -10,8 +10,6 @@ const Register = () => {
   const navigate = useNavigate();
   const [viewPassword, setViewPassword] = useState(true);
   const [selectedRole, setSelectedRole] = useState("");
-  // console.log('selected role',selectedRole)
-  // console.log('set selected role',setSelectedRole)
   const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
@@ -22,7 +20,7 @@ const Register = () => {
     password: "",
     role:""
   });
-// console.log("This is role based form data",formData)
+
   const handleViewPassword = () => {
     setViewPassword(!viewPassword);
   };
@@ -76,7 +74,6 @@ const Register = () => {
     setLoading(true);
 
     try {
-      // Prepare data for backend (only the fields your API expects)
       const backendData = {
         firstname: formData.firstname,
         lastname: formData.lastname,
@@ -84,13 +81,10 @@ const Register = () => {
         mobile: formData.mobile,
         password: formData.password,
         role: formData.role
-        // Do NOT send role-specific fields as your backend doesn't expect them yet
       };
 
-      // console.log("Sending to backend:", backendData);
-
       const response = await axios.post(
-        "https://yuvamanthanbackend.onrender.com/api/register",
+        "http://localhost:5000/api/register",
         backendData,
         {
           headers: {
@@ -98,7 +92,7 @@ const Register = () => {
           },
         }
       );
-// console.log("respose",response)
+
       Swal.fire({
         icon: "success",
         title: "Registration Successful!",
@@ -136,28 +130,28 @@ const Register = () => {
     <>
       <Navbar />
 
-      <section className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-[#FFF7ED] via-white to-[#FFEDD5] p-4">
-        <div className="w-full max-w-4xl">
+      <section className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-[#FFF7ED] via-white to-[#FFEDD5] px-4 sm:px-6 py-8 sm:py-12">
+        <div className="w-full max-w-5xl mx-auto">
           {/* Header */}
-          <div className="text-center mb-8">
-            <h1 className="text-4xl font-extrabold text-[#6A3E2E] mb-2">
+          <div className="text-center mb-6 sm:mb-8">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#6A3E2E] mb-2">
               Join the <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#6A3E2E] via-[#8B4513] to-[#E07B00]">Yuvamanthan</span> Movement
             </h1>
-            <p className="text-[#8B4513]/80">
+            <p className="text-[#8B4513]/80 text-sm sm:text-base">
               Register and be part of India's largest youth empowerment platform
             </p>
           </div>
 
-          <div className="bg-white rounded-3xl shadow-2xl overflow-hidden border border-[#6A3E2E]/10">
-            <div className="md:flex">
+          <div className="bg-white rounded-xl sm:rounded-2xl lg:rounded-3xl shadow-2xl overflow-hidden border border-[#6A3E2E]/10">
+            <div className="flex flex-col md:flex-row">
               {/* Left Side - Role Selection */}
-              <div className="md:w-2/5 bg-gradient-to-br from-[#6A3E2E] to-[#8B4513] p-8 text-white">
-                <h2 className="text-2xl font-bold mb-6">Select Your Role</h2>
-                <p className="text-white/80 mb-8">
+              <div className="md:w-2/5 bg-gradient-to-br from-[#6A3E2E] to-[#8B4513] p-4 sm:p-5 md:p-6 lg:p-8 text-white">
+                <h2 className="text-lg sm:text-xl md:text-2xl font-bold mb-3 sm:mb-4 md:mb-6">Select Your Role</h2>
+                <p className="text-white/80 text-xs sm:text-sm mb-4 sm:mb-6 md:mb-8">
                   Choose how you want to participate in Yuvamanthan
                 </p>
 
-                <div className="space-y-4">
+                <div className="space-y-3 sm:space-y-4">
                   {[
                     {
                       id: "student",
@@ -182,27 +176,27 @@ const Register = () => {
                       key={role.id}
                       type="button"
                       onClick={() => handleRoleChange(role.id)}
-                      className={`w-full text-left p-4 rounded-xl transition-all duration-300 ${
+                      className={`w-full text-left p-3 sm:p-4 rounded-lg sm:rounded-xl transition-all duration-300 ${
                         selectedRole === role.id
                           ? "bg-gradient-to-r from-[#FFA500] to-[#FF8C00] text-white shadow-lg"
                           : "bg-white/10 hover:bg-white/20"
                       }`}
                     >
-                      <div className="flex items-center gap-3 mb-2">
-                        <div className={`p-2 rounded-lg ${
+                      <div className="flex items-center gap-2 sm:gap-3 mb-1 sm:mb-2">
+                        <div className={`p-1.5 sm:p-2 rounded-lg ${
                           selectedRole === role.id ? "bg-white/20" : "bg-white/10"
                         }`}>
-                          <span className="text-xl">{role.icon}</span>
+                          <span className="text-base sm:text-lg md:text-xl">{role.icon}</span>
                         </div>
-                        <h3 className="font-bold text-lg">{role.title}</h3>
+                        <h3 className="font-bold text-sm sm:text-base md:text-lg">{role.title}</h3>
                       </div>
-                      <p className="text-sm opacity-90">{role.description}</p>
+                      <p className="text-[10px] sm:text-xs opacity-90">{role.description}</p>
                     </button>
                   ))}
                 </div>
 
-                <div className="mt-8 pt-6 border-t border-white/20">
-                  <p className="text-sm text-white/80">
+                <div className="mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-white/20">
+                  <p className="text-xs sm:text-sm text-white/80">
                     Already have an account?{" "}
                     <span
                       onClick={() => navigate("/login")}
@@ -215,20 +209,20 @@ const Register = () => {
               </div>
 
               {/* Right Side - Registration Form */}
-              <div className="md:w-3/5 p-8">
-                <div className="mb-6">
-                  <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#6A3E2E]/10 to-[#8B4513]/10 rounded-full">
-                    <span className="text-sm font-semibold text-[#6A3E2E]">
-                      Registering as: <span className="capitalize">{selectedRole}</span>
+              <div className="md:w-3/5 p-4 sm:p-5 md:p-6 lg:p-8">
+                <div className="mb-4 sm:mb-6">
+                  <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-[#6A3E2E]/10 to-[#8B4513]/10 rounded-full">
+                    <span className="text-xs sm:text-sm font-semibold text-[#6A3E2E]">
+                      Registering as: <span className="capitalize">{selectedRole || "Select a role"}</span>
                     </span>
                   </div>
                 </div>
 
-                <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+                <form className="flex flex-col gap-3 sm:gap-4" onSubmit={handleSubmit}>
                   {/* Basic Information */}
-                  <div className="grid md:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                     <div>
-                      <label className="block text-sm font-semibold text-[#6A3E2E] mb-2">
+                      <label className="block text-xs sm:text-sm font-semibold text-[#6A3E2E] mb-1 sm:mb-2">
                         First Name *
                       </label>
                       <input
@@ -237,13 +231,13 @@ const Register = () => {
                         value={formData.firstname}
                         onChange={handleChange}
                         placeholder="John"
-                        className="w-full px-4 py-3 border border-[#6A3E2E]/20 rounded-xl focus:outline-none focus:border-[#8B4513] focus:ring-2 focus:ring-[#8B4513]/20 transition-all"
+                        className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-[#6A3E2E]/20 rounded-lg sm:rounded-xl focus:outline-none focus:border-[#8B4513] focus:ring-2 focus:ring-[#8B4513]/20 transition-all text-sm sm:text-base"
                         required
                       />
                     </div>
 
                     <div>
-                      <label className="block text-sm font-semibold text-[#6A3E2E] mb-2">
+                      <label className="block text-xs sm:text-sm font-semibold text-[#6A3E2E] mb-1 sm:mb-2">
                         Last Name *
                       </label>
                       <input
@@ -252,15 +246,15 @@ const Register = () => {
                         value={formData.lastname}
                         onChange={handleChange}
                         placeholder="Doe"
-                        className="w-full px-4 py-3 border border-[#6A3E2E]/20 rounded-xl focus:outline-none focus:border-[#8B4513] focus:ring-2 focus:ring-[#8B4513]/20 transition-all"
+                        className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-[#6A3E2E]/20 rounded-lg sm:rounded-xl focus:outline-none focus:border-[#8B4513] focus:ring-2 focus:ring-[#8B4513]/20 transition-all text-sm sm:text-base"
                         required
                       />
                     </div>
                   </div>
 
-                  <div className="grid md:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                     <div>
-                      <label className="block text-sm font-semibold text-[#6A3E2E] mb-2">
+                      <label className="block text-xs sm:text-sm font-semibold text-[#6A3E2E] mb-1 sm:mb-2">
                         Email Address *
                       </label>
                       <input
@@ -269,13 +263,13 @@ const Register = () => {
                         value={formData.email}
                         onChange={handleChange}
                         placeholder="you@example.com"
-                        className="w-full px-4 py-3 border border-[#6A3E2E]/20 rounded-xl focus:outline-none focus:border-[#8B4513] focus:ring-2 focus:ring-[#8B4513]/20 transition-all"
+                        className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-[#6A3E2E]/20 rounded-lg sm:rounded-xl focus:outline-none focus:border-[#8B4513] focus:ring-2 focus:ring-[#8B4513]/20 transition-all text-sm sm:text-base"
                         required
                       />
                     </div>
 
                     <div>
-                      <label className="block text-sm font-semibold text-[#6A3E2E] mb-2">
+                      <label className="block text-xs sm:text-sm font-semibold text-[#6A3E2E] mb-1 sm:mb-2">
                         Mobile Number *
                       </label>
                       <input
@@ -286,7 +280,7 @@ const Register = () => {
                         placeholder="9876543210"
                         pattern="[0-9]{10}"
                         maxLength="10"
-                        className="w-full px-4 py-3 border border-[#6A3E2E]/20 rounded-xl focus:outline-none focus:border-[#8B4513] focus:ring-2 focus:ring-[#8B4513]/20 transition-all"
+                        className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-[#6A3E2E]/20 rounded-lg sm:rounded-xl focus:outline-none focus:border-[#8B4513] focus:ring-2 focus:ring-[#8B4513]/20 transition-all text-sm sm:text-base"
                         required
                       />
                     </div>
@@ -294,7 +288,7 @@ const Register = () => {
 
                   {/* Password */}
                   <div className="relative">
-                    <label className="block text-sm font-semibold text-[#6A3E2E] mb-2">
+                    <label className="block text-xs sm:text-sm font-semibold text-[#6A3E2E] mb-1 sm:mb-2">
                       Password *
                     </label>
                     <input
@@ -304,14 +298,14 @@ const Register = () => {
                       onChange={handleChange}
                       placeholder="Enter your password (min. 6 characters)"
                       minLength="6"
-                      className="w-full px-4 py-3 pr-12 border border-[#6A3E2E]/20 rounded-xl focus:outline-none focus:border-[#8B4513] focus:ring-2 focus:ring-[#8B4513]/20 transition-all"
+                      className="w-full px-3 sm:px-4 py-2.5 sm:py-3 pr-10 sm:pr-12 border border-[#6A3E2E]/20 rounded-lg sm:rounded-xl focus:outline-none focus:border-[#8B4513] focus:ring-2 focus:ring-[#8B4513]/20 transition-all text-sm sm:text-base"
                       required
                     />
                     <span
                       onClick={handleViewPassword}
-                      className="absolute right-4 top-[42px] cursor-pointer text-[#8B4513]/60"
+                      className="absolute right-3 sm:right-4 top-[32px] sm:top-[38px] cursor-pointer text-[#8B4513]/60"
                     >
-                      {viewPassword ? <FaEyeSlash /> : <FaEye />}
+                      {viewPassword ? <FaEyeSlash className="text-sm sm:text-base" /> : <FaEye className="text-sm sm:text-base" />}
                     </span>
                   </div>
 
@@ -324,33 +318,33 @@ const Register = () => {
                   />
 
                   {/* Note about role-specific info */}
-                  <div className="bg-gradient-to-r from-[#FFF7ED] to-[#FFEDD5] rounded-xl p-4 border border-[#FFA500]/20">
-                    <p className="text-sm text-[#8B4513]">
-                      <span className="font-semibold">Note:</span> Complete your profile after registration to add {selectedRole}-specific information.
+                  <div className="bg-gradient-to-r from-[#FFF7ED] to-[#FFEDD5] rounded-lg sm:rounded-xl p-3 sm:p-4 border border-[#FFA500]/20">
+                    <p className="text-xs sm:text-sm text-[#8B4513]">
+                      <span className="font-semibold">Note:</span> Complete your profile after registration to add {selectedRole || "your"}-specific information.
                     </p>
                   </div>
 
                   {/* Submit Button */}
                   <button
                     type="submit"
-                    disabled={loading}
-                    className="w-full py-3 mt-2 bg-gradient-to-r from-[#6A3E2E] via-[#8B4513] to-[#E07B00] text-white font-bold rounded-xl uppercase hover:shadow-lg transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed"
+                    disabled={loading || !selectedRole}
+                    className={`w-full py-2.5 sm:py-3 mt-2 bg-gradient-to-r from-[#6A3E2E] via-[#8B4513] to-[#E07B00] text-white font-bold rounded-lg sm:rounded-xl uppercase hover:shadow-lg transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed text-xs sm:text-sm ${!selectedRole ? 'opacity-50 cursor-not-allowed' : ''}`}
                   >
                     {loading ? (
                       <span className="flex items-center justify-center gap-2">
-                        <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <svg className="animate-spin h-4 w-4 sm:h-5 sm:w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                           <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                           <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                         </svg>
-                        Registering...
+                        <span className="text-xs sm:text-sm">Registering...</span>
                       </span>
                     ) : (
-                      `Register as ${selectedRole}`
+                      `Register as ${selectedRole || 'Select a Role'}`
                     )}
                   </button>
                 </form>
 
-                <p className="text-center text-sm text-[#8B4513]/60 mt-6">
+                <p className="text-center text-[10px] sm:text-xs text-[#8B4513]/60 mt-4 sm:mt-6">
                   By registering, you agree to our{" "}
                   <span className="text-[#6A3E2E] font-semibold cursor-pointer hover:underline">
                     Terms of Service
@@ -365,18 +359,18 @@ const Register = () => {
           </div>
 
           {/* Stats Section */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
-            <div className="bg-white rounded-xl p-4 border border-[#6A3E2E]/10 text-center">
-              <div className="text-2xl font-bold text-[#6A3E2E]">2.4M+</div>
-              <div className="text-sm text-[#8B4513]/80">Students Registered</div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mt-6 sm:mt-8">
+            <div className="bg-white rounded-lg sm:rounded-xl p-3 sm:p-4 border border-[#6A3E2E]/10 text-center">
+              <div className="text-lg sm:text-xl md:text-2xl font-bold text-[#6A3E2E]">2.4M+</div>
+              <div className="text-[10px] sm:text-xs text-[#8B4513]/80">Students Registered</div>
             </div>
-            <div className="bg-white rounded-xl p-4 border border-[#6A3E2E]/10 text-center">
-              <div className="text-2xl font-bold text-[#6A3E2E]">50K+</div>
-              <div className="text-sm text-[#8B4513]/80">Institutions</div>
+            <div className="bg-white rounded-lg sm:rounded-xl p-3 sm:p-4 border border-[#6A3E2E]/10 text-center">
+              <div className="text-lg sm:text-xl md:text-2xl font-bold text-[#6A3E2E]">50K+</div>
+              <div className="text-[10px] sm:text-xs text-[#8B4513]/80">Institutions</div>
             </div>
-            <div className="bg-white rounded-xl p-4 border border-[#6A3E2E]/10 text-center">
-              <div className="text-2xl font-bold text-[#6A3E2E]">5K+</div>
-              <div className="text-sm text-[#8B4513]/80">Teachers</div>
+            <div className="bg-white rounded-lg sm:rounded-xl p-3 sm:p-4 border border-[#6A3E2E]/10 text-center">
+              <div className="text-lg sm:text-xl md:text-2xl font-bold text-[#6A3E2E]">5K+</div>
+              <div className="text-[10px] sm:text-xs text-[#8B4513]/80">Teachers</div>
             </div>
           </div>
         </div>

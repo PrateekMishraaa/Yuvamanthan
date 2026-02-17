@@ -1,7 +1,10 @@
 import React, { createContext, useState } from 'react';
 export const TeacherContext = createContext();
-
+import Swal from "sweetalert2"
+import axios from "axios"
+import { useNavigate } from 'react-router-dom';
 const TeacherProvider = ({ children }) => {
+    // const navigate= useNavigate()
     const [profilePicture,setProfilePicture] = useState(null)
     // console.log("this is profile data",profilePicture)
     const [teacherFormData, setTeacherFormData] = useState({
@@ -19,7 +22,7 @@ const TeacherProvider = ({ children }) => {
         youtube: "",
     });
 
-    // console.log("This is for Teacher data", teacherFormData);
+    console.log("This is for Teacher data from context api", teacherFormData);
 
 
     const handleProfileChange=(e)=>{
@@ -44,6 +47,27 @@ const TeacherProvider = ({ children }) => {
         }
     };
 
+
+    const handleSubmit=async(e)=>{
+            e.preventDefault()
+
+            if(!teacherFormData.FirstName || !teacherFormData.DateOfBirth || !teacherFormData.LastName  || !teacherFormData.facebook || !teacherFormData.gender || !teacherFormData.instagram || !teacherFormData.linkedin || !teacherFormData.twitter || !teacherFormData.websiteUrl || !teacherFormData.youtube){
+                return Swal.fire('All fields are required')
+            }
+            try{
+                    const response = await axios.post(`http://localhost:5000/api/teacher/${id}`,teacherFormData,{
+                        "headers":{
+                            "Content-Type":"application/json"
+                        }
+                    })
+                    console.log('response',response)
+                    Swal.fire('Teacher Completed their profile ')
+            }catch(error){
+                console.log('error',error)
+                Swal.fire('Internal server error')
+            }
+    }
+
     return (
         <TeacherContext.Provider value={{ 
             teacherFormData,
@@ -51,7 +75,8 @@ const TeacherProvider = ({ children }) => {
             setTeacherFormData,
             handleProfileChange,
             profilePicture,
-            setProfilePicture
+            setProfilePicture,
+            handleSubmit
         }}>
             {children}
         </TeacherContext.Provider>

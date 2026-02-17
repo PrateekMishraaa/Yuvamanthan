@@ -22,25 +22,25 @@ import Footer from "../../Components/Footer";
 const AirQualityAwareness = () => {
   const programFeatures = [
     {
-      icon: <Target className="w-6 h-6" />,
+      icon: <Target className="w-5 h-5 sm:w-6 sm:h-6" />,
       title: "Mission-Driven",
       description: "Clean air awareness for sustainable future",
       color: "from-[#6A3E2E] to-[#8B4513]"
     },
     {
-      icon: <Users className="w-6 h-6" />,
+      icon: <Users className="w-5 h-5 sm:w-6 sm:h-6" />,
       title: "Collaborative",
       description: "CAQM & Yuvamanthan partnership",
       color: "from-[#8B4513] to-[#C46200]"
     },
     {
-      icon: <BarChart className="w-6 h-6" />,
+      icon: <BarChart className="w-5 h-5 sm:w-6 sm:h-6" />,
       title: "Multi-Level Impact",
       description: "Individual, school & district levels",
       color: "from-[#C46200] to-[#E07B00]"
     },
     {
-      icon: <Award className="w-6 h-6" />,
+      icon: <Award className="w-5 h-5 sm:w-6 sm:h-6" />,
       title: "Certification",
       description: "Recognition for participation",
       color: "from-[#E07B00] to-[#FFA500]"
@@ -51,7 +51,7 @@ const AirQualityAwareness = () => {
     {
       title: "Student Engagement",
       points: ["Air quality monitoring", "Sustainable practices", "Awareness campaigns"],
-      icon: <Users className="w-8 h-8" />,
+      icon: <Users className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8" />,
       bg: "bg-gradient-to-br from-orange-50 to-amber-50",
       border: "border-orange-200",
       dotColor: "bg-[#E07B00]"
@@ -59,7 +59,7 @@ const AirQualityAwareness = () => {
     {
       title: "Teacher Training",
       points: ["Curriculum integration", "Workshops", "Resource materials"],
-      icon: <Shield className="w-8 h-8" />,
+      icon: <Shield className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8" />,
       bg: "bg-gradient-to-br from-amber-50 to-orange-50",
       border: "border-amber-200",
       dotColor: "bg-[#C46200]"
@@ -67,7 +67,7 @@ const AirQualityAwareness = () => {
     {
       title: "Community Outreach",
       points: ["Parent workshops", "Local initiatives", "Policy advocacy"],
-      icon: <TreePine className="w-8 h-8" />,
+      icon: <TreePine className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8" />,
       bg: "bg-gradient-to-br from-orange-50 to-amber-50",
       border: "border-orange-200",
       dotColor: "bg-[#8B4513]"
@@ -106,21 +106,21 @@ const leaders = [
 
   const programSteps = [
     {
-      icon: <BookOpen className="w-8 h-8" />,
+      icon: <BookOpen className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8" />,
       title: "Educate",
       description: "Learn about air quality, air pollution, reasons and mitigative actions",
       color: "from-[#6A3E2E] to-[#8B4513]",
       steps: ["Online courses", "Educational materials", "Expert sessions"]
     },
     {
-      icon: <UsersIcon className="w-8 h-8" />,
+      icon: <UsersIcon className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8" />,
       title: "Engage",
       description: "Conduct air monitoring, plantation drives & community outreach",
       color: "from-[#8B4513] to-[#C46200]",
       steps: ["Air monitoring kits", "Plantation drives", "Community workshops"]
     },
     {
-      icon: <TrendingUp className="w-8 h-8" />,
+      icon: <TrendingUp className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8" />,
       title: "Impact",
       description: "Reduce pollution, track progress & earn Green Credits",
       color: "from-[#C46200] to-[#E07B00]",
@@ -131,31 +131,31 @@ const leaders = [
   // Updated arrays based on your requirements
   const studentBenefits = [
     {
-      icon: <BookOpen className="w-6 h-6" />,
+      icon: <BookOpen className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" />,
       title: "Learn",
       description: "Access an engaging e-course on air pollution and sustainability.",
       color: "from-[#6A3E2E] to-[#8B4513]"
     },
     {
-      icon: <Flag className="w-6 h-6" />,
+      icon: <Flag className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" />,
       title: "Lead",
       description: "Become a sustainability ambassador and change your school.",
       color: "from-[#8B4513] to-[#C46200]"
     },
     {
-      icon: <Lightbulb className="w-6 h-6" />,
+      icon: <Lightbulb className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" />,
       title: "Innovate",
       description: "Participate in hackathons and develop real-world solutions.",
       color: "from-[#C46200] to-[#E07B00]"
     },
     {
-      icon: <Users className="w-6 h-6" />,
+      icon: <Users className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" />,
       title: "Impact",
       description: "Contribute to a student-driven 'Youth Air Quality Taskforce'.",
       color: "from-[#E07B00] to-[#FFA500]"
     },
     {
-      icon: <Trophy className="w-6 h-6" />,
+      icon: <Trophy className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" />,
       title: "Compete",
       description: "Join games to reduce your carbon footprints and win rewards.",
       color: "from-[#FFA500] to-[#FF8C00]"
@@ -164,31 +164,31 @@ const leaders = [
 
   const schoolBenefits = [
     {
-      icon: <School className="w-6 h-6" />,
+      icon: <School className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" />,
       title: "Empower",
       description: "Equip your teachers and students with air pollution knowledge.",
       color: "from-[#6A3E2E] to-[#8B4513]"
     },
     {
-      icon: <UsersIcon className="w-6 h-6" />,
+      icon: <UsersIcon className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" />,
       title: "Engage",
       description: "Implement hands-on sustainability projects and activities.",
       color: "from-[#8B4513] to-[#C46200]"
     },
     {
-      icon: <Award className="w-6 h-6" />,
+      icon: <Award className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" />,
       title: "Showcase",
       description: "Participate in district and conferences to share your stories.",
       color: "from-[#C46200] to-[#E07B00]"
     },
     {
-      icon: <CheckCircle className="w-6 h-6" />,
+      icon: <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" />,
       title: "Shunya Audit",
       description: "Utilize our comprehensive tools to reduce your school's environmental footprint.",
       color: "from-[#E07B00] to-[#FFA500]"
     },
     {
-      icon: <Trophy className="w-6 h-6" />,
+      icon: <Trophy className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" />,
       title: "Recognition",
       description: "Gain recognition for your school's work towards sustainability.",
       color: "from-[#FFA500] to-[#FF8C00]"
@@ -197,25 +197,25 @@ const leaders = [
 
   const programComponents = [
     {
-      icon: <BookOpen className="w-8 h-8" />,
+      icon: <BookOpen className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8" />,
       title: "Empower",
       description: "Equip your teachers and students with air pollution knowledge.",
       color: "from-[#6A3E2E] to-[#8B4513]"
     },
     {
-      icon: <UsersIcon className="w-8 h-8" />,
+      icon: <UsersIcon className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8" />,
       title: "Engage",
       description: "Implement hands-on sustainability projects and activities.",
       color: "from-[#8B4513] to-[#C46200]"
     },
     {
-      icon: <CheckCircle className="w-8 h-8" />,
+      icon: <CheckCircle className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8" />,
       title: "Shunya Audit",
       description: "Utilize our comprehensive tools to reduce your school's environmental footprint.",
       color: "from-[#C46200] to-[#E07B00]"
     },
     {
-      icon: <Award className="w-8 h-8" />,
+      icon: <Award className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8" />,
       title: "Showcase",
       description: "Participate in district and conferences to share your stories.",
       color: "from-[#E07B00] to-[#FFA500]"
@@ -225,35 +225,35 @@ const leaders = [
   // Student Steps Detailed
   const studentSteps = [
     {
-      icon: <BookOpen className="w-8 h-8" />,
+      icon: <BookOpen className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8" />,
       title: "Learn",
       description: "Access an engaging e-course on air pollution and sustainability",
       color: "from-[#6A3E2E] to-[#8B4513]",
       steps: ["Interactive modules", "Video lessons", "Quizzes & assessments", "Expert webinars"]
     },
     {
-      icon: <Flag className="w-8 h-8" />,
+      icon: <Flag className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8" />,
       title: "Lead",
       description: "Become a sustainability ambassador and change your school",
       color: "from-[#8B4513] to-[#C46200]",
       steps: ["Leadership training", "Peer mentoring programs", "School initiatives planning", "Event organization"]
     },
     {
-      icon: <Lightbulb className="w-8 h-8" />,
+      icon: <Lightbulb className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8" />,
       title: "Innovate",
       description: "Participate in hackathons and develop real-world solutions",
       color: "from-[#C46200] to-[#E07B00]",
       steps: ["Problem identification", "Solution brainstorming", "Prototype development", "Presentation skills"]
     },
     {
-      icon: <Users className="w-8 h-8" />,
+      icon: <Users className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8" />,
       title: "Impact",
       description: "Contribute to a student-driven 'Youth Air Quality Taskforce'",
       color: "from-[#E07B00] to-[#FFA500]",
       steps: ["Community projects", "Data collection", "Policy recommendations", "Public awareness campaigns"]
     },
     {
-      icon: <Trophy className="w-8 h-8" />,
+      icon: <Trophy className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8" />,
       title: "Compete",
       description: "Join games to reduce your carbon footprints and win rewards",
       color: "from-[#FFA500] to-[#FF8C00]",
@@ -264,35 +264,35 @@ const leaders = [
   // School Steps Detailed
   const schoolSteps = [
     {
-      icon: <School className="w-8 h-8" />,
+      icon: <School className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8" />,
       title: "Empower",
       description: "Equip your teachers and students with air pollution knowledge",
       color: "from-[#6A3E2E] to-[#8B4513]",
       steps: ["Teacher training workshops", "Curriculum integration guides", "Resource materials", "Expert sessions"]
     },
     {
-      icon: <UsersIcon className="w-8 h-8" />,
+      icon: <UsersIcon className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8" />,
       title: "Engage",
       description: "Implement hands-on sustainability projects and activities",
       color: "from-[#8B4513] to-[#C46200]",
       steps: ["Field projects", "Community outreach", "Action plan development", "Monitoring activities"]
     },
     {
-      icon: <Award className="w-8 h-8" />,
+      icon: <Award className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8" />,
       title: "Showcase",
       description: "Participate in district and conferences to share your stories",
       color: "from-[#C46200] to-[#E07B00]",
       steps: ["Case study preparation", "Presentation skills", "Networking events", "Success story documentation"]
     },
     {
-      icon: <CheckCircle className="w-8 h-8" />,
+      icon: <CheckCircle className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8" />,
       title: "Shunya Audit",
       description: "Utilize our comprehensive tools to reduce your school's environmental footprint",
       color: "from-[#E07B00] to-[#FFA500]",
       steps: ["Environmental audit tools", "Carbon assessment methods", "Improvement action plans", "Progress tracking"]
     },
     {
-      icon: <Trophy className="w-8 h-8" />,
+      icon: <Trophy className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8" />,
       title: "Recognition",
       description: "Gain recognition for your school's work towards sustainability",
       color: "from-[#FFA500] to-[#FF8C00]",
@@ -303,28 +303,28 @@ const leaders = [
   // Program Components Detailed
   const programComponentsDetailed = [
     {
-      icon: <BookOpen className="w-8 h-8" />,
+      icon: <BookOpen className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8" />,
       title: "Empower",
       description: "Equip your teachers and students with powerful knowledge about air pollution",
       color: "from-[#6A3E2E] to-[#8B4513]",
       steps: ["Training modules development", "Expert sessions organization", "Resource library access", "Skill building workshops"]
     },
     {
-      icon: <UsersIcon className="w-8 h-8" />,
+      icon: <UsersIcon className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8" />,
       title: "Engage",
       description: "Implement hands-on sustainability projects and activities",
       color: "from-[#8B4513] to-[#C46200]",
       steps: ["Project planning tools", "Activity implementation guides", "Community engagement strategies", "Monitoring systems"]
     },
     {
-      icon: <CheckCircle className="w-8 h-8" />,
+      icon: <CheckCircle className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8" />,
       title: "Shunya Audit",
       description: "Utilize our comprehensive tools to reduce your school's environmental footprint",
       color: "from-[#C46200] to-[#E07B00]",
       steps: ["Assessment tools access", "Progress tracking systems", "Action recommendation engines", "Reporting frameworks"]
     },
     {
-      icon: <Award className="w-8 h-8" />,
+      icon: <Award className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8" />,
       title: "Showcase",
       description: "Participate in district and conferences to share your stories",
       color: "from-[#E07B00] to-[#FFA500]",
@@ -337,15 +337,15 @@ const leaders = [
       <Navbar />
       
       {/* Hero Section */}
-      <section className="min-h-screen w-full bg-gradient-to-br from-white via-orange-50 to-amber-50">
-        <div className="container mx-auto px-4 md:px-8 lg:px-16 py-8 md:py-12 lg:py-20">
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12">
+      <section className="w-full bg-gradient-to-br from-white via-orange-50 to-amber-50 pt-16 sm:pt-20 lg:pt-24">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 py-8 sm:py-12 lg:py-20">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12 xl:gap-16">
             {/* Left Content */}
-            <div className="w-full lg:w-1/2 space-y-6 lg:space-y-8">
+            <div className="w-full lg:w-1/2 space-y-6 sm:space-y-8">
               <div className="space-y-4">
-                <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-amber-100 to-orange-100 rounded-full">
-                  <Cloud className="w-5 h-5 text-[#8B4513] mr-2" />
-                  <span className="text-sm font-semibold text-[#8B4513]">
+                <div className="inline-flex items-center px-3 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-amber-100 to-orange-100 rounded-full">
+                  <Cloud className="w-4 h-4 sm:w-5 sm:h-5 text-[#8B4513] mr-1 sm:mr-2" />
+                  <span className="text-xs sm:text-sm font-semibold text-[#8B4513]">
                     Commission for Air Quality Management
                   </span>
                 </div>
@@ -357,78 +357,78 @@ const leaders = [
                   </span>
                 </h1>
 
-                <p className="text-lg md:text-xl text-gray-700 leading-relaxed">
+                <p className="text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed">
                   A collaborative effort by the Commission for Air Quality Management in NCR and 
                   Adjoining Areas (CAQM) and Yuvamanthan for students, teachers and parents in 
                   Delhi-NCR, fostering sustainable practices at individual, school, and district levels.
                 </p>
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-2 gap-3 sm:gap-4">
                 {programFeatures.map((feature, index) => (
                   <div
                     key={index}
-                    className="group flex items-start space-x-3 p-4 bg-white/80 backdrop-blur-sm rounded-2xl border border-gray-200 hover:border-[#E07B00]/30 hover:shadow-lg transition-all duration-300"
+                    className="group flex items-start space-x-2 sm:space-x-3 p-3 sm:p-4 bg-white/80 backdrop-blur-sm rounded-xl sm:rounded-2xl border border-gray-200 hover:border-[#E07B00]/30 hover:shadow-lg transition-all duration-300"
                   >
-                    <div className={`p-2 bg-gradient-to-br ${feature.color} rounded-lg group-hover:scale-110 transition-transform duration-300`}>
+                    <div className={`p-1.5 sm:p-2 bg-gradient-to-br ${feature.color} rounded-lg group-hover:scale-110 transition-transform duration-300 flex-shrink-0`}>
                       <div className="text-white">{feature.icon}</div>
                     </div>
                     <div>
-                      <h3 className="font-bold text-gray-800">{feature.title}</h3>
-                      <p className="text-sm text-gray-600 mt-1">{feature.description}</p>
+                      <h3 className="font-bold text-gray-800 text-xs sm:text-sm">{feature.title}</h3>
+                      <p className="text-xs text-gray-600 mt-1 line-clamp-2">{feature.description}</p>
                     </div>
                   </div>
                 ))}
               </div>
 
               <div className="pt-4">
-                <button className="group relative h-14 w-full sm:w-64 px-8 overflow-hidden rounded-2xl bg-gradient-to-r from-[#6A3E2E] via-[#8B4513] to-[#E07B00] text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02]">
+                <button className="group relative h-12 sm:h-14 w-full sm:w-64 px-6 sm:px-8 overflow-hidden rounded-xl sm:rounded-2xl bg-gradient-to-r from-[#6A3E2E] via-[#8B4513] to-[#E07B00] text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02]">
                   <div className="absolute inset-0 w-0 bg-white/20 group-hover:w-full transition-all duration-500"></div>
-                  <div className="relative flex items-center justify-center space-x-3">
-                    <Leaf className="w-5 h-5" />
-                    <span className="text-lg font-semibold">Join Program</span>
-                    <ChevronRight className="w-5 h-5 group-hover:translate-x-2 transition-transform duration-300" />
+                  <div className="relative flex items-center justify-center space-x-2 sm:space-x-3">
+                    <Leaf className="w-4 h-4 sm:w-5 sm:h-5" />
+                    <span className="text-sm sm:text-base font-semibold">Join Program</span>
+                    <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-2 transition-transform duration-300" />
                   </div>
                 </button>
               </div>
             </div>
 
             <div className="w-full lg:w-1/2">
-              <div className="relative space-y-6">
+              <div className="relative space-y-4 sm:space-y-6">
                 <div className="relative group">
-                  <div className="absolute -inset-4 bg-gradient-to-r from-[#6A3E2E] via-[#8B4513] to-[#E07B00] rounded-3xl blur-xl opacity-30 group-hover:opacity-50 transition-opacity duration-300"></div>
-                  <div className="relative bg-white rounded-2xl p-6 shadow-2xl transform group-hover:-translate-y-2 transition-transform duration-300">
-                    <div className="text-center space-y-4">
-                      <div className="w-20 h-20 mx-auto bg-gradient-to-br from-amber-100 to-orange-100 rounded-full flex items-center justify-center">
-                        <Wind className="w-10 h-10 text-[#8B4513]" />
+                  <div className="absolute -inset-2 sm:-inset-3 lg:-inset-4 bg-gradient-to-r from-[#6A3E2E] via-[#8B4513] to-[#E07B00] rounded-2xl sm:rounded-3xl blur-xl opacity-30 group-hover:opacity-50 transition-opacity duration-300"></div>
+                  <div className="relative bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-2xl transform group-hover:-translate-y-2 transition-transform duration-300">
+                    <div className="text-center space-y-3 sm:space-y-4">
+                      <div className="w-16 h-16 sm:w-18 sm:h-18 md:w-20 md:h-20 mx-auto bg-gradient-to-br from-amber-100 to-orange-100 rounded-full flex items-center justify-center">
+                        <Wind className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 text-[#8B4513]" />
                       </div>
                       <div>
-                        <h3 className="text-xl font-bold text-gray-900">CAQM</h3>
-                        <p className="text-gray-600 text-sm mt-1">Commission for Air Quality Management</p>
+                        <h3 className="text-lg sm:text-xl font-bold text-gray-900">CAQM</h3>
+                        <p className="text-gray-600 text-xs sm:text-sm mt-1">Commission for Air Quality Management</p>
                       </div>
                       <img 
                         src={CAQM} 
                         alt="CAQM Logo" 
-                        className="w-full max-w-xs mx-auto h-auto object-contain"
+                        className="w-full max-w-[200px] sm:max-w-xs mx-auto h-auto object-contain"
                       />
                     </div>
                   </div>
                 </div>
 
                 <div className="relative group">
-                  <div className="absolute -inset-4 bg-gradient-to-r from-[#8B4513] via-[#C46200] to-[#E07B00] rounded-3xl blur-xl opacity-30 group-hover:opacity-50 transition-opacity duration-300"></div>
-                  <div className="relative bg-white rounded-2xl p-4 shadow-2xl transform group-hover:-translate-y-2 transition-transform duration-300 overflow-hidden">
+                  <div className="absolute -inset-2 sm:-inset-3 lg:-inset-4 bg-gradient-to-r from-[#8B4513] via-[#C46200] to-[#E07B00] rounded-2xl sm:rounded-3xl blur-xl opacity-30 group-hover:opacity-50 transition-opacity duration-300"></div>
+                  <div className="relative bg-white rounded-xl sm:rounded-2xl p-3 sm:p-4 shadow-2xl transform group-hover:-translate-y-2 transition-transform duration-300 overflow-hidden">
                     <img 
                       src={SaveTree} 
                       alt="Save Trees - Save Future" 
                       className="w-full h-auto rounded-lg object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-lg"></div>
-                    <div className="absolute bottom-4 left-4 right-4">
-                      <div className="bg-white/90 backdrop-blur-sm rounded-lg p-3">
+                    <div className="absolute bottom-2 sm:bottom-4 left-2 sm:left-4 right-2 sm:right-4">
+                      <div className="bg-white/90 backdrop-blur-sm rounded-lg p-2 sm:p-3">
                         <div className="flex items-center space-x-2">
-                          <Leaf className="w-5 h-5 text-[#8B4513]" />
-                          <span className="font-semibold text-gray-900">Clean Air = Healthy Future</span>
+                          <Leaf className="w-4 h-4 sm:w-5 sm:h-5 text-[#8B4513]" />
+                          <span className="text-xs sm:text-sm font-semibold text-gray-900">Clean Air = Healthy Future</span>
                         </div>
                       </div>
                     </div>
@@ -443,7 +443,7 @@ const leaders = [
           <svg
             viewBox="0 0 1200 120"
             preserveAspectRatio="none"
-            className="relative block w-full h-16 md:h-24"
+            className="relative block w-full h-12 sm:h-16 md:h-20 lg:h-24"
           >
             <path
               d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z"
@@ -464,42 +464,42 @@ const leaders = [
       </section>
 
       {/* Leadership Speaks Section */}
-      <section className="w-full bg-gradient-to-b from-white to-orange-50 py-12 md:py-20 lg:py-32">
-        <div className="container mx-auto px-4 md:px-8 lg:px-16">
-          <div className="text-center mb-12 lg:mb-16">
-            <div className="inline-flex items-center justify-center w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-amber-100 to-orange-100 rounded-2xl mb-4 md:mb-6">
-              <Quote className="w-8 h-8 md:w-10 md:h-10 text-[#8B4513]" />
+      <section className="w-full bg-gradient-to-b from-white to-orange-50 py-8 sm:py-12 md:py-16 lg:py-20 xl:py-24">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
+          <div className="text-center mb-8 sm:mb-10 lg:mb-12 xl:mb-16">
+            <div className="inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-20 lg:h-20 bg-gradient-to-br from-amber-100 to-orange-100 rounded-xl sm:rounded-2xl mb-3 sm:mb-4 md:mb-5 lg:mb-6">
+              <Quote className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-8 lg:h-8 xl:w-10 xl:h-10 text-[#8B4513]" />
             </div>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-2 sm:mb-3 md:mb-4">
               <span className="bg-gradient-to-r from-[#6A3E2E] via-[#8B4513] to-[#E07B00] bg-clip-text text-transparent">
                 LEADERSHIP SPEAKS
               </span>
             </h2>
-            <p className="text-gray-600 text-lg max-w-3xl mx-auto">
+            <p className="text-sm sm:text-base md:text-lg text-gray-600 max-w-2xl sm:max-w-3xl mx-auto px-4">
               Hear from our leaders about their commitment to environmental conservation and air quality improvement
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6 lg:gap-8 max-w-7xl mx-auto">
             {leaders.map((leader, index) => (
               <div
                 key={index}
-                className={`group relative overflow-hidden rounded-2xl md:rounded-3xl border ${leader.borderColor} bg-white shadow-lg hover:shadow-xl transition-all duration-300`}
+                className={`group relative overflow-hidden rounded-xl sm:rounded-2xl lg:rounded-3xl border ${leader.borderColor} bg-white shadow-lg hover:shadow-xl transition-all duration-300`}
               >
-                <div className={`absolute top-0 right-0 w-24 h-24 bg-gradient-to-br ${leader.gradient} opacity-10 rounded-bl-full`}></div>
+                <div className={`absolute top-0 right-0 w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br ${leader.gradient} opacity-10 rounded-bl-full`}></div>
                 
-                <div className="relative p-6 md:p-8">
-                  <div className="mb-6">
-                    <Quote className={`w-8 h-8 bg-gradient-to-r ${leader.gradient} bg-clip-text text-transparent`} />
+                <div className="relative p-4 sm:p-5 md:p-6 lg:p-8">
+                  <div className="mb-3 sm:mb-4 md:mb-6">
+                    <Quote className={`w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-8 lg:h-8 bg-gradient-to-r ${leader.gradient} bg-clip-text text-transparent`} />
                   </div>
                   
-                  <p className="text-gray-700 text-lg leading-relaxed italic mb-6">
+                  <p className="text-gray-700 text-sm sm:text-base md:text-lg leading-relaxed italic mb-4 sm:mb-5 md:mb-6 line-clamp-4 md:line-clamp-5">
                     "{leader.quote}"
                   </p>
                   
-                  <div className="pt-6 border-t border-gray-100">
-                    <div className="flex items-center gap-4">
-                      <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-gray-200">
+                  <div className="pt-4 sm:pt-5 md:pt-6 border-t border-gray-100">
+                    <div className="flex items-center gap-3 sm:gap-4">
+                      <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full overflow-hidden border-2 border-gray-200 flex-shrink-0">
                         <img 
                           src={leader.img} 
                           alt={leader.name}
@@ -507,8 +507,8 @@ const leaders = [
                         />
                       </div>
                       <div>
-                        <h3 className="text-xl font-bold text-gray-900">{leader.name}</h3>
-                        <p className="text-gray-600 text-sm mt-1">{leader.designation}</p>
+                        <h3 className="text-sm sm:text-base md:text-lg lg:text-xl font-bold text-gray-900">{leader.name}</h3>
+                        <p className="text-gray-600 text-xs sm:text-sm mt-1 line-clamp-2">{leader.designation}</p>
                       </div>
                     </div>
                   </div>
@@ -522,21 +522,21 @@ const leaders = [
       </section>
 
       {/* About Section */}
-      <section className="w-full bg-gradient-to-b from-orange-50 to-white py-12 md:py-20 lg:py-32">
-        <div className="container mx-auto px-4 md:px-8 lg:px-16">
+      <section className="w-full bg-gradient-to-b from-orange-50 to-white py-8 sm:py-12 md:py-16 lg:py-20 xl:py-24">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
           <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-12 lg:mb-16">
-              <div className="inline-flex items-center justify-center w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-amber-100 to-orange-100 rounded-2xl mb-4 md:mb-6">
-                <BookOpen className="w-8 h-8 md:w-10 md:h-10 text-[#8B4513]" />
+            <div className="text-center mb-8 sm:mb-10 lg:mb-12 xl:mb-16">
+              <div className="inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-20 lg:h-20 bg-gradient-to-br from-amber-100 to-orange-100 rounded-xl sm:rounded-2xl mb-3 sm:mb-4 md:mb-5 lg:mb-6">
+                <BookOpen className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-8 lg:h-8 xl:w-10 xl:h-10 text-[#8B4513]" />
               </div>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 sm:mb-4 md:mb-6">
                 <span className="bg-gradient-to-r from-[#6A3E2E] via-[#8B4513] to-[#E07B00] bg-clip-text text-transparent">
                   ABOUT
                 </span>
               </h2>
               
-              <div className="bg-gradient-to-br from-white to-orange-50 rounded-2xl md:rounded-3xl p-6 md:p-8 lg:p-10 border border-orange-200 shadow-lg mb-8 md:mb-12">
-                <p className="text-gray-700 text-lg md:text-xl leading-relaxed text-center">
+              <div className="bg-gradient-to-br from-white to-orange-50 rounded-xl sm:rounded-2xl lg:rounded-3xl p-4 sm:p-6 md:p-8 lg:p-10 border border-orange-200 shadow-lg mb-6 sm:mb-8 md:mb-12">
+                <p className="text-gray-700 text-sm sm:text-base md:text-lg lg:text-xl leading-relaxed text-center">
                   Commission for Air Quality Management in NCR and Adjoining Areas (CAQM) is a Statutory Body 
                   established by the Govt. of India for better co-ordination, research, identification and 
                   resolution of air quality issues of Delhi-NCR and adjoining areas. The body ensures coordinated 
@@ -546,15 +546,15 @@ const leaders = [
               </div>
               
               {/* Clean Air Photos Grid */}
-              <div className="mt-8 md:mt-12">
-                <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6 md:mb-8">
+              <div className="mt-6 sm:mt-8 md:mt-12">
+                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-4 sm:mb-6 md:mb-8">
                   <span className="bg-gradient-to-r from-[#6A3E2E] via-[#8B4513] to-[#E07B00] bg-clip-text text-transparent">
                     Clean Air Initiatives
                   </span>
                 </h3>
                 
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-                  <div className="group relative overflow-hidden rounded-xl md:rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3 md:gap-4 lg:gap-6">
+                  <div className="group relative overflow-hidden rounded-lg sm:rounded-xl md:rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300">
                     <div className="aspect-square overflow-hidden">
                       <img 
                         src={CleanOne} 
@@ -564,7 +564,7 @@ const leaders = [
                     </div>
                   </div>
                   
-                  <div className="group relative overflow-hidden rounded-xl md:rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300">
+                  <div className="group relative overflow-hidden rounded-lg sm:rounded-xl md:rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300">
                     <div className="aspect-square overflow-hidden">
                       <img 
                         src={CleanTwo} 
@@ -574,7 +574,7 @@ const leaders = [
                     </div>
                   </div>
                   
-                  <div className="group relative overflow-hidden rounded-xl md:rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300">
+                  <div className="group relative overflow-hidden rounded-lg sm:rounded-xl md:rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300">
                     <div className="aspect-square overflow-hidden">
                       <img 
                         src={CleanThree} 
@@ -584,7 +584,7 @@ const leaders = [
                     </div>
                   </div>
                   
-                  <div className="group relative overflow-hidden rounded-xl md:rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300">
+                  <div className="group relative overflow-hidden rounded-lg sm:rounded-xl md:rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300">
                     <div className="aspect-square overflow-hidden">
                       <img 
                         src={CleanFour} 
@@ -598,38 +598,38 @@ const leaders = [
             </div>
 
             {/* How the Program Works */}
-            <div className="mt-20">
-              <div className="text-center mb-12">
-                <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-6">
+            <div className="mt-12 sm:mt-16 md:mt-20">
+              <div className="text-center mb-6 sm:mb-8 md:mb-12">
+                <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 sm:mb-4 md:mb-6">
                   <span className="bg-gradient-to-r from-[#6A3E2E] via-[#8B4513] to-[#E07B00] bg-clip-text text-transparent">
                     HOW THE PROGRAM WORKS
                   </span>
                 </h3>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5 md:gap-6 lg:gap-8">
                 {programSteps.map((step, index) => (
                   <div
                     key={index}
-                    className="group relative overflow-hidden rounded-2xl md:rounded-3xl border border-orange-200 bg-white shadow-lg hover:shadow-xl transition-all duration-300"
+                    className="group relative overflow-hidden rounded-xl sm:rounded-2xl lg:rounded-3xl border border-orange-200 bg-white shadow-lg hover:shadow-xl transition-all duration-300"
                   >
-                    <div className="relative p-6 md:p-8">
-                      <div className="flex items-center space-x-4 mb-6">
-                        <div className={`p-3 bg-gradient-to-br ${step.color} rounded-xl`}>
+                    <div className="relative p-4 sm:p-5 md:p-6 lg:p-8">
+                      <div className="flex items-center space-x-3 sm:space-x-4 mb-3 sm:mb-4 md:mb-6">
+                        <div className={`p-2 sm:p-2.5 md:p-3 bg-gradient-to-br ${step.color} rounded-lg sm:rounded-xl`}>
                           <div className="text-white">{step.icon}</div>
                         </div>
                         <div>
-                          <h4 className="text-xl md:text-2xl font-bold text-gray-900">{step.title}</h4>
+                          <h4 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900">{step.title}</h4>
                         </div>
                       </div>
                       
-                      <p className="text-gray-700 mb-6">{step.description}</p>
+                      <p className="text-gray-700 text-sm sm:text-base mb-3 sm:mb-4 md:mb-6">{step.description}</p>
                       
-                      <div className="space-y-2">
+                      <div className="space-y-1.5 sm:space-y-2">
                         {step.steps.map((item, idx) => (
-                          <div key={idx} className="flex items-center space-x-3">
-                            <div className={`w-2 h-2 rounded-full bg-gradient-to-r ${step.color}`}></div>
-                            <span className="text-gray-600">{item}</span>
+                          <div key={idx} className="flex items-center space-x-2 sm:space-x-3">
+                            <div className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-gradient-to-r ${step.color}`}></div>
+                            <span className="text-gray-600 text-xs sm:text-sm">{item}</span>
                           </div>
                         ))}
                       </div>
@@ -645,76 +645,76 @@ const leaders = [
       </section>
 
       {/* For Students Section - Updated with Detailed Steps */}
-      <section className="w-full bg-gradient-to-b from-white to-orange-50 py-12 md:py-20 lg:py-32">
-        <div className="container mx-auto px-4 md:px-8 lg:px-16">
-          <div className="text-center mb-12 lg:mb-16">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+      <section className="w-full bg-gradient-to-b from-white to-orange-50 py-8 sm:py-12 md:py-16 lg:py-20 xl:py-24">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
+          <div className="text-center mb-6 sm:mb-8 lg:mb-12 xl:mb-16">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-2 sm:mb-3 md:mb-4">
               <span className="bg-gradient-to-r from-[#6A3E2E] via-[#8B4513] to-[#E07B00] bg-clip-text text-transparent">
                 FOR STUDENTS
               </span>
             </h2>
-            <p className="text-gray-600 text-lg max-w-3xl mx-auto">
+            <p className="text-sm sm:text-base md:text-lg text-gray-600 max-w-2xl sm:max-w-3xl mx-auto px-4">
               Empowering the next generation of environmental leaders
             </p>
           </div>
 
           {/* Benefits Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 md:gap-6 max-w-7xl mx-auto mb-12 lg:mb-16">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-3 md:gap-4 lg:gap-6 max-w-7xl mx-auto mb-8 sm:mb-10 lg:mb-12 xl:mb-16">
             {studentBenefits.map((benefit, index) => (
               <div
                 key={index}
-                className="group relative bg-white rounded-xl md:rounded-2xl border border-orange-200 p-4 md:p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+                className="group relative bg-white rounded-lg sm:rounded-xl lg:rounded-2xl border border-orange-200 p-3 sm:p-4 md:p-5 lg:p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
               >
-                <div className={`p-2 md:p-3 bg-gradient-to-br ${benefit.color} rounded-lg md:rounded-xl inline-block mb-3 md:mb-4 group-hover:scale-110 transition-transform duration-300`}>
+                <div className={`p-1.5 sm:p-2 md:p-3 bg-gradient-to-br ${benefit.color} rounded-lg sm:rounded-xl inline-block mb-2 sm:mb-3 md:mb-4 group-hover:scale-110 transition-transform duration-300`}>
                   <div className="text-white">{benefit.icon}</div>
                 </div>
                 
-                <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-2">{benefit.title}</h3>
-                <p className="text-sm md:text-base text-gray-600">{benefit.description}</p>
+                <h3 className="text-sm sm:text-base md:text-lg lg:text-xl font-bold text-gray-900 mb-1 sm:mb-2">{benefit.title}</h3>
+                <p className="text-xs sm:text-sm md:text-base text-gray-600 line-clamp-3">{benefit.description}</p>
                 
-                <div className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${benefit.color}`}></div>
+                <div className={`absolute bottom-0 left-0 right-0 h-0.5 sm:h-1 bg-gradient-to-r ${benefit.color}`}></div>
               </div>
             ))}
           </div>
 
           {/* Student Steps Details */}
           <div className="max-w-6xl mx-auto">
-            <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-8 text-center">
+            <h3 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-gray-900 mb-4 sm:mb-6 md:mb-8 text-center">
               <span className="bg-gradient-to-r from-[#6A3E2E] via-[#8B4513] to-[#E07B00] bg-clip-text text-transparent">
                 Student Journey Steps
               </span>
             </h3>
             
-            <div className="space-y-6 md:space-y-8">
+            <div className="space-y-4 sm:space-y-5 md:space-y-6 lg:space-y-8">
               {studentSteps.map((step, index) => (
                 <div
                   key={index}
-                  className="group relative overflow-hidden rounded-xl md:rounded-2xl border border-orange-200 bg-white shadow-md hover:shadow-lg transition-all duration-300"
+                  className="group relative overflow-hidden rounded-lg sm:rounded-xl lg:rounded-2xl border border-orange-200 bg-white shadow-md hover:shadow-lg transition-all duration-300"
                 >
-                  <div className="relative p-4 md:p-6">
-                    <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-6">
-                      <div className={`p-3 md:p-4 bg-gradient-to-br ${step.color} rounded-xl md:rounded-2xl flex-shrink-0`}>
+                  <div className="relative p-3 sm:p-4 md:p-5 lg:p-6">
+                    <div className="flex flex-col md:flex-row md:items-center gap-3 sm:gap-4 md:gap-5 lg:gap-6">
+                      <div className={`p-2 sm:p-2.5 md:p-3 lg:p-4 bg-gradient-to-br ${step.color} rounded-lg sm:rounded-xl lg:rounded-2xl flex-shrink-0 self-start`}>
                         <div className="text-white">{step.icon}</div>
                       </div>
                       
                       <div className="flex-1">
-                        <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-3">
+                        <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-2 sm:mb-3 gap-2">
                           <div>
-                            <h4 className="text-xl md:text-2xl font-bold text-gray-900 mb-1">{step.title}</h4>
-                            <p className="text-gray-700">{step.description}</p>
+                            <h4 className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-gray-900 mb-0.5 sm:mb-1">{step.title}</h4>
+                            <p className="text-gray-700 text-xs sm:text-sm md:text-base">{step.description}</p>
                           </div>
-                          <div className="mt-2 md:mt-0">
-                            <span className="inline-flex items-center px-3 py-1 rounded-full bg-gradient-to-r from-orange-50 to-amber-50 border border-orange-200 text-sm font-medium text-[#8B4513]">
+                          <div className="self-start md:self-auto">
+                            <span className="inline-flex items-center px-2 sm:px-3 py-0.5 sm:py-1 rounded-full bg-gradient-to-r from-orange-50 to-amber-50 border border-orange-200 text-xs font-medium text-[#8B4513]">
                               Step {index + 1}
                             </span>
                           </div>
                         </div>
                         
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 mt-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-1.5 sm:gap-2 mt-2 sm:mt-3 md:mt-4">
                           {step.steps.map((item, idx) => (
-                            <div key={idx} className="flex items-center space-x-2">
-                              <div className={`w-1.5 h-1.5 rounded-full bg-gradient-to-r ${step.color}`}></div>
-                              <span className="text-sm md:text-base text-gray-600">{item}</span>
+                            <div key={idx} className="flex items-center space-x-1.5 sm:space-x-2">
+                              <div className={`w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-gradient-to-r ${step.color}`}></div>
+                              <span className="text-xs sm:text-sm text-gray-600">{item}</span>
                             </div>
                           ))}
                         </div>
@@ -722,7 +722,7 @@ const leaders = [
                     </div>
                   </div>
                   
-                  <div className={`h-1 bg-gradient-to-r ${step.color}`}></div>
+                  <div className={`h-0.5 sm:h-1 bg-gradient-to-r ${step.color}`}></div>
                 </div>
               ))}
             </div>
@@ -731,78 +731,78 @@ const leaders = [
       </section>
 
       {/* For Schools Section - Updated with Detailed Steps */}
-      <section className="w-full bg-gradient-to-b from-orange-50 to-white py-12 md:py-20 lg:py-32">
-        <div className="container mx-auto px-4 md:px-8 lg:px-16">
-          <div className="text-center mb-12 lg:mb-16">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+      <section className="w-full bg-gradient-to-b from-orange-50 to-white py-8 sm:py-12 md:py-16 lg:py-20 xl:py-24">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
+          <div className="text-center mb-6 sm:mb-8 lg:mb-12 xl:mb-16">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-2 sm:mb-3 md:mb-4">
               <span className="bg-gradient-to-r from-[#6A3E2E] via-[#8B4513] to-[#E07B00] bg-clip-text text-transparent">
                 FOR SCHOOLS
               </span>
             </h2>
-            <p className="text-gray-600 text-lg max-w-3xl mx-auto">
+            <p className="text-sm sm:text-base md:text-lg text-gray-600 max-w-2xl sm:max-w-3xl mx-auto px-4">
               Transform your school into a center of environmental excellence
             </p>
           </div>
 
           {/* Benefits Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 md:gap-6 max-w-7xl mx-auto mb-12 lg:mb-16">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-3 md:gap-4 lg:gap-6 max-w-7xl mx-auto mb-8 sm:mb-10 lg:mb-12 xl:mb-16">
             {schoolBenefits.map((benefit, index) => (
               <div
                 key={index}
-                className="group relative bg-white rounded-xl md:rounded-2xl border border-amber-200 p-4 md:p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+                className="group relative bg-white rounded-lg sm:rounded-xl lg:rounded-2xl border border-amber-200 p-3 sm:p-4 md:p-5 lg:p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
               >
-                <div className={`p-2 md:p-3 bg-gradient-to-br ${benefit.color} rounded-lg md:rounded-xl inline-block mb-3 md:mb-4 group-hover:scale-110 transition-transform duration-300`}>
+                <div className={`p-1.5 sm:p-2 md:p-3 bg-gradient-to-br ${benefit.color} rounded-lg sm:rounded-xl inline-block mb-2 sm:mb-3 md:mb-4 group-hover:scale-110 transition-transform duration-300`}>
                   <div className="text-white">{benefit.icon}</div>
                 </div>
                 
-                <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-2">{benefit.title}</h3>
-                <p className="text-sm md:text-base text-gray-600">{benefit.description}</p>
+                <h3 className="text-sm sm:text-base md:text-lg lg:text-xl font-bold text-gray-900 mb-1 sm:mb-2">{benefit.title}</h3>
+                <p className="text-xs sm:text-sm md:text-base text-gray-600 line-clamp-3">{benefit.description}</p>
                 
-                <div className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${benefit.color}`}></div>
+                <div className={`absolute bottom-0 left-0 right-0 h-0.5 sm:h-1 bg-gradient-to-r ${benefit.color}`}></div>
               </div>
             ))}
           </div>
 
           {/* School Steps Details */}
           <div className="max-w-6xl mx-auto">
-            <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-8 text-center">
+            <h3 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-gray-900 mb-4 sm:mb-6 md:mb-8 text-center">
               <span className="bg-gradient-to-r from-[#6A3E2E] via-[#8B4513] to-[#E07B00] bg-clip-text text-transparent">
                 School Implementation Steps
               </span>
             </h3>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6 lg:gap-8">
               {schoolSteps.map((step, index) => (
                 <div
                   key={index}
-                  className="group relative overflow-hidden rounded-xl md:rounded-2xl border border-orange-200 bg-white shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+                  className="group relative overflow-hidden rounded-lg sm:rounded-xl lg:rounded-2xl border border-orange-200 bg-white shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
                 >
-                  <div className="relative p-6 md:p-8">
-                    <div className="flex items-center space-x-4 mb-4">
-                      <div className={`p-3 bg-gradient-to-br ${step.color} rounded-xl`}>
+                  <div className="relative p-4 sm:p-5 md:p-6 lg:p-8">
+                    <div className="flex items-center space-x-3 sm:space-x-4 mb-3 sm:mb-4">
+                      <div className={`p-2 sm:p-2.5 md:p-3 bg-gradient-to-br ${step.color} rounded-lg sm:rounded-xl`}>
                         <div className="text-white">{step.icon}</div>
                       </div>
                       <div>
-                        <div className="inline-flex items-center px-3 py-1 rounded-full bg-gradient-to-r from-orange-50 to-amber-50 border border-orange-200 text-sm font-medium text-[#8B4513] mb-1">
+                        <div className="inline-flex items-center px-2 sm:px-3 py-0.5 sm:py-1 rounded-full bg-gradient-to-r from-orange-50 to-amber-50 border border-orange-200 text-xs font-medium text-[#8B4513] mb-1">
                           Step {index + 1}
                         </div>
-                        <h4 className="text-xl md:text-2xl font-bold text-gray-900">{step.title}</h4>
+                        <h4 className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-gray-900">{step.title}</h4>
                       </div>
                     </div>
                     
-                    <p className="text-gray-700 mb-6">{step.description}</p>
+                    <p className="text-gray-700 text-xs sm:text-sm md:text-base mb-3 sm:mb-4 md:mb-6">{step.description}</p>
                     
-                    <div className="space-y-2">
+                    <div className="space-y-1.5 sm:space-y-2">
                       {step.steps.map((item, idx) => (
-                        <div key={idx} className="flex items-center space-x-3">
-                          <div className={`w-2 h-2 rounded-full bg-gradient-to-r ${step.color}`}></div>
-                          <span className="text-gray-600">{item}</span>
+                        <div key={idx} className="flex items-center space-x-2 sm:space-x-3">
+                          <div className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-gradient-to-r ${step.color}`}></div>
+                          <span className="text-gray-600 text-xs sm:text-sm">{item}</span>
                         </div>
                       ))}
                     </div>
                   </div>
                   
-                  <div className={`h-1 bg-gradient-to-r ${step.color}`}></div>
+                  <div className={`h-0.5 sm:h-1 bg-gradient-to-r ${step.color}`}></div>
                 </div>
               ))}
             </div>
@@ -811,144 +811,140 @@ const leaders = [
       </section>
 
       {/* Program Components Section - Updated with Detailed Steps */}
-      <section className="w-full bg-gradient-to-b from-white to-orange-50 py-12 md:py-20 lg:py-32">
-        <div className="container mx-auto px-4 md:px-8 lg:px-16">
-          <div className="text-center mb-12 lg:mb-16">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+      <section className="w-full bg-gradient-to-b from-white to-orange-50 py-8 sm:py-12 md:py-16 lg:py-20 xl:py-24">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
+          <div className="text-center mb-6 sm:mb-8 lg:mb-12 xl:mb-16">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-2 sm:mb-3 md:mb-4">
               <span className="bg-gradient-to-r from-[#6A3E2E] via-[#8B4513] to-[#E07B00] bg-clip-text text-transparent">
                 PROGRAM COMPONENTS
               </span>
             </h2>
-            <p className="text-gray-600 text-lg max-w-3xl mx-auto">
+            <p className="text-sm sm:text-base md:text-lg text-gray-600 max-w-2xl sm:max-w-3xl mx-auto px-4">
               Comprehensive framework for sustainable school transformation
             </p>
           </div>
 
           {/* Components Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto mb-12 lg:mb-16">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 md:gap-6 lg:gap-8 max-w-7xl mx-auto mb-8 sm:mb-10 lg:mb-12 xl:mb-16">
             {programComponents.map((component, index) => (
               <div
                 key={index}
-                className="group relative overflow-hidden rounded-xl md:rounded-2xl border border-orange-200 bg-white shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+                className="group relative overflow-hidden rounded-lg sm:rounded-xl lg:rounded-2xl border border-orange-200 bg-white shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
               >
-                <div className="relative p-6 md:p-8">
-                  <div className={`p-3 bg-gradient-to-br ${component.color} rounded-xl inline-block mb-4 group-hover:scale-110 transition-transform duration-300`}>
+                <div className="relative p-4 sm:p-5 md:p-6 lg:p-8">
+                  <div className={`p-2 sm:p-2.5 md:p-3 bg-gradient-to-br ${component.color} rounded-lg sm:rounded-xl inline-block mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300`}>
                     <div className="text-white">{component.icon}</div>
                   </div>
                   
-                  <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-2">{component.title}</h3>
-                  <p className="text-gray-700">{component.description}</p>
+                  <h3 className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-gray-900 mb-1 sm:mb-2">{component.title}</h3>
+                  <p className="text-gray-700 text-xs sm:text-sm md:text-base">{component.description}</p>
                 </div>
                 
-                <div className={`h-1 bg-gradient-to-r ${component.color}`}></div>
+                <div className={`h-0.5 sm:h-1 bg-gradient-to-r ${component.color}`}></div>
               </div>
             ))}
           </div>
-
-  
         </div>
       </section>
 
-            {/* Program in Numbers Section */}
-<section className="w-full bg-gradient-to-b from-orange-50 to-white py-12 md:py-20 lg:py-32">
-  <div className="container mx-auto px-4 md:px-8 lg:px-16">
-    <div className="max-w-6xl mx-auto">
-      <div className="text-center mb-12 lg:mb-16">
-        <div className="inline-flex items-center justify-center w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-amber-100 to-orange-100 rounded-2xl mb-4 md:mb-6">
-          <BarChart className="w-8 h-8 md:w-10 md:h-10 text-[#8B4513]" />
-        </div>
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-          <span className="bg-gradient-to-r from-[#6A3E2E] via-[#8B4513] to-[#E07B00] bg-clip-text text-transparent">
-            PROGRAM IN NUMBERS
-          </span>
-        </h2>
-        <p className="text-gray-600 text-lg max-w-3xl mx-auto">
-          Our nationwide reach and impact in promoting air quality awareness
-        </p>
-      </div>
-
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
-        {/* District Card */}
-        <div className="group relative bg-white rounded-2xl md:rounded-3xl border border-orange-200 p-6 md:p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
-          <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-[#6A3E2E] to-[#8B4513] opacity-5 rounded-bl-full"></div>
-          
-          <div className="relative text-center">
-            <div className="text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-[#6A3E2E] to-[#8B4513] bg-clip-text text-transparent mb-2">
-              38
+      {/* Program in Numbers Section */}
+      <section className="w-full bg-gradient-to-b from-orange-50 to-white py-8 sm:py-12 md:py-16 lg:py-20 xl:py-24">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-6 sm:mb-8 lg:mb-12 xl:mb-16">
+              <div className="inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-20 lg:h-20 bg-gradient-to-br from-amber-100 to-orange-100 rounded-xl sm:rounded-2xl mb-3 sm:mb-4 md:mb-5 lg:mb-6">
+                <BarChart className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-8 lg:h-8 xl:w-10 xl:h-10 text-[#8B4513]" />
+              </div>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-2 sm:mb-3 md:mb-4">
+                <span className="bg-gradient-to-r from-[#6A3E2E] via-[#8B4513] to-[#E07B00] bg-clip-text text-transparent">
+                  PROGRAM IN NUMBERS
+                </span>
+              </h2>
+              <p className="text-sm sm:text-base md:text-lg text-gray-600 max-w-2xl sm:max-w-3xl mx-auto px-4">
+                Our nationwide reach and impact in promoting air quality awareness
+              </p>
             </div>
-            <div className="text-lg md:text-xl font-semibold text-gray-900">Districts</div>
-            <p className="text-gray-600 text-sm mt-2">Across Delhi-NCR region</p>
-          </div>
-          
-          <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#6A3E2E] to-[#8B4513]"></div>
-        </div>
 
-        {/* Schools Card */}
-        <div className="group relative bg-white rounded-2xl md:rounded-3xl border border-orange-200 p-6 md:p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
-          <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-[#8B4513] to-[#C46200] opacity-5 rounded-bl-full"></div>
-          
-          <div className="relative text-center">
-            <div className="text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-[#8B4513] to-[#C46200] bg-clip-text text-transparent mb-2">
-              4K
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 md:gap-5 lg:gap-6 xl:gap-8">
+              {/* District Card */}
+              <div className="group relative bg-white rounded-xl sm:rounded-2xl lg:rounded-3xl border border-orange-200 p-3 sm:p-4 md:p-5 lg:p-6 xl:p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+                <div className="absolute top-0 right-0 w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 bg-gradient-to-br from-[#6A3E2E] to-[#8B4513] opacity-5 rounded-bl-full"></div>
+                
+                <div className="relative text-center">
+                  <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold bg-gradient-to-r from-[#6A3E2E] to-[#8B4513] bg-clip-text text-transparent mb-1 sm:mb-2">
+                    38
+                  </div>
+                  <div className="text-sm sm:text-base md:text-lg lg:text-xl font-semibold text-gray-900">Districts</div>
+                  <p className="text-gray-600 text-xs sm:text-sm mt-1 sm:mt-2">Across Delhi-NCR region</p>
+                </div>
+                
+                <div className="absolute bottom-0 left-0 right-0 h-0.5 sm:h-1 bg-gradient-to-r from-[#6A3E2E] to-[#8B4513]"></div>
+              </div>
+
+              {/* Schools Card */}
+              <div className="group relative bg-white rounded-xl sm:rounded-2xl lg:rounded-3xl border border-orange-200 p-3 sm:p-4 md:p-5 lg:p-6 xl:p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+                <div className="absolute top-0 right-0 w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 bg-gradient-to-br from-[#8B4513] to-[#C46200] opacity-5 rounded-bl-full"></div>
+                
+                <div className="relative text-center">
+                  <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold bg-gradient-to-r from-[#8B4513] to-[#C46200] bg-clip-text text-transparent mb-1 sm:mb-2">
+                    4K
+                  </div>
+                  <div className="text-sm sm:text-base md:text-lg lg:text-xl font-semibold text-gray-900">Schools</div>
+                  <p className="text-gray-600 text-xs sm:text-sm mt-1 sm:mt-2">Participating actively</p>
+                </div>
+                
+                <div className="absolute bottom-0 left-0 right-0 h-0.5 sm:h-1 bg-gradient-to-r from-[#8B4513] to-[#C46200]"></div>
+              </div>
+
+              {/* Students & Families Card */}
+              <div className="group relative bg-white rounded-xl sm:rounded-2xl lg:rounded-3xl border border-orange-200 p-3 sm:p-4 md:p-5 lg:p-6 xl:p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+                <div className="absolute top-0 right-0 w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 bg-gradient-to-br from-[#C46200] to-[#E07B00] opacity-5 rounded-bl-full"></div>
+                
+                <div className="relative text-center">
+                  <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold bg-gradient-to-r from-[#C46200] to-[#E07B00] bg-clip-text text-transparent mb-1 sm:mb-2">
+                    24L+
+                  </div>
+                  <div className="text-sm sm:text-base md:text-lg lg:text-xl font-semibold text-gray-900">Students & Families</div>
+                  <p className="text-gray-600 text-xs sm:text-sm mt-1 sm:mt-2">Directly impacted</p>
+                </div>
+                
+                <div className="absolute bottom-0 left-0 right-0 h-0.5 sm:h-1 bg-gradient-to-r from-[#C46200] to-[#E07B00]"></div>
+              </div>
+
+              {/* Teachers Card */}
+              <div className="group relative bg-white rounded-xl sm:rounded-2xl lg:rounded-3xl border border-orange-200 p-3 sm:p-4 md:p-5 lg:p-6 xl:p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+                <div className="absolute top-0 right-0 w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 bg-gradient-to-br from-[#E07B00] to-[#FFA500] opacity-5 rounded-bl-full"></div>
+                
+                <div className="relative text-center">
+                  <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold bg-gradient-to-r from-[#E07B00] to-[#FFA500] bg-clip-text text-transparent mb-1 sm:mb-2">
+                    60K+
+                  </div>
+                  <div className="text-sm sm:text-base md:text-lg lg:text-xl font-semibold text-gray-900">Teachers</div>
+                  <p className="text-gray-600 text-xs sm:text-sm mt-1 sm:mt-2">Trained & empowered</p>
+                </div>
+                
+                <div className="absolute bottom-0 left-0 right-0 h-0.5 sm:h-1 bg-gradient-to-r from-[#E07B00] to-[#FFA500]"></div>
+              </div>
             </div>
-            <div className="text-lg md:text-xl font-semibold text-gray-900">Schools</div>
-            <p className="text-gray-600 text-sm mt-2">Participating actively</p>
-          </div>
-          
-          <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#8B4513] to-[#C46200]"></div>
-        </div>
 
-        {/* Students & Families Card */}
-        <div className="group relative bg-white rounded-2xl md:rounded-3xl border border-orange-200 p-6 md:p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
-          <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-[#C46200] to-[#E07B00] opacity-5 rounded-bl-full"></div>
-          
-          <div className="relative text-center">
-            <div className="text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-[#C46200] to-[#E07B00] bg-clip-text text-transparent mb-2">
-              24L+
+            {/* Additional Impact Info */}
+            <div className="mt-8 sm:mt-10 md:mt-12 lg:mt-16 bg-gradient-to-br from-orange-50 to-amber-50 rounded-xl sm:rounded-2xl lg:rounded-3xl p-4 sm:p-5 md:p-6 lg:p-8 border border-orange-200">
+              <div className="text-center">
+                <div className="inline-flex items-center px-3 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-amber-100 to-orange-100 rounded-full mb-3 sm:mb-4">
+                  <TrendingUpDown className="w-4 h-4 sm:w-5 sm:h-5 text-[#8B4513] mr-1 sm:mr-2" />
+                  <span className="text-xs sm:text-sm font-semibold text-[#8B4513]">Growing Impact</span>
+                </div>
+                <p className="text-gray-700 text-sm sm:text-base md:text-lg">
+                  These numbers represent our commitment to creating a cleaner, healthier environment through 
+                  education and community engagement. Every day, more schools join our mission to build 
+                  sustainable futures.
+                </p>
+              </div>
             </div>
-            <div className="text-lg md:text-xl font-semibold text-gray-900">Students & Families</div>
-            <p className="text-gray-600 text-sm mt-2">Directly impacted</p>
           </div>
-          
-          <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#C46200] to-[#E07B00]"></div>
         </div>
+      </section>
 
-        {/* Teachers Card */}
-        <div className="group relative bg-white rounded-2xl md:rounded-3xl border border-orange-200 p-6 md:p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
-          <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-[#E07B00] to-[#FFA500] opacity-5 rounded-bl-full"></div>
-          
-          <div className="relative text-center">
-            <div className="text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-[#E07B00] to-[#FFA500] bg-clip-text text-transparent mb-2">
-              60K+
-            </div>
-            <div className="text-lg md:text-xl font-semibold text-gray-900">Teachers</div>
-            <p className="text-gray-600 text-sm mt-2">Trained & empowered</p>
-          </div>
-          
-          <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#E07B00] to-[#FFA500]"></div>
-        </div>
-      </div>
-
-      {/* Additional Impact Info */}
-      <div className="mt-12 md:mt-16 bg-gradient-to-br from-orange-50 to-amber-50 rounded-2xl md:rounded-3xl p-6 md:p-8 border border-orange-200">
-        <div className="text-center">
-          <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-amber-100 to-orange-100 rounded-full mb-4">
-            <TrendingUpDown className="w-5 h-5 text-[#8B4513] mr-2" />
-            <span className="text-sm font-semibold text-[#8B4513]">Growing Impact</span>
-          </div>
-          <p className="text-gray-700 md:text-lg">
-            These numbers represent our commitment to creating a cleaner, healthier environment through 
-            education and community engagement. Every day, more schools join our mission to build 
-            sustainable futures.
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-   
-
-  
       <Footer/>
     </>
   );

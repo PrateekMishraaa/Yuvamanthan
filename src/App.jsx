@@ -1,7 +1,7 @@
 import React, { Suspense, lazy } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ProtectedRoutes from "./Components/ProtectedRoutes";
-
+import Logo from "../src/assets/logo.png"
 /* =======================
    LAZY LOADED PAGES
 ======================= */
@@ -21,6 +21,7 @@ const ModelG20 = lazy(() => import("./Pages/Programs/ModelG20"));
 const YuvamanthanUnitedNations = lazy(() =>
   import("./Pages/Programs/YuvamanthanUnitedNations")
 );
+import { useNavigate } from "react-router-dom";
 
 // Engage
 const YouthCommunity = lazy(() => import("./Pages/Engage/YouthCommunity"));
@@ -55,6 +56,7 @@ const SocialPresence = lazy(() =>
 ======================= */
 
 const App = () => {
+  // const navigate = useNavigate()
   return (
     <Router>
       <Suspense fallback={<div className="page-loader">Loading page...</div>}>
@@ -188,7 +190,7 @@ const App = () => {
           
           {/* Additional Teacher Routes if needed */}
           <Route
-            path="/teacher/:id/personal-details/*"
+            path="/teacher/:id/personal-details*"
             element={
               <ProtectedRoutes>
                 <Teacher />
