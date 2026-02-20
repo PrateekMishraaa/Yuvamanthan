@@ -88,7 +88,7 @@ const Navbar = () => {
       dropdown: [
         { path: "/theme/life", label: "Mission LiFE(Lifestyle of Environment in parthnership With UNDP)" },
         { path: "/theme/future-of-work", label: "Future of work" },
-        { path: "/themes/leadership", label: "Leadership" },
+        { path: "/theme/peacebuilding-and-reconciliation", label: "Peacebuilding-and-Reconciliation" },
         { path: "/themes/technology", label: "Technology" }
       ]
     },
