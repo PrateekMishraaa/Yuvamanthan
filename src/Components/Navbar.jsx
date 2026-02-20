@@ -112,7 +112,7 @@ const Navbar = () => {
         { path: "/about", label: "About Yuvamanthan" },
         { path: "/about/parthnership", label: "ParthnerShip's" },
         { path: "/about/media", label: "Media" },
-        // { path: "/theme/climate-change-and-risk-disaster", label: "Climate Change And Disaster Risk Reduction" },
+        { path: "/about/teams", label: "Our Teams" },
         //  { path: "/theme/health-well-being-and-sports", label: "Health, Well Being and Sports" },
         //  { path: "/theme/shared-future", label: "Shared Future" }
       ]

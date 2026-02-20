@@ -46,6 +46,7 @@ const TeacherAppreance = lazy(()=>import("./Pages/TeacherParts/TeacherAppreance.
 const TeacherSocial = lazy(()=>import("./Pages/TeacherParts/TeacherSocial.jsx"))
 const Student = lazy(() => import("./Dashboard/Student"));
 const Admin = lazy(() => import("./Pages/Admin"));
+const Teams = lazy(()=>import("../src/Pages/AboutPages/Teams.jsx"))
 
 // Institution Parts
 const OverView = lazy(() => import("./Pages/InstitutionParts/OverView.jsx"));
@@ -94,6 +95,7 @@ const App = () => {
           <Route path="/theme/life" element={<Life/>}/>
           <Route path="/theme/future-of-work" element={<FutureWork/>}/>
           <Route path="/about/media" element={<Media/>}/>
+          <Route path="/about/teams" element={<Teams/>}/>
           <Route path="/theme/peacebuilding-and-reconciliation" element={<PeaceBuilding/>}/>
           <Route path="/theme/climate-change-and-risk-disaster" element={<Climate/>}/>
           <Route path="/theme/health-well-being-and-sports" element={<Health/>}/>
