@@ -86,7 +86,7 @@ const Navbar = () => {
       label: "Themes",
       icon: <FaPalette className="lg:hidden" />,
       dropdown: [
-        { path: "/themes/innovation", label: "Innovation" },
+        { path: "/theme/life", label: "Mission LiFE(Lifestyle of Environment in parthnership With UNDP)" },
         { path: "/themes/sustainability", label: "Sustainability" },
         { path: "/themes/leadership", label: "Leadership" },
         { path: "/themes/technology", label: "Technology" }

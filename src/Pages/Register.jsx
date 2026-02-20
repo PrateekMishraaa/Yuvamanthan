@@ -5,7 +5,7 @@ import { FaEyeSlash, FaEye } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
-
+import { GoogleLogin } from "@react-oauth/google";
 const Register = () => {
   const navigate = useNavigate();
   const [viewPassword, setViewPassword] = useState(true);
@@ -193,6 +193,7 @@ const Register = () => {
                       <p className="text-[10px] sm:text-xs opacity-90">{role.description}</p>
                     </button>
                   ))}
+                  
                 </div>
 
                 <div className="mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-white/20">
@@ -342,6 +343,14 @@ const Register = () => {
                       `Register as ${selectedRole || 'Select a Role'}`
                     )}
                   </button>
+                    <GoogleLogin
+                                  onSuccess={(credentialResponse) => {
+                                    console.log(credentialResponse);
+                                  }}
+                                  onError={() => {
+                                    console.log("Login Failed");
+                                  }}
+                                />
                 </form>
 
                 <p className="text-center text-[10px] sm:text-xs text-[#8B4513]/60 mt-4 sm:mt-6">

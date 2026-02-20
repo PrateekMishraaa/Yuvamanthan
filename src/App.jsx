@@ -30,6 +30,7 @@ const YuvamanthanBlog = lazy(() => import("./Pages/Engage/YuvamanthanBlog"));
 const YuvamanthanNews = lazy(() => import("./Pages/Engage/YuvamanthanNews"));
 const YuvamanthanContact = lazy(() => import("./Pages/Engage/YuvamanthanContact"));
 
+const Life = lazy(()=>import('../src/Pages/Themes/MissionLife.jsx'))
 // Dashboards
 const Institution = lazy(() => import("./Dashboard/Institution"));
 const Teacher = lazy(() => import("./Dashboard/Teacher"));
@@ -81,6 +82,7 @@ const App = () => {
           <Route path="/engage/blog" element={<YuvamanthanBlog />} />
           <Route path="/engage/news" element={<YuvamanthanNews />} />
           <Route path="/engage/contact-us" element={<YuvamanthanContact />} />
+          <Route path="/theme/life" element={<Life/>}/>
 
           {/* ========== INSTITUTION ROUTES ========== */}
           {/* Main Institution Routes with ID */}
@@ -309,3 +311,7 @@ const NavigateToLogin = () => {
 };
 
 export default App;
+
+
+
+// 35663760498-9oph3eraul9j2812vartq6u33tsh7bot.apps.googleusercontent.com
