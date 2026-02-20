@@ -90,7 +90,8 @@ const Navbar = () => {
         { path: "/theme/future-of-work", label: "Future of work" },
         { path: "/theme/peacebuilding-and-reconciliation", label: "Peacebuilding-and-Reconciliation" },
         { path: "/theme/climate-change-and-risk-disaster", label: "Climate Change And Disaster Risk Reduction" },
-         { path: "/theme/health-well-being-and-sports", label: "Health, Well Being and Sports" }
+         { path: "/theme/health-well-being-and-sports", label: "Health, Well Being and Sports" },
+         { path: "/theme/shared-future", label: "Shared Future" }
       ]
     },
     {

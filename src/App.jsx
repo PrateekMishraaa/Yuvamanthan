@@ -35,6 +35,7 @@ const FutureWork  = lazy(()=>import('../src/Pages/Themes/FutureWork.jsx'))
 const PeaceBuilding = lazy(()=>import('../src/Pages/Themes/PeaceBuilding.jsx'))
 const Climate = lazy(()=>import('../src/Pages/Themes/ClimateChange.jsx'))
 const Health = lazy(()=>import('../src/Pages/Themes/HealthWell.jsx'))
+const Future = lazy(()=>import("../src/Pages/Themes/SharedFuture.jsx"))
 // Dashboards
 const Institution = lazy(() => import("./Dashboard/Institution"));
 const Teacher = lazy(() => import("./Dashboard/Teacher"));
@@ -91,6 +92,7 @@ const App = () => {
           <Route path="/theme/peacebuilding-and-reconciliation" element={<PeaceBuilding/>}/>
           <Route path="/theme/climate-change-and-risk-disaster" element={<Climate/>}/>
           <Route path="/theme/health-well-being-and-sports" element={<Health/>}/>
+          <Route path="/theme/shared-future" element={<Future/>}/>
 
           {/* ========== INSTITUTION ROUTES ========== */}
           {/* Main Institution Routes with ID */}
