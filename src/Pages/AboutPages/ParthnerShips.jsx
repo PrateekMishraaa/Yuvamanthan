@@ -33,6 +33,7 @@ import Parthner30 from "../../assets/p30.png";
 import Parthner31 from "../../assets/p31.png";
 import Parthner32 from "../../assets/p32.png";
 import Parthner33 from "../../assets/p33.png";
+import Footer from "../../Components/Footer";
 
 const ParthnerShips = () => {
   const parthnerShips = [
@@ -69,6 +70,34 @@ const ParthnerShips = () => {
     Parthner31,
     Parthner32,
     Parthner33,
+  ];
+
+  // Dignitaries data
+  const dignitaries = [
+    {
+      name: "Shri Nayab Singh Saini",
+      title: "Honorable Chief Minister of Haryana"
+    },
+    {
+      name: "Shri Pramod Sawant",
+      title: "Honorable Chief Minister of Goa"
+    },
+    {
+      name: "Shri Arjun Munda",
+      title: "Honorable Union Minister of Tribal Affairs, Honorable Agriculture and Farmer Welfare"
+    },
+    {
+      name: "Shri Arun Sao",
+      title: "Honorable Deputy Chief Minister of Chhattisgarh"
+    },
+    {
+      name: "Dr K Laxman",
+      title: "Honorable Minister of parliament, Rajya Sabha, Honorable National President OBC Morcha"
+    },
+    {
+      name: "Shri Bhupendra Singh Choudhary",
+      title: "President, BJP Uttar Pradesh"
+    }
   ];
 
   return (
@@ -116,6 +145,43 @@ const ParthnerShips = () => {
           </div>
         </div>
       </section>
+
+      {/* Dignitaries Section */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto bg-gradient-to-b from-white to-[#FFF7ED]">
+        <div className="text-center mb-12">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+            Dignitaries Speaking About <span className="text-[#E07B00]">YuvaManthan</span>
+          </h2>
+          <div className="w-24 h-1 bg-[#E07B00] mx-auto rounded-full"></div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {dignitaries.map((dignitary, index) => (
+            <div 
+              key={index}
+              className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 border-l-4 border-[#E07B00] hover:scale-105"
+            >
+              <h3 className="text-xl font-bold text-[#8B4513] mb-2">{dignitary.name}</h3>
+              <p className="text-gray-600 text-sm leading-relaxed">{dignitary.title}</p>
+              
+              {/* Decorative element */}
+              <div className="mt-4 pt-4 border-t border-gray-100">
+                <div className="flex items-center text-[#E07B00]">
+                  <span className="text-xs font-semibold">YuvaManthan Supporter</span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Note about dignitaries */}
+        <div className="mt-12 text-center">
+          <p className="text-gray-600 italic">
+            Respected dignitaries from across India have appreciated YuvaManthan's contribution to youth empowerment and experiential learning.
+          </p>
+        </div>
+      </section>
+      <Footer/>
     </>
   );
 };
