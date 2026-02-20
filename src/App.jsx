@@ -23,6 +23,7 @@ const YuvamanthanUnitedNations = lazy(() =>
 );
 import { useNavigate } from "react-router-dom";
 
+
 // Engage
 const YouthCommunity = lazy(() => import("./Pages/Engage/YouthCommunity"));
 const YuvamanthanMedia = lazy(() => import("./Pages/Engage/YuvamanthanMedia"));
@@ -31,6 +32,7 @@ const YuvamanthanNews = lazy(() => import("./Pages/Engage/YuvamanthanNews"));
 const YuvamanthanContact = lazy(() => import("./Pages/Engage/YuvamanthanContact"));
 
 const Life = lazy(()=>import('../src/Pages/Themes/MissionLife.jsx'))
+const ParthnerShips = lazy(()=>import("../src/Pages/AboutPages/ParthnerShips.jsx"))
 const FutureWork  = lazy(()=>import('../src/Pages/Themes/FutureWork.jsx'))
 const PeaceBuilding = lazy(()=>import('../src/Pages/Themes/PeaceBuilding.jsx'))
 const Climate = lazy(()=>import('../src/Pages/Themes/ClimateChange.jsx'))
@@ -74,6 +76,7 @@ const App = () => {
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/about" element={<About />} />
           <Route path="/programs" element={<Programs />} />
+          <Route path="/about/parthnership" element={<ParthnerShips/>}/>
 
           {/* Programs */}
           <Route path="/programs/nipam" element={<Nipam />} />

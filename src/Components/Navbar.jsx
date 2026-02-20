@@ -106,10 +106,17 @@ const Navbar = () => {
       ]
     },
     {
-      path: "/about",
       label: "About",
-      icon: <FaInfoCircle className="lg:hidden" />
-    }
+      icon: <FaPalette className="lg:hidden" />,
+      dropdown: [
+        { path: "/about", label: "About Yuvamanthan" },
+        { path: "/about/parthnership", label: "ParthnerShip's" },
+        // { path: "/theme/peacebuilding-and-reconciliation", label: "Peacebuilding-and-Reconciliation" },
+        // { path: "/theme/climate-change-and-risk-disaster", label: "Climate Change And Disaster Risk Reduction" },
+        //  { path: "/theme/health-well-being-and-sports", label: "Health, Well Being and Sports" },
+        //  { path: "/theme/shared-future", label: "Shared Future" }
+      ]
+    },
   ];
 
   // Quick contact for mobile
