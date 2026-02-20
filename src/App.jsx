@@ -31,6 +31,7 @@ const YuvamanthanNews = lazy(() => import("./Pages/Engage/YuvamanthanNews"));
 const YuvamanthanContact = lazy(() => import("./Pages/Engage/YuvamanthanContact"));
 
 const Life = lazy(()=>import('../src/Pages/Themes/MissionLife.jsx'))
+const FutureWork  = lazy(()=>import('../src/Pages/Themes/FutureWork.jsx'))
 // Dashboards
 const Institution = lazy(() => import("./Dashboard/Institution"));
 const Teacher = lazy(() => import("./Dashboard/Teacher"));
@@ -83,6 +84,7 @@ const App = () => {
           <Route path="/engage/news" element={<YuvamanthanNews />} />
           <Route path="/engage/contact-us" element={<YuvamanthanContact />} />
           <Route path="/theme/life" element={<Life/>}/>
+          <Route path="/theme/future-of-work" element={<FutureWork/>}/>
 
           {/* ========== INSTITUTION ROUTES ========== */}
           {/* Main Institution Routes with ID */}
